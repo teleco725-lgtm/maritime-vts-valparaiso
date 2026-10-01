@@ -217,21 +217,21 @@ export default function AIChatPanel() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.95 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed bottom-6 right-6 z-50 w-[calc(100vw-3rem)] sm:w-[400px] md:w-[440px] h-[600px] max-h-[calc(100vh-3rem)] flex flex-col border border-sky-200/60 rounded-2xl shadow-2xl overflow-hidden bg-sky-50/85 backdrop-blur-xl"
+            className="fixed bottom-6 right-6 z-50 w-[calc(100vw-3rem)] sm:w-[400px] md:w-[440px] h-[600px] max-h-[calc(100vh-3rem)] flex flex-col border border-slate-700/60 rounded-2xl shadow-2xl overflow-hidden bg-sky-50/85 backdrop-blur-xl"
             style={{
               boxShadow: '0 20px 25px -5px rgba(0,0,0,0.15), 0 10px 10px -5px rgba(0,0,0,0.04)',
             }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-3 border-b border-sky-200/40 bg-sky-100/40">
+            <div className="flex items-center justify-between p-3 border-b border-slate-700/40 bg-[#0f1620]">
               <div className="flex items-center gap-2.5 min-w-0">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center flex-shrink-0 shadow-md">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-base font-bold text-slate-900 flex items-center gap-1.5">
+                  <div className="text-base font-bold text-slate-100 flex items-center gap-1.5">
                     Victoria
-                    <Badge variant="outline" className="bg-sky-100 text-sky-700 border-sky-200 text-[10px] px-1.5 py-0">
+                    <Badge variant="outline" className="bg-[#1a2433] text-[#00FF66] border-slate-700/50 text-[10px] px-1.5 py-0">
                       IA
                     </Badge>
                   </div>
@@ -260,12 +260,12 @@ export default function AIChatPanel() {
             </div>
 
             {/* Status bar con fuentes de información */}
-            <div className="flex items-center gap-2 px-3 py-2 bg-sky-100/30 border-b border-sky-200/40 text-xs">
+            <div className="flex items-center gap-2 px-3 py-2 bg-[#0f1620] border-b border-slate-700/40 text-xs">
               <span className="flex items-center gap-1 text-emerald-600 font-medium">
                 <Globe2 className="w-3 h-3" /> Internet
               </span>
               <span className="text-slate-300">·</span>
-              <span className="flex items-center gap-1 text-sky-600 font-medium">
+              <span className="flex items-center gap-1 text-[#00D2FF] font-medium">
                 <Database className="w-3 h-3" /> DB TPS
               </span>
               <span className="text-slate-300">·</span>
@@ -286,7 +286,7 @@ export default function AIChatPanel() {
                     <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center mx-auto mb-3 shadow-md">
                       <Brain className="w-8 h-8 text-white" />
                     </div>
-                    <div className="text-lg font-bold text-slate-900">Hola, soy Victoria</div>
+                    <div className="text-lg font-bold text-slate-100">Hola, soy Victoria</div>
                     <div className="text-sm text-slate-600 mt-1 px-2">
                       Asistente de IA del VTS. Tengo acceso al dashboard en vivo,
                       la base de datos TPS y búsqueda web.
@@ -294,13 +294,13 @@ export default function AIChatPanel() {
                   </motion.div>
 
                   <div className="space-y-1.5">
-                    <div className="flex items-center gap-1 mb-2 p-1 bg-sky-100/40 backdrop-blur-sm rounded-lg border border-sky-200/40">
+                    <div className="flex items-center gap-1 mb-2 p-1 bg-[#0f1620] backdrop-blur-sm rounded-lg border border-slate-700/40">
                       <button
                         onClick={() => setSuggestionTab('operacional')}
                         className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-md text-xs font-semibold transition-colors ${
                           suggestionTab === 'operacional'
-                            ? 'bg-sky-200/80 text-sky-900 shadow-sm'
-                            : 'text-slate-600 hover:text-slate-900'
+                            ? 'bg-[#00FF66]/15 text-[#00FF66] shadow-sm'
+                            : 'text-slate-600 hover:text-slate-100'
                         }`}
                       >
                         <Ship className="w-3.5 h-3.5" /> Operacional
@@ -309,8 +309,8 @@ export default function AIChatPanel() {
                         onClick={() => setSuggestionTab('ciberseguridad')}
                         className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-md text-xs font-semibold transition-colors ${
                           suggestionTab === 'ciberseguridad'
-                            ? 'bg-red-100/80 text-red-900 shadow-sm'
-                            : 'text-slate-600 hover:text-slate-900'
+                            ? 'bg-red-500/15 text-red-900 shadow-sm'
+                            : 'text-slate-600 hover:text-slate-100'
                         }`}
                       >
                         <ShieldCheck className="w-3.5 h-3.5" /> Ciberseguridad
@@ -333,7 +333,7 @@ export default function AIChatPanel() {
                           className={`w-full flex items-center gap-2 p-2.5 rounded-lg border hover:bg-slate-50 transition-colors text-left ${
                             suggestionTab === 'ciberseguridad'
                               ? 'border-red-100 hover:border-red-300 bg-red-50/30'
-                              : 'border-slate-200/60 hover:border-sky-300 bg-sky-100/60'
+                              : 'border-slate-700/50/60 hover:border-sky-300 bg-[#1a2433]'
                           }`}
                         >
                           <Icon className={`w-4 h-4 flex-shrink-0 ${p.color}`} />
@@ -352,25 +352,25 @@ export default function AIChatPanel() {
                   animate={{ opacity: 1, y: 0 }}
                   className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <div className={`max-w-[88%] ${msg.role === 'user' ? 'bg-sky-600 text-white border-sky-600' : 'bg-slate-50 border-slate-200'} border rounded-2xl p-3 ${msg.role === 'user' ? 'rounded-tr-sm' : 'rounded-tl-sm'}`}>
+                  <div className={`max-w-[88%] ${msg.role === 'user' ? 'bg-sky-600 text-white border-sky-600' : 'bg-slate-50 border-slate-700/50'} border rounded-2xl p-3 ${msg.role === 'user' ? 'rounded-tr-sm' : 'rounded-tl-sm'}`}>
                     {msg.role === 'assistant' && (
-                      <div className="flex items-center gap-1.5 mb-1.5 text-xs text-sky-700 font-semibold">
+                      <div className="flex items-center gap-1.5 mb-1.5 text-xs text-[#00FF66] font-semibold">
                         <Sparkles className="w-3 h-3" />
                         Victoria
                       </div>
                     )}
-                    <div className={`text-sm leading-relaxed whitespace-pre-wrap ${msg.role === 'user' ? 'text-white' : 'text-slate-800'}`}>
+                    <div className={`text-sm leading-relaxed whitespace-pre-wrap ${msg.role === 'user' ? 'text-white' : 'text-slate-200'}`}>
                       {msg.content}
                     </div>
                     {msg.meta && (
-                      <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-slate-200/50 flex-wrap">
+                      <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-slate-700/50/50 flex-wrap">
                         {msg.meta.usedWebSearch && (
-                          <span className="text-[10px] flex items-center gap-0.5 text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-medium">
+                          <span className="text-[10px] flex items-center gap-0.5 text-[#00FF66] bg-[#00FF66]/10 px-2 py-0.5 rounded-full font-medium">
                             <Globe2 className="w-2.5 h-2.5" /> Web
                           </span>
                         )}
                         {msg.meta.usedTPSDb && (
-                          <span className="text-[10px] flex items-center gap-0.5 text-sky-700 bg-sky-50 px-2 py-0.5 rounded-full font-medium">
+                          <span className="text-[10px] flex items-center gap-0.5 text-[#00FF66] bg-sky-50 px-2 py-0.5 rounded-full font-medium">
                             <Database className="w-2.5 h-2.5" /> TPS
                           </span>
                         )}
@@ -391,15 +391,15 @@ export default function AIChatPanel() {
                   animate={{ opacity: 1 }}
                   className="flex justify-start"
                 >
-                  <div className="bg-slate-50 border border-slate-200 rounded-2xl rounded-tl-sm p-3">
+                  <div className="bg-slate-50 border border-slate-700/50 rounded-2xl rounded-tl-sm p-3">
                     <div className="flex items-center gap-2">
-                      <Loader2 className="w-4 h-4 animate-spin text-sky-600" />
+                      <Loader2 className="w-4 h-4 animate-spin text-[#00D2FF]" />
                       <span className="text-sm text-slate-600">Consultando fuentes...</span>
                     </div>
                     <div className="flex items-center gap-1.5 mt-2 text-xs text-slate-500">
                       <span className="flex items-center gap-0.5"><Globe2 className="w-3 h-3 text-emerald-600" /> Internet</span>
                       <span>·</span>
-                      <span className="flex items-center gap-0.5"><Database className="w-3 h-3 text-sky-600" /> TPS</span>
+                      <span className="flex items-center gap-0.5"><Database className="w-3 h-3 text-[#00D2FF]" /> TPS</span>
                       <span>·</span>
                       <span className="flex items-center gap-0.5"><Activity className="w-3 h-3 text-violet-600" /> VTS</span>
                     </div>
@@ -409,7 +409,7 @@ export default function AIChatPanel() {
             </div>
 
             {/* Input */}
-            <div className="p-3 border-t border-sky-200/40 bg-sky-100/40">
+            <div className="p-3 border-t border-slate-700/40 bg-[#0f1620]">
               <form
                 onSubmit={(e) => { e.preventDefault(); send() }}
                 className="flex items-center gap-2"
@@ -420,7 +420,7 @@ export default function AIChatPanel() {
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Escribe tu consulta..."
                   disabled={loading}
-                  className="flex-1 h-11 bg-sky-100/60 backdrop-blur border-sky-200 text-slate-800 text-sm placeholder:text-slate-500"
+                  className="flex-1 h-11 bg-[#1a2433] backdrop-blur border-slate-700/50 text-slate-200 text-sm placeholder:text-slate-500"
                 />
                 <Button
                   type="submit"

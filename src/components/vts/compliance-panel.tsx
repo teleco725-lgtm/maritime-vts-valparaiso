@@ -59,7 +59,7 @@ export default function CompliancePanel() {
     <div className="space-y-4">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
+        <h2 className="text-2xl font-bold text-slate-100 flex items-center gap-2">
           <ShieldCheck className="w-6 h-6 text-emerald-400" />
           Cumplimiento Normativo y Auditoría
         </h2>
@@ -77,14 +77,14 @@ export default function CompliancePanel() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.05 }}
           >
-            <Card className="bg-white border-slate-200 shadow-sm">
+            <Card className="bg-white border-slate-700/50 shadow-sm">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs text-slate-500">{s.label}</span>
                   <Lock className="w-3 h-3 text-emerald-400" />
                 </div>
-                <div className="text-2xl font-bold text-slate-900 mb-1">{s.value}%</div>
-                <Progress value={s.value} className="h-1 bg-sky-100/60" />
+                <div className="text-2xl font-bold text-slate-100 mb-1">{s.value}%</div>
+                <Progress value={s.value} className="h-1 bg-[#1a2433]" />
               </CardContent>
             </Card>
           </motion.div>
@@ -102,9 +102,9 @@ export default function CompliancePanel() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
             >
-              <Card className="bg-white border-slate-200 shadow-sm h-full">
+              <Card className="bg-white border-slate-700/50 shadow-sm h-full">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-sky-700 text-base flex items-center gap-2">
+                  <CardTitle className="text-[#00FF66] text-base flex items-center gap-2">
                     <Icon className="w-4 h-4" />
                     {cat.category}
                   </CardTitle>
@@ -113,7 +113,7 @@ export default function CompliancePanel() {
                   {cat.items.map((item) => (
                     <div
                       key={item.name}
-                      className="flex items-start gap-2 p-2 rounded-md bg-sky-100/60/40 border border-slate-800"
+                      className="flex items-start gap-2 p-2 rounded-md bg-[#1a2433]/40 border border-slate-800"
                     >
                       <CheckCircle2
                         className={`w-4 h-4 mt-0.5 flex-shrink-0 ${
@@ -143,9 +143,9 @@ export default function CompliancePanel() {
       </div>
 
       {/* Auditorías recientes */}
-      <Card className="bg-white border-slate-200 shadow-sm">
+      <Card className="bg-white border-slate-700/50 shadow-sm">
         <CardHeader>
-          <CardTitle className="text-sky-700 text-base flex items-center gap-2">
+          <CardTitle className="text-[#00FF66] text-base flex items-center gap-2">
             <FileText className="w-4 h-4" />
             Auditorías Recientes
           </CardTitle>

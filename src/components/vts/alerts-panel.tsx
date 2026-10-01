@@ -10,7 +10,7 @@ const severityConfig: Record<AlertItem['severity'], { color: string; bg: string;
   critical: { color: 'text-red-600', bg: 'bg-red-50', border: 'border-red-200', label: 'CRÍTICA', text: 'text-red-700' },
   high: { color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-200', label: 'ALTA', text: 'text-amber-700' },
   medium: { color: 'text-yellow-700', bg: 'bg-yellow-50', border: 'border-yellow-200', label: 'MEDIA', text: 'text-yellow-800' },
-  low: { color: 'text-sky-700', bg: 'bg-sky-50', border: 'border-sky-200', label: 'BAJA', text: 'text-sky-800' },
+  low: { color: 'text-[#00FF66]', bg: 'bg-sky-50', border: 'border-slate-700/50', label: 'BAJA', text: 'text-sky-800' },
 }
 
 const typeIcon: Record<AlertItem['type'], typeof AlertTriangle> = {
@@ -27,10 +27,10 @@ export default function AlertsPanel() {
   const items = initialAlerts.filter((a) => filter === 'all' || a.status === filter)
 
   return (
-    <div className="flex flex-col h-full bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-      <div className="p-4 border-b border-slate-200 bg-sky-100/40">
+    <div className="flex flex-col h-full bg-white border border-slate-700/50 rounded-xl overflow-hidden shadow-sm">
+      <div className="p-4 border-b border-slate-700/50 bg-[#0f1620]">
         <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2 text-sky-700 text-base font-semibold">
+          <div className="flex items-center gap-2 text-[#00FF66] text-base font-semibold">
             <ShieldAlert className="w-5 h-5" />
             <span>Centro de Alertas</span>
           </div>
@@ -84,7 +84,7 @@ export default function AlertsPanel() {
                       <span className="text-[10px] text-slate-500">·</span>
                       <span className="text-[10px] text-slate-500">{a.timestamp}</span>
                     </div>
-                    <div className="text-sm font-semibold text-slate-900 mb-1">{a.title}</div>
+                    <div className="text-sm font-semibold text-slate-100 mb-1">{a.title}</div>
                     <div className="text-xs text-slate-600 leading-snug">{a.description}</div>
                     {a.vessel && (
                       <div className="mt-1.5 text-xs text-slate-500 flex items-center gap-1">

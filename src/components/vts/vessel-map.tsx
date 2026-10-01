@@ -17,23 +17,23 @@ export default function VesselMap({ selectedVessel, onSelectVessel }: Props) {
   const [showLabels, setShowLabels] = useState(true)
 
   return (
-    <div className="relative w-full h-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 rounded-lg overflow-hidden border border-slate-700">
+    <div className="relative w-full h-full rounded-lg overflow-hidden border border-slate-700/60" style={{ background: 'radial-gradient(ellipse at center, #0A0F18 0%, #050810 100%)' }}>
       {/* Header */}
-      <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-4 py-2 bg-slate-900/80 backdrop-blur border-b border-slate-700">
-        <div className="flex items-center gap-2 text-cyan-400 text-sm font-medium">
+      <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-4 py-2 bg-[#0A0F18]/85 backdrop-blur border-b border-slate-700/50">
+        <div className="flex items-center gap-2 text-[#00FF66] text-sm font-medium">
           <Radar className="w-4 h-4" />
           <span>Mapa de Tráfico Marítimo — Bahía de Valparaíso</span>
         </div>
         <div className="flex items-center gap-2 text-xs">
           <button
             onClick={() => setShowTrails(!showTrails)}
-            className={`px-2 py-1 rounded ${showTrails ? 'bg-cyan-500/20 text-cyan-300' : 'bg-slate-800 text-slate-400'}`}
+            className={`px-2 py-1 rounded ${showTrails ? 'bg-[#00FF66]/15 text-[#00FF66]' : 'bg-slate-800 text-slate-400'}`}
           >
             Estelas
           </button>
           <button
             onClick={() => setShowLabels(!showLabels)}
-            className={`px-2 py-1 rounded ${showLabels ? 'bg-cyan-500/20 text-cyan-300' : 'bg-slate-800 text-slate-400'}`}
+            className={`px-2 py-1 rounded ${showLabels ? 'bg-[#00FF66]/15 text-[#00FF66]' : 'bg-slate-800 text-slate-400'}`}
           >
             Etiquetas
           </button>
@@ -51,8 +51,8 @@ export default function VesselMap({ selectedVessel, onSelectVessel }: Props) {
             <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e3a5f" strokeWidth="0.5" opacity="0.4" />
           </pattern>
           <radialGradient id="radarSweep" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.3" />
-            <stop offset="100%" stopColor="#06b6d4" stopOpacity="0" />
+            <stop offset="0%" stopColor="#00FF66" stopOpacity="0.3" />
+            <stop offset="100%" stopColor="#00FF66" stopOpacity="0" />
           </radialGradient>
           <filter id="glow">
             <feGaussianBlur stdDeviation="2" result="coloredBlur" />
@@ -119,7 +119,7 @@ export default function VesselMap({ selectedVessel, onSelectVessel }: Props) {
             d="M 500 350 L 700 350 A 200 200 0 0 1 590 530 Z"
             fill="url(#radarSweep)"
           />
-          <line x1="500" y1="350" x2="700" y2="350" stroke="#06b6d4" strokeWidth="1" opacity="0.6" />
+          <line x1="500" y1="350" x2="700" y2="350" stroke="#00D2FF" strokeWidth="1" opacity="0.6" />
         </motion.g>
 
         {/* Estelas */}
@@ -146,7 +146,7 @@ export default function VesselMap({ selectedVessel, onSelectVessel }: Props) {
               <g key={v.id} className="cursor-pointer" onClick={() => onSelectVessel(v)}>
                 {/* Halo de selección */}
                 {isSelected && (
-                  <circle cx={v.x} cy={v.y} r="14" fill="none" stroke="#06b6d4" strokeWidth="2" opacity="0.8">
+                  <circle cx={v.x} cy={v.y} r="14" fill="none" stroke="#00D2FF" strokeWidth="2" opacity="0.8">
                     <animate attributeName="r" values="14;20;14" dur="1.5s" repeatCount="indefinite" />
                   </circle>
                 )}

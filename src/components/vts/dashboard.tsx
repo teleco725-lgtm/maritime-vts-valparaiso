@@ -15,6 +15,7 @@ import AnalyticsPanel from './analytics-panel'
 import ReportsPanel from './reports-panel'
 import CompliancePanel from './compliance-panel'
 import AIChatPanel from './ai-chat-panel'
+import ColorPaletteStrip from './color-palette-strip'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { LayoutDashboard, FileText, ShieldCheck } from 'lucide-react'
 
@@ -26,9 +27,9 @@ export default function Dashboard() {
 
   return (
     <div
-      className="min-h-screen flex flex-col text-slate-100"
+      className="min-h-screen flex flex-col text-slate-200"
       style={{
-        background: 'linear-gradient(135deg, #0c4a6e 0%, #075985 25%, #0369a1 50%, #0284c7 100%)',
+        background: 'radial-gradient(ellipse at top, #0A0F18 0%, #0A0F18 60%, #050810 100%)',
       }}
     >
       <Header
@@ -40,7 +41,7 @@ export default function Dashboard() {
 
       {/* Mobile nav sheet */}
       <Sheet open={mobileNavOpen} onOpenChange={setMobileNavOpen}>
-        <SheetContent side="left" className="w-72 bg-sky-50/90 backdrop-blur-xl border-sky-200/60">
+        <SheetContent side="left" className="w-72 bg-sky-50/90 backdrop-blur-xl border-slate-700/60">
           <div className="py-4">
             <div className="text-xs text-slate-500 uppercase tracking-wider px-3 mb-2 font-semibold">Navegación</div>
             {[
@@ -55,8 +56,8 @@ export default function Dashboard() {
                   onClick={() => { setActiveView(item.id); setMobileNavOpen(false) }}
                   className={`w-full flex items-center gap-3 px-3 py-3 text-base rounded-lg mb-1 font-medium transition-colors ${
                     activeView === item.id
-                      ? 'bg-sky-100 text-sky-700'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                      ? 'bg-[#1a2433] text-[#00FF66]'
+                      : 'text-slate-600 hover:text-slate-100 hover:bg-slate-100'
                   }`}
                 >
                   <Icon className="w-5 h-5" />
@@ -69,6 +70,11 @@ export default function Dashboard() {
       </Sheet>
 
       <main className="flex-1 p-3 sm:p-4 lg:p-6">
+        {/* Franja de paleta de colores */}
+        <div className="mb-3 sm:mb-4">
+          <ColorPaletteStrip />
+        </div>
+
         {activeView === 'dashboard' && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -122,21 +128,21 @@ export default function Dashboard() {
         )}
       </main>
 
-      <footer className="border-t border-white/10 bg-white/5 backdrop-blur-md px-4 sm:px-6 py-3 mt-auto">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-300">
+      <footer className="border-t border-slate-700/40 bg-[#0A0F18]/60 backdrop-blur-md px-4 sm:px-6 py-3 mt-auto">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-400">
           <div className="flex items-center gap-3 flex-wrap justify-center">
-            <span className="font-semibold text-white">MaritimeVTS v1.0</span>
-            <span className="hidden sm:inline text-slate-400">·</span>
+            <span className="font-semibold text-slate-200">MaritimeVTS v1.0</span>
+            <span className="hidden sm:inline text-slate-600">·</span>
             <span>TCP Valparaíso</span>
-            <span className="hidden sm:inline text-slate-400">·</span>
-            <span className="hidden lg:inline text-slate-400">IALA V-103 · IMO MSC.428(98) · Ley 21.719</span>
+            <span className="hidden sm:inline text-slate-600">·</span>
+            <span className="hidden lg:inline text-slate-500">IALA V-103 · IMO MSC.428(98) · Ley 21.719</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00FF66] opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-[#00FF66]" />
             </span>
-            <span className="font-medium text-slate-200">Sistema operacional · IA Victoria activa</span>
+            <span className="font-medium text-slate-300">Sistema operacional · IA Victoria activa</span>
           </div>
         </div>
       </footer>

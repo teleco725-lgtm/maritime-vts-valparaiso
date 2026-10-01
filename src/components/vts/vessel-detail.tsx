@@ -12,7 +12,7 @@ interface Props {
 export default function VesselDetail({ vessel }: Props) {
   if (!vessel) {
     return (
-      <div className="h-full flex items-center justify-center text-slate-500 text-sm text-center p-4 bg-white border border-slate-200 rounded-xl shadow-sm">
+      <div className="h-full flex items-center justify-center text-slate-500 text-sm text-center p-4 bg-white border border-slate-700/50 rounded-xl shadow-sm">
         <div>
           <Ship className="w-12 h-12 mx-auto mb-3 opacity-30 text-slate-400" />
           <div className="font-medium text-slate-600 mb-1">Seleccione un buque</div>
@@ -38,11 +38,11 @@ export default function VesselDetail({ vessel }: Props) {
   ]
 
   return (
-    <div className="h-full flex flex-col bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-      <div className="p-4 border-b border-slate-200 bg-sky-100/40">
+    <div className="h-full flex flex-col bg-white border border-slate-700/50 rounded-xl overflow-hidden shadow-sm">
+      <div className="p-4 border-b border-slate-700/50 bg-[#0f1620]">
         <div className="flex items-center justify-between mb-1">
-          <span className="font-bold text-slate-900 text-base truncate">{vessel.name}</span>
-          <Badge variant="secondary" className="bg-sky-100 text-sky-800 border-sky-200 text-xs px-2 py-0.5">
+          <span className="font-bold text-slate-100 text-base truncate">{vessel.name}</span>
+          <Badge variant="secondary" className="bg-[#1a2433] text-sky-800 border-slate-700/50 text-xs px-2 py-0.5">
             {vessel.flag}
           </Badge>
         </div>
@@ -64,26 +64,26 @@ export default function VesselDetail({ vessel }: Props) {
                 initial={{ opacity: 0, x: -5 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.02 }}
-                className="flex items-center gap-2 text-sm bg-sky-100/60 backdrop-blur-sm rounded-lg px-3 py-2 border border-sky-200/40"
+                className="flex items-center gap-2 text-sm bg-[#1a2433] rounded-lg px-3 py-2 border border-slate-700/40"
               >
-                <Icon className="w-4 h-4 text-sky-600 flex-shrink-0" />
+                <Icon className="w-4 h-4 text-[#00D2FF] flex-shrink-0" />
                 <span className="text-slate-500 w-20 flex-shrink-0 text-xs">{f.label}</span>
-                <span className="text-slate-900 font-mono ml-auto text-right font-medium">{f.value}</span>
+                <span className="text-slate-100 font-mono ml-auto text-right font-medium">{f.value}</span>
               </motion.div>
             )
           })}
 
           {/* Confidence IA */}
-          <div className="mt-4 pt-4 border-t border-slate-200">
+          <div className="mt-4 pt-4 border-t border-slate-700/50">
             <div className="flex items-center justify-between mb-2">
               <span className="text-sm text-slate-600 flex items-center gap-1.5 font-medium">
-                <Cpu className="w-4 h-4 text-sky-600" /> Precisión IA
+                <Cpu className="w-4 h-4 text-[#00D2FF]" /> Precisión IA
               </span>
               <span className={`font-bold text-base ${vessel.confidence > 98 ? 'text-emerald-600' : vessel.confidence > 95 ? 'text-amber-600' : 'text-red-600'}`}>
                 {vessel.confidence.toFixed(1)}%
               </span>
             </div>
-            <div className="h-2 bg-sky-100/60 rounded-full overflow-hidden">
+            <div className="h-2 bg-[#1a2433] rounded-full overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${vessel.confidence}%` }}

@@ -11,18 +11,18 @@ function KpiCard({ kpi, index }: { kpi: KPI; index: number }) {
     kpi.trend === 'down' ? 'text-amber-600' : 'text-slate-500'
   const trendBg =
     kpi.trend === 'up' ? 'bg-emerald-50' :
-    kpi.trend === 'down' ? 'bg-amber-50' : 'bg-sky-100/60'
+    kpi.trend === 'down' ? 'bg-amber-50' : 'bg-[#1a2433]'
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
-      className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow"
+      className="bg-white border border-slate-700/50 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow"
     >
       <div className="text-sm text-slate-600 mb-1 font-medium">{kpi.label}</div>
       <div className="flex items-baseline gap-1.5 mb-2">
-        <span className="text-3xl font-bold text-slate-900 tabular-nums">{kpi.value}</span>
+        <span className="text-3xl font-bold text-slate-100 tabular-nums">{kpi.value}</span>
         <span className="text-sm text-slate-500 font-medium">{kpi.unit}</span>
         <span className={`ml-auto text-xs flex items-center gap-0.5 ${trendColor} ${trendBg} px-2 py-0.5 rounded-md font-semibold`}>
           <TrendIcon className="w-3 h-3" />

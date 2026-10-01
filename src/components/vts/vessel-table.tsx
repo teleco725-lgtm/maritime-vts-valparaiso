@@ -26,12 +26,12 @@ export default function VesselTable({ selectedVessel, onSelectVessel }: Props) {
   }, [query, filter])
 
   return (
-    <div className="flex flex-col h-full bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-      <div className="p-4 border-b border-slate-200 space-y-3 bg-sky-100/40">
-        <div className="flex items-center gap-2 text-sky-700 text-base font-semibold">
+    <div className="flex flex-col h-full bg-white border border-slate-700/50 rounded-xl overflow-hidden shadow-sm">
+      <div className="p-4 border-b border-slate-700/50 space-y-3 bg-[#0f1620]">
+        <div className="flex items-center gap-2 text-[#00FF66] text-base font-semibold">
           <Ship className="w-5 h-5" />
           <span>Registro de Buques</span>
-          <Badge variant="secondary" className="ml-auto bg-sky-100 text-sky-700 border-sky-200 text-xs px-2 py-0.5">
+          <Badge variant="secondary" className="ml-auto bg-[#1a2433] text-[#00FF66] border-slate-700/50 text-xs px-2 py-0.5">
             {filtered.length} naves
           </Badge>
         </div>
@@ -41,7 +41,7 @@ export default function VesselTable({ selectedVessel, onSelectVessel }: Props) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Buscar por nombre, MMSI o IMO..."
-            className="pl-10 h-10 bg-white border-slate-300 text-slate-800 text-sm"
+            className="pl-10 h-10 bg-white border-slate-300 text-slate-200 text-sm"
           />
         </div>
         <div className="flex flex-wrap gap-1.5">
@@ -89,7 +89,7 @@ export default function VesselTable({ selectedVessel, onSelectVessel }: Props) {
                       className="w-2.5 h-2.5 rounded-full flex-shrink-0 ring-2 ring-offset-1 ring-slate-200"
                       style={{ backgroundColor: getVesselStatusColor(v.status) }}
                     />
-                    <span className="font-semibold text-sm text-slate-900 truncate">{v.name}</span>
+                    <span className="font-semibold text-sm text-slate-100 truncate">{v.name}</span>
                   </div>
                   <span className="text-xs text-slate-500 flex-shrink-0 font-medium">{v.flag}</span>
                 </div>
@@ -103,11 +103,11 @@ export default function VesselTable({ selectedVessel, onSelectVessel }: Props) {
                     <span className="font-mono text-slate-700">{v.imo}</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <Ship className="w-3 h-3 text-sky-600" />
+                    <Ship className="w-3 h-3 text-[#00D2FF]" />
                     <span>{getVesselTypeLabel(v.type)}</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    {v.status === 'moored' ? <Anchor className="w-3 h-3 text-emerald-600" /> : <Navigation className="w-3 h-3 text-sky-600" />}
+                    {v.status === 'moored' ? <Anchor className="w-3 h-3 text-emerald-600" /> : <Navigation className="w-3 h-3 text-[#00D2FF]" />}
                     <span>{getStatusLabel(v.status)}</span>
                   </div>
                   <div className="flex items-center gap-1">

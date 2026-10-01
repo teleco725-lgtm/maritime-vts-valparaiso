@@ -11,8 +11,8 @@ export default function AnalyticsPanel() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
       {/* Distribución por tipo */}
-      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
-        <div className="text-sky-700 text-sm font-semibold mb-3">Distribución por Tipo</div>
+      <div className="bg-white border border-slate-700/50 rounded-xl p-4 shadow-sm">
+        <div className="text-[#00FF66] text-sm font-semibold mb-3">Distribución por Tipo</div>
         <div className="h-44">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
@@ -48,15 +48,15 @@ export default function AnalyticsPanel() {
             <div key={v.name} className="flex items-center gap-1.5 text-xs">
               <span className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ backgroundColor: v.color }} />
               <span className="text-slate-600 truncate">{v.name}</span>
-              <span className="text-slate-900 ml-auto font-semibold">{v.value}</span>
+              <span className="text-slate-100 ml-auto font-semibold">{v.value}</span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Distribución por bandera */}
-      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
-        <div className="text-sky-700 text-sm font-semibold mb-3">Distribución por Bandera</div>
+      <div className="bg-white border border-slate-700/50 rounded-xl p-4 shadow-sm">
+        <div className="text-[#00FF66] text-sm font-semibold mb-3">Distribución por Bandera</div>
         <div className="h-44">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={flagDistribution} layout="vertical" margin={{ left: 10, right: 15, top: 0, bottom: 0 }}>
@@ -80,8 +80,8 @@ export default function AnalyticsPanel() {
       </div>
 
       {/* Tendencia horaria de tráfico */}
-      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
-        <div className="text-sky-700 text-sm font-semibold mb-3">Tráfico por Hora (24h)</div>
+      <div className="bg-white border border-slate-700/50 rounded-xl p-4 shadow-sm">
+        <div className="text-[#00FF66] text-sm font-semibold mb-3">Tráfico por Hora (24h)</div>
         <div className="h-44">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={trafficTrend} margin={{ left: -15, right: 5, top: 5, bottom: 0 }}>
