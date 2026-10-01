@@ -26,9 +26,9 @@ export default function Dashboard() {
 
   return (
     <div
-      className="min-h-screen flex flex-col text-slate-800"
+      className="min-h-screen flex flex-col text-slate-100"
       style={{
-        background: 'linear-gradient(135deg, #dbeafe 0%, #e0f2fe 25%, #f0f9ff 55%, #ffffff 100%)',
+        background: 'linear-gradient(135deg, #0c4a6e 0%, #075985 25%, #0369a1 50%, #0284c7 100%)',
       }}
     >
       <Header
@@ -122,21 +122,21 @@ export default function Dashboard() {
         )}
       </main>
 
-      <footer className="border-t border-slate-200 bg-white/80 backdrop-blur px-4 sm:px-6 py-3 mt-auto">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-600">
+      <footer className="border-t border-white/10 bg-white/5 backdrop-blur-md px-4 sm:px-6 py-3 mt-auto">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-300">
           <div className="flex items-center gap-3 flex-wrap justify-center">
-            <span className="font-semibold text-slate-800">MaritimeVTS v1.0</span>
+            <span className="font-semibold text-white">MaritimeVTS v1.0</span>
             <span className="hidden sm:inline text-slate-400">·</span>
             <span>TCP Valparaíso</span>
             <span className="hidden sm:inline text-slate-400">·</span>
-            <span className="hidden lg:inline">IALA V-103 · IMO MSC.428(98) · Ley 21.719</span>
+            <span className="hidden lg:inline text-slate-400">IALA V-103 · IMO MSC.428(98) · Ley 21.719</span>
           </div>
           <div className="flex items-center gap-1.5">
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
             </span>
-            <span className="font-medium">Sistema operacional · IA Victoria activa</span>
+            <span className="font-medium text-slate-200">Sistema operacional · IA Victoria activa</span>
           </div>
         </div>
       </footer>

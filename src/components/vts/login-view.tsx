@@ -41,29 +41,29 @@ export default function LoginView() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row text-slate-800"
+    <div className="min-h-screen flex flex-col lg:flex-row text-white"
       style={{
-        background: 'linear-gradient(135deg, #dbeafe 0%, #e0f2fe 25%, #f0f9ff 55%, #ffffff 100%)',
+        background: 'linear-gradient(135deg, #0c4a6e 0%, #075985 25%, #0369a1 50%, #0284c7 100%)',
       }}
     >
       {/* Panel izquierdo — branding */}
       <div className="lg:w-1/2 flex flex-col justify-between p-8 lg:p-14 relative overflow-hidden">
         {/* Decoración suave */}
-        <div className="absolute inset-0 opacity-30 pointer-events-none">
+        <div className="absolute inset-0 opacity-40 pointer-events-none">
           <div className="absolute top-20 left-10 w-72 h-72 rounded-full blur-3xl"
-            style={{ background: 'radial-gradient(circle, #38bdf8 0%, transparent 70%)' }} />
+            style={{ background: 'radial-gradient(circle, #0ea5e9 0%, transparent 70%)' }} />
           <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full blur-3xl"
-            style={{ background: 'radial-gradient(circle, #60a5fa 0%, transparent 70%)' }} />
+            style={{ background: 'radial-gradient(circle, #0284c7 0%, transparent 70%)' }} />
         </div>
 
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center shadow-lg shadow-sky-500/30">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-500 flex items-center justify-center shadow-lg shadow-sky-900/40 border border-white/20">
               <Ship className="w-7 h-7 text-white" strokeWidth={2.5} />
             </div>
             <div>
-              <h1 className="text-2xl font-bold tracking-tight text-slate-900">MaritimeVTS</h1>
-              <p className="text-sm text-slate-600">Control de Tráfico Marítimo · TCP Valparaíso</p>
+              <h1 className="text-2xl font-bold tracking-tight text-white">MaritimeVTS</h1>
+              <p className="text-sm text-sky-200">Control de Tráfico Marítimo · TCP Valparaíso</p>
             </div>
           </div>
         </div>
@@ -74,16 +74,16 @@ export default function LoginView() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <Badge variant="outline" className="mb-5 bg-sky-50 text-sky-700 border-sky-200 px-3 py-1 text-xs">
+            <Badge variant="outline" className="mb-5 bg-white/10 text-sky-100 border-white/20 px-3 py-1 text-xs backdrop-blur">
               <ShieldCheck className="w-3.5 h-3.5 mr-1.5" /> Sistema conforme a IALA V-103 · Ley 21.719
             </Badge>
-            <h2 className="text-4xl lg:text-5xl font-bold leading-tight mb-5 text-slate-900">
+            <h2 className="text-4xl lg:text-5xl font-bold leading-tight mb-5 text-white">
               Plataforma Ejecutiva de<br/>
-              <span className="bg-gradient-to-r from-sky-600 to-blue-700 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-sky-300 to-cyan-200 bg-clip-text text-transparent">
                 Vigilancia Marítima
               </span>
             </h2>
-            <p className="text-slate-600 text-base lg:text-lg max-w-md leading-relaxed mb-6">
+            <p className="text-sky-100 text-base lg:text-lg max-w-md leading-relaxed mb-6">
               Sistema integrado AIS, Radar y Cámaras con fusión de sensores basada en IA.
               Diseñado para operadores con cualquier nivel de experiencia.
             </p>
@@ -94,22 +94,22 @@ export default function LoginView() {
                 { icon: Cctv, label: 'CCTV PTZ', desc: 'Visual en vivo' },
                 { icon: Waves, label: 'MET-OCEAN', desc: 'Clima marítimo' },
               ].map(({ icon: Icon, label, desc }) => (
-                <div key={label} className="rounded-xl bg-white/80 backdrop-blur border border-sky-100 p-3 flex flex-col items-center gap-1.5 shadow-sm">
-                  <Icon className="w-6 h-6 text-sky-600" strokeWidth={2} />
-                  <span className="text-xs font-semibold text-slate-700 text-center">{label}</span>
-                  <span className="text-[10px] text-slate-500 text-center">{desc}</span>
+                <div key={label} className="rounded-xl bg-white/10 backdrop-blur border border-white/15 p-3 flex flex-col items-center gap-1.5 shadow-lg">
+                  <Icon className="w-6 h-6 text-sky-200" strokeWidth={2} />
+                  <span className="text-xs font-semibold text-white text-center">{label}</span>
+                  <span className="text-[10px] text-sky-200/80 text-center">{desc}</span>
                 </div>
               ))}
             </div>
 
-            <div className="mt-8 flex items-center gap-2 text-sm text-slate-600">
-              <Anchor className="w-4 h-4 text-sky-600" />
+            <div className="mt-8 flex items-center gap-2 text-sm text-sky-100">
+              <Anchor className="w-4 h-4 text-sky-200" />
               <span>Puerto de Valparaíso · Terminal Pacífico Sur</span>
             </div>
           </motion.div>
         </div>
 
-        <div className="relative z-10 text-xs text-slate-500 space-y-1">
+        <div className="relative z-10 text-xs text-sky-200 space-y-1">
           <p className="flex items-center gap-2"><Lock className="w-3.5 h-3.5" /> Conexión cifrada TLS 1.3 · Ley 19.628 / 21.719</p>
           <p className="flex items-center gap-2"><Globe2 className="w-3.5 h-3.5" /> Operación en jurisdicción marítima chilena (12 mn)</p>
         </div>
@@ -123,7 +123,7 @@ export default function LoginView() {
           transition={{ duration: 0.5 }}
           className="w-full max-w-md"
         >
-          <Card className="bg-white/95 border-slate-200 backdrop-blur-xl shadow-2xl shadow-sky-900/10">
+          <Card className="bg-white border-white/40 backdrop-blur-xl shadow-2xl shadow-sky-950/40">
             <CardHeader className="space-y-2 pb-4">
               <CardTitle className="text-2xl text-slate-900">Acceso al Sistema</CardTitle>
               <CardDescription className="text-slate-600 text-base">
@@ -185,7 +185,7 @@ export default function LoginView() {
             </CardContent>
           </Card>
 
-          <div className="mt-6 text-center text-xs text-slate-500">
+          <div className="mt-6 text-center text-xs text-sky-200">
             <p>Prototipo demostrativo · TCP Valparaíso · v1.0</p>
             <p className="mt-1">© 2026 MaritimeVTS — Todos los derechos reservados</p>
           </div>
