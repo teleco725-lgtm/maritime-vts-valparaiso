@@ -15,6 +15,7 @@ import AnalyticsPanel from './analytics-panel'
 import ReportsPanel from './reports-panel'
 import CompliancePanel from './compliance-panel'
 import AIChatPanel from './ai-chat-panel'
+import RadioVTSPanel from './radio-vts-panel'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { LayoutDashboard, FileText, ShieldCheck } from 'lucide-react'
 
@@ -106,6 +107,9 @@ export default function Dashboard() {
                 <CameraPanel />
               </div>
             </div>
+
+            {/* Radio VTS — Walkie-Talkie Virtual con IA */}
+            <RadioVTSPanel />
           </motion.div>
         )}
 
