@@ -25,7 +25,12 @@ export default function Dashboard() {
   const user = useAuthStore((s) => s.user)
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+    <div
+      className="min-h-screen flex flex-col text-slate-100"
+      style={{
+        background: 'linear-gradient(135deg, #1a1d24 0%, #1b1f26 35%, #1c1e22 70%, #1d1c1f 100%)',
+      }}
+    >
       <Header
         activeView={activeView}
         onNavigate={(v) => { setActiveView(v); setMobileNavOpen(false) }}
@@ -117,8 +122,8 @@ export default function Dashboard() {
         )}
       </main>
 
-      <footer className="border-t border-slate-800 bg-slate-950 px-4 py-3 mt-auto">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] text-slate-500">
+      <footer className="border-t border-slate-800/60 px-4 py-3 mt-auto" style={{ background: 'rgba(15, 18, 22, 0.6)', backdropFilter: 'blur(8px)' }}>
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-[10px] text-slate-400">
           <div className="flex items-center gap-3 flex-wrap justify-center">
             <span>MaritimeVTS v1.0 · TCP Valparaíso</span>
             <span className="hidden sm:inline">·</span>

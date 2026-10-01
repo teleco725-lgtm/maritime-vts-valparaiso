@@ -41,12 +41,18 @@ export default function LoginView() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-100">
+    <div
+      className="min-h-screen flex flex-col lg:flex-row text-slate-100"
+      style={{
+        background:
+          'linear-gradient(135deg, #1a1d24 0%, #1b1f26 30%, #1c1e22 60%, #1d1c1f 100%)',
+      }}
+    >
       {/* Panel izquierdo — branding */}
       <div className="lg:w-1/2 flex flex-col justify-between p-8 lg:p-14 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20 pointer-events-none">
-          <div className="absolute top-20 left-10 w-72 h-72 rounded-full bg-cyan-500 blur-3xl" />
-          <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full bg-emerald-500 blur-3xl" />
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
+          <div className="absolute top-20 left-10 w-64 h-64 rounded-full blur-3xl" style={{ background: 'radial-gradient(circle, #06b6d4 0%, transparent 70%)' }} />
+          <div className="absolute bottom-10 right-10 w-80 h-80 rounded-full blur-3xl" style={{ background: 'radial-gradient(circle, #10b981 0%, transparent 70%)' }} />
         </div>
 
         <div className="relative z-10">
@@ -110,7 +116,7 @@ export default function LoginView() {
           transition={{ duration: 0.5 }}
           className="w-full max-w-md"
         >
-          <Card className="bg-slate-900/70 border-slate-700/70 backdrop-blur-xl shadow-2xl">
+          <Card className="border-slate-700/60 backdrop-blur-xl shadow-2xl" style={{ background: 'rgba(26, 30, 38, 0.65)' }}>
             <CardHeader className="space-y-1">
               <CardTitle className="text-2xl text-white">Acceso Ejecutivo</CardTitle>
               <CardDescription className="text-slate-400">
