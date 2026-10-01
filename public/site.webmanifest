@@ -1,0 +1,23 @@
+{
+  "name": "MaritimeVTS — TCP Valparaíso",
+  "short_name": "MaritimeVTS",
+  "description": "Plataforma ejecutiva de control de tráfico marítimo con integración AIS, Radar y Cámaras.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1a1d24",
+  "theme_color": "#06b6d4",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.svg",
+      "sizes": "180x180",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
