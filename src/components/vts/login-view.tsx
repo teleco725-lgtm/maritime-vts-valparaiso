@@ -123,7 +123,7 @@ export default function LoginView() {
           transition={{ duration: 0.5 }}
           className="w-full max-w-md"
         >
-          <Card className="bg-[#111927]/95 backdrop-blur-xl shadow-2xl shadow-black/50 border-slate-700/60">
+          <Card className="bg-[#1B3A5F]/95 backdrop-blur-xl shadow-2xl shadow-black/50 border-slate-700/60">
             <CardHeader className="space-y-2 pb-4">
               <CardTitle className="text-2xl text-slate-900">Acceso al Sistema</CardTitle>
               <CardDescription className="text-slate-600 text-base">
@@ -134,7 +134,7 @@ export default function LoginView() {
               <Button
                 onClick={() => handleLogin('microsoft')}
                 disabled={isAuthenticating}
-                className="w-full h-14 bg-[#1a2433] hover:bg-[#1a2433]/80 text-slate-200 font-medium text-base border border-slate-300 shadow-sm"
+                className="w-full h-14 bg-[#2A4D75] hover:bg-[#2A4D75]/80 text-slate-200 font-medium text-base border border-slate-300 shadow-sm"
               >
                 {isAuthenticating && activeProvider === 'microsoft' ? (
                   <Loader2 className="w-5 h-5 mr-3 animate-spin" />
@@ -147,7 +147,7 @@ export default function LoginView() {
               <Button
                 onClick={() => handleLogin('google')}
                 disabled={isAuthenticating}
-                className="w-full h-14 bg-[#1a2433] hover:bg-[#1a2433]/80 text-slate-200 font-medium text-base border border-slate-300 shadow-sm"
+                className="w-full h-14 bg-[#2A4D75] hover:bg-[#2A4D75]/80 text-slate-200 font-medium text-base border border-slate-300 shadow-sm"
               >
                 {isAuthenticating && activeProvider === 'google' ? (
                   <Loader2 className="w-5 h-5 mr-3 animate-spin" />

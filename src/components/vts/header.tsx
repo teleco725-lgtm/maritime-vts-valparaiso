@@ -33,7 +33,7 @@ export default function Header({ activeView, onNavigate, onToggleMobileNav, mobi
   const { user, logout } = useAuthStore()
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-700/50 bg-[#0A0F18]/85 backdrop-blur-xl shadow-lg shadow-black/40">
+    <header className="sticky top-0 z-40 border-b border-slate-700/50 bg-[#0E2A4D]/85 backdrop-blur-xl shadow-lg shadow-black/40">
       <div className="flex h-16 items-center justify-between px-4 sm:px-6">
         <div className="flex items-center gap-3">
           <button
@@ -62,7 +62,7 @@ export default function Header({ activeView, onNavigate, onToggleMobileNav, mobi
                 className={`px-4 py-2 text-sm font-medium rounded-lg transition-all ${
                   activeView === item.id
                     ? 'bg-[#00D2FF]/15 text-[#00D2FF] shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-[#1a2433]/50'
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-[#2A4D75]/50'
                 }`}
               >
                 {item.label}
@@ -101,7 +101,7 @@ export default function Header({ activeView, onNavigate, onToggleMobileNav, mobi
                 <ChevronDown className="w-4 h-4 text-slate-400" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-72 bg-[#111927] border-slate-700/60 shadow-xl shadow-black/50">
+            <DropdownMenuContent align="end" className="w-72 bg-[#1B3A5F] border-slate-700/60 shadow-xl shadow-black/50">
               <DropdownMenuLabel className="text-slate-100">
                 <div className="flex flex-col gap-1">
                   <span className="font-semibold text-base">{user?.name}</span>

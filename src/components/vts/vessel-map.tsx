@@ -17,9 +17,9 @@ export default function VesselMap({ selectedVessel, onSelectVessel }: Props) {
   const [showLabels, setShowLabels] = useState(true)
 
   return (
-    <div className="relative w-full h-full rounded-lg overflow-hidden border border-slate-700/60" style={{ background: 'radial-gradient(ellipse at center, #0A0F18 0%, #050810 100%)' }}>
+    <div className="relative w-full h-full rounded-lg overflow-hidden border border-slate-700/60" style={{ background: 'radial-gradient(ellipse at center, #0E2A4D 0%, #082140 100%)' }}>
       {/* Header */}
-      <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-4 py-2 bg-[#0A0F18]/85 backdrop-blur border-b border-slate-700/50">
+      <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-4 py-2 bg-[#0E2A4D]/85 backdrop-blur border-b border-slate-700/50">
         <div className="flex items-center gap-2 text-[#00FF66] text-sm font-medium">
           <Radar className="w-4 h-4" />
           <span>Mapa de Tráfico Marítimo — Bahía de Valparaíso</span>

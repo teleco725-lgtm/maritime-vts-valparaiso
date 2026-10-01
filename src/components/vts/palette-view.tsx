@@ -28,10 +28,10 @@ const paletteGroups: PaletteGroup[] = [
     icon: Waves,
     accentColor: '#94a3b8',
     colors: [
-      { hex: '#0A0F18', name: 'Fondo Base', description: 'Color principal del fondo. Casi negro con tinte azul. Evita fatiga visual en turnos largos.' },
-      { hex: '#111927', name: 'Capas / Tarjetas', description: 'Fondo de tarjetas, modales y secciones. Crea jerarquía visual sobre el fondo base.' },
-      { hex: '#1a2433', name: 'Sub-capas', description: 'Áreas internas, headers de panel, status bars. Sub-jerarquía dentro de tarjetas.' },
-      { hex: '#050810', name: 'Profundidad', description: 'Para sombras y gradientes. Crea sensación de profundidad en el radar.' },
+      { hex: '#0E2A4D', name: 'Fondo Base', description: 'Color principal del fondo. Celeste oscuro profundo. Evita fatiga visual en turnos largos.' },
+      { hex: '#1B3A5F', name: 'Capas / Tarjetas', description: 'Fondo de tarjetas, modales y secciones. Celeste oscuro medio. Crea jerarquía visual sobre el fondo base.' },
+      { hex: '#2A4D75', name: 'Sub-capas', description: 'Áreas internas, headers de panel, status bars. Celeste oscuro claro. Sub-jerarquía dentro de tarjetas.' },
+      { hex: '#082140', name: 'Profundidad', description: 'Para sombras y gradientes. Crea sensación de profundidad en el radar.' },
     ],
   },
   {
@@ -100,42 +100,42 @@ const suggestions: Suggestion[] = [
   {
     title: 'Modo Operacional Nocturno',
     context: 'Turno de noche en el centro VTS, ojos cansados',
-    colors: ['#0A0F18', '#111927', '#00FF66', '#00D2FF'],
+    colors: ['#0E2A4D', '#1B3A5F', '#00FF66', '#00D2FF'],
     explanation: 'Fondo muy oscuro para minimizar fatiga ocular, verde radar para tracks, cyan AIS para identificación. Evita tonos blancos que cansan en turnos de 12h.',
     icon: Eye,
   },
   {
     title: 'Presentación Ejecutiva',
     context: 'Reunión con stakeholder, board de Directemar',
-    colors: ['#0A0F18', '#003366', '#00D2FF', '#FFB800'],
+    colors: ['#0E2A4D', '#003366', '#00D2FF', '#FFB800'],
     explanation: 'Azul marino para autoridad, cyan AIS para destacar datos clave, ámbar para KPIs importantes. Combinación profesional y sobria.',
     icon: Palette,
   },
   {
     title: 'Modo Clima Marítimo',
     context: 'Visualización de MET-OCEAN, oleaje, viento',
-    colors: ['#0A0F18', '#003366', '#008080', '#2E8B57'],
+    colors: ['#0E2A4D', '#003366', '#008080', '#2E8B57'],
     explanation: 'Paleta del océano puro. Teal para mareas, sea green para corrientes. Coherente con el dominio marítimo.',
     icon: Waves,
   },
   {
     title: 'Modo Auditoría de Seguridad',
     context: 'Investigación de incidente, análisis post-evento',
-    colors: ['#0A0F18', '#111927', '#FF3B3B', '#FFB800'],
+    colors: ['#0E2A4D', '#1B3A5F', '#FF3B3B', '#FFB800'],
     explanation: 'Rojo y ámbar dominantes para severidad, mínimo distracción cromática. Permite al operador enfocarse en eventos críticos.',
     icon: ShieldAlert,
   },
   {
     title: 'Modo CCTV / Vigilancia',
     context: 'Monitoreo de cámaras PTZ y térmicas',
-    colors: ['#0A0F18', '#111927', '#00FF66', '#10B981'],
+    colors: ['#0E2A4D', '#1B3A5F', '#00FF66', '#10B981'],
     explanation: 'Verde radar y emerald para indicar cámaras operativas. Compatible con la visión nocturna del operador.',
     icon: Cctv,
   },
   {
     title: 'Modo Cumplimiento Legal',
     context: 'Vista para auditoría ANCI / Ley 21.719',
-    colors: ['#0A0F18', '#003366', '#00D2FF', '#10B981'],
+    colors: ['#0E2A4D', '#003366', '#00D2FF', '#10B981'],
     explanation: 'Azul marino + cyan AIS + verde OK. Transmite cumplimiento y estatus operacional claro. Listo para captura de pantalla en informes.',
     icon: Anchor,
   },
@@ -165,7 +165,7 @@ export default function PaletteView() {
       </div>
 
       {/* Tabs por categoría */}
-      <div className="flex flex-wrap gap-2 p-2 bg-[#111927] border border-slate-700/60 rounded-xl shadow-lg shadow-black/30">
+      <div className="flex flex-wrap gap-2 p-2 bg-[#1B3A5F] border border-slate-700/60 rounded-xl shadow-lg shadow-black/30">
         {paletteGroups.map((group) => {
           const Icon = group.icon
           const isActive = activeGroup === group.id
@@ -175,8 +175,8 @@ export default function PaletteView() {
               onClick={() => setActiveGroup(group.id)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
                 isActive
-                  ? 'bg-[#1a2433] text-slate-100 shadow-md border border-slate-600'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-[#1a2433]/50 border border-transparent'
+                  ? 'bg-[#2A4D75] text-slate-100 shadow-md border border-slate-600'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-[#2A4D75]/50 border border-transparent'
               }`}
             >
               <Icon className="w-4 h-4" style={{ color: isActive ? group.accentColor : undefined }} />
@@ -196,7 +196,7 @@ export default function PaletteView() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Card className="bg-[#111927] border-slate-700/60 shadow-lg shadow-black/30">
+            <Card className="bg-[#1B3A5F] border-slate-700/60 shadow-lg shadow-black/30">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg sm:text-xl text-slate-100 flex items-center gap-2">
                   <Icon className="w-5 h-5" style={{ color: group.accentColor }} />
@@ -213,7 +213,7 @@ export default function PaletteView() {
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: i * 0.05 }}
                       onClick={() => copyToClipboard(color.hex)}
-                      className="group text-left p-3 rounded-lg bg-[#1a2433] border border-slate-700/40 hover:border-slate-600 transition-all cursor-pointer"
+                      className="group text-left p-3 rounded-lg bg-[#2A4D75] border border-slate-700/40 hover:border-slate-600 transition-all cursor-pointer"
                     >
                       <div className="flex items-center gap-3 mb-2">
                         <div
@@ -256,7 +256,7 @@ export default function PaletteView() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
               >
-                <Card className="bg-[#111927] border-slate-700/60 shadow-lg shadow-black/30 hover:border-slate-600 transition-all h-full">
+                <Card className="bg-[#1B3A5F] border-slate-700/60 shadow-lg shadow-black/30 hover:border-slate-600 transition-all h-full">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-base text-slate-100 flex items-center gap-2">
                       <Icon className="w-4 h-4 text-[#00D2FF]" />
@@ -281,7 +281,7 @@ export default function PaletteView() {
                       {s.colors.map((c) => (
                         <span
                           key={c}
-                          className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#1a2433] border border-slate-700/40 text-slate-400"
+                          className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#2A4D75] border border-slate-700/40 text-slate-400"
                         >
                           {c}
                         </span>
@@ -298,7 +298,7 @@ export default function PaletteView() {
       </div>
 
       {/* Footer info */}
-      <Card className="bg-[#111927] border-slate-700/60 shadow-lg shadow-black/30">
+      <Card className="bg-[#1B3A5F] border-slate-700/60 shadow-lg shadow-black/30">
         <CardContent className="p-4">
           <div className="flex items-start gap-3">
             <div className="w-8 h-8 rounded-lg bg-[#00D2FF]/10 flex items-center justify-center flex-shrink-0">

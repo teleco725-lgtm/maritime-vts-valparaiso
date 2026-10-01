@@ -27,7 +27,7 @@ export default function AlertsPanel() {
   const items = initialAlerts.filter((a) => filter === 'all' || a.status === filter)
 
   return (
-    <div className="flex flex-col h-full bg-[#111927] border border-slate-700/60 rounded-xl overflow-hidden shadow-lg shadow-black/30">
+    <div className="flex flex-col h-full bg-[#1B3A5F] border border-slate-700/60 rounded-xl overflow-hidden shadow-lg shadow-black/30">
       <div className="p-4 border-b border-slate-700/50 bg-[#0f1620]">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2 text-[#00FF66] text-base font-semibold">
@@ -51,7 +51,7 @@ export default function AlertsPanel() {
               className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
                 filter === f.id
                   ? 'bg-sky-600 text-white shadow-sm'
-                  : 'bg-[#1a2433] text-slate-300 border border-slate-700/60 hover:border-[#00FF66]/40 hover:text-[#00FF66]'
+                  : 'bg-[#2A4D75] text-slate-300 border border-slate-700/60 hover:border-[#00FF66]/40 hover:text-[#00FF66]'
               }`}
             >
               {f.label}

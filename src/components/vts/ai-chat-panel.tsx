@@ -217,7 +217,7 @@ export default function AIChatPanel() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.95 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed bottom-6 right-6 z-50 w-[calc(100vw-3rem)] sm:w-[400px] md:w-[440px] h-[600px] max-h-[calc(100vh-3rem)] flex flex-col border border-slate-700/60 rounded-2xl shadow-2xl overflow-hidden bg-[#111927]/95 backdrop-blur-xl"
+            className="fixed bottom-6 right-6 z-50 w-[calc(100vw-3rem)] sm:w-[400px] md:w-[440px] h-[600px] max-h-[calc(100vh-3rem)] flex flex-col border border-slate-700/60 rounded-2xl shadow-2xl overflow-hidden bg-[#1B3A5F]/95 backdrop-blur-xl"
             style={{
               boxShadow: '0 20px 25px -5px rgba(0,0,0,0.15), 0 10px 10px -5px rgba(0,0,0,0.04)',
             }}
@@ -231,7 +231,7 @@ export default function AIChatPanel() {
                 <div className="min-w-0">
                   <div className="text-base font-bold text-slate-100 flex items-center gap-1.5">
                     Victoria
-                    <Badge variant="outline" className="bg-[#1a2433] text-[#00FF66] border-slate-700/50 text-[10px] px-1.5 py-0">
+                    <Badge variant="outline" className="bg-[#2A4D75] text-[#00FF66] border-slate-700/50 text-[10px] px-1.5 py-0">
                       IA
                     </Badge>
                   </div>
@@ -330,10 +330,10 @@ export default function AIChatPanel() {
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: i * 0.05 }}
                           onClick={() => send(p.text)}
-                          className={`w-full flex items-center gap-2 p-2.5 rounded-lg border hover:bg-[#1a2433] transition-colors text-left ${
+                          className={`w-full flex items-center gap-2 p-2.5 rounded-lg border hover:bg-[#2A4D75] transition-colors text-left ${
                             suggestionTab === 'ciberseguridad'
                               ? 'border-red-100 hover:border-red-300 bg-red-50/30'
-                              : 'border-slate-700/50/60 hover:border-sky-300 bg-[#1a2433]'
+                              : 'border-slate-700/50/60 hover:border-sky-300 bg-[#2A4D75]'
                           }`}
                         >
                           <Icon className={`w-4 h-4 flex-shrink-0 ${p.color}`} />
@@ -352,7 +352,7 @@ export default function AIChatPanel() {
                   animate={{ opacity: 1, y: 0 }}
                   className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <div className={`max-w-[88%] ${msg.role === 'user' ? 'bg-sky-600 text-white border-sky-600' : 'bg-[#1a2433] border-slate-700/50'} border rounded-2xl p-3 ${msg.role === 'user' ? 'rounded-tr-sm' : 'rounded-tl-sm'}`}>
+                  <div className={`max-w-[88%] ${msg.role === 'user' ? 'bg-sky-600 text-white border-sky-600' : 'bg-[#2A4D75] border-slate-700/50'} border rounded-2xl p-3 ${msg.role === 'user' ? 'rounded-tr-sm' : 'rounded-tl-sm'}`}>
                     {msg.role === 'assistant' && (
                       <div className="flex items-center gap-1.5 mb-1.5 text-xs text-[#00FF66] font-semibold">
                         <Sparkles className="w-3 h-3" />
@@ -391,7 +391,7 @@ export default function AIChatPanel() {
                   animate={{ opacity: 1 }}
                   className="flex justify-start"
                 >
-                  <div className="bg-[#1a2433] border border-slate-700/50 rounded-2xl rounded-tl-sm p-3">
+                  <div className="bg-[#2A4D75] border border-slate-700/50 rounded-2xl rounded-tl-sm p-3">
                     <div className="flex items-center gap-2">
                       <Loader2 className="w-4 h-4 animate-spin text-[#00D2FF]" />
                       <span className="text-sm text-slate-600">Consultando fuentes...</span>
@@ -420,7 +420,7 @@ export default function AIChatPanel() {
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Escribe tu consulta..."
                   disabled={loading}
-                  className="flex-1 h-11 bg-[#1a2433] backdrop-blur border-slate-700/50 text-slate-200 text-sm placeholder:text-slate-500"
+                  className="flex-1 h-11 bg-[#2A4D75] backdrop-blur border-slate-700/50 text-slate-200 text-sm placeholder:text-slate-500"
                 />
                 <Button
                   type="submit"
