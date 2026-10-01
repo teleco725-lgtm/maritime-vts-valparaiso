@@ -11,7 +11,8 @@ import { toast } from 'sonner'
 import {
   Brain, Send, X, Sparkles, Globe2, Database, Activity,
   MessageSquare, Loader2, Trash2, ChevronDown, ChevronUp,
-  Ship, AlertTriangle, FileText, ShieldCheck, Mic
+  Ship, AlertTriangle, FileText, ShieldCheck, Mic,
+  ShieldAlert, Lock, KeyRound, FileWarning, Network
 } from 'lucide-react'
 
 interface Message {
@@ -27,12 +28,87 @@ interface Message {
 }
 
 const SUGGESTED_PROMPTS = [
-  { icon: Ship, text: '¿Qué buques hay en zona VTS ahora?', color: 'text-cyan-400' },
-  { icon: AlertTriangle, text: '¿Cuáles son las alertas activas críticas?', color: 'text-amber-400' },
-  { icon: Database, text: '¿Cuántos contenedores hay en patio TPS?', color: 'text-emerald-400' },
-  { icon: Globe2, text: '¿Cómo está el clima marítimo en Valparaíso hoy?', color: 'text-sky-400' },
-  { icon: ShieldCheck, text: '¿Cumple el sistema con la Ley 21.719?', color: 'text-violet-400' },
-  { icon: FileText, text: 'Genera mensaje SMCP para buque en aproximación', color: 'text-pink-400' },
+  { icon: Ship, text: '¿Qué buques hay en zona VTS ahora?', color: 'text-cyan-400', category: 'operacional' },
+  { icon: AlertTriangle, text: '¿Cuáles son las alertas activas críticas?', color: 'text-amber-400', category: 'operacional' },
+  { icon: Database, text: '¿Cuántos contenedores hay en patio TPS?', color: 'text-emerald-400', category: 'operacional' },
+  { icon: Globe2, text: '¿Cómo está el clima marítimo en Valparaíso hoy?', color: 'text-sky-400', category: 'operacional' },
+  { icon: ShieldCheck, text: '¿Cumple el sistema con la Ley 21.719?', color: 'text-violet-400', category: 'ciberseguridad' },
+  { icon: FileText, text: 'Genera mensaje SMCP para buque en aproximación', color: 'text-pink-400', category: 'operacional' },
+]
+
+const AUDIT_PROMPTS = [
+  {
+    icon: ShieldAlert,
+    text: '¿Cuáles son los hallazgos críticos de la auditoría de seguridad?',
+    color: 'text-red-400',
+    category: 'ciberseguridad',
+  },
+  {
+    icon: Lock,
+    text: '¿Qué headers HTTP de seguridad faltan en el sistema?',
+    color: 'text-orange-400',
+    category: 'ciberseguridad',
+  },
+  {
+    icon: KeyRound,
+    text: '¿Cómo implemento autenticación OAuth real con NextAuth?',
+    color: 'text-amber-400',
+    category: 'ciberseguridad',
+  },
+  {
+    icon: Activity,
+    text: '¿Qué endpoints API están sin autenticación ni rate limiting?',
+    color: 'text-yellow-400',
+    category: 'ciberseguridad',
+  },
+  {
+    icon: Database,
+    text: '¿Cómo cumplo la Ley 19.628 sobre protección de datos personales?',
+    color: 'text-lime-400',
+    category: 'ciberseguridad',
+  },
+  {
+    icon: FileWarning,
+    text: 'Dame el plan de remediación prioritario para subir el score de cumplimiento',
+    color: 'text-green-400',
+    category: 'ciberseguridad',
+  },
+  {
+    icon: Network,
+    text: '¿Cómo segmento redes OT/IT conforme a IEC 62443?',
+    color: 'text-emerald-400',
+    category: 'ciberseguridad',
+  },
+  {
+    icon: ShieldCheck,
+    text: '¿Qué necesito para certificar ISO/IEC 27001 en el VTS?',
+    color: 'text-teal-400',
+    category: 'ciberseguridad',
+  },
+  {
+    icon: AlertTriangle,
+    text: '¿Cómo notifico un incidente a la ANCI conforme al Art. 16 Ley 21.719?',
+    color: 'text-cyan-400',
+    category: 'ciberseguridad',
+  },
+  {
+    icon: FileText,
+    text: 'Genera plantilla de respuesta a incidente cibernético para CSIRT',
+    color: 'text-sky-400',
+    category: 'ciberseguridad',
+  },
+  {
+    icon: Lock,
+    text: '¿Cómo cifro la base de datos TPS en reposo y en tránsito?',
+    color: 'text-blue-400',
+    category: 'ciberseguridad',
+  },
+  {
+    icon: Activity,
+    text: '¿Qué derechos ARCO debo implementar por la Ley 19.628?',
+    color: 'text-indigo-400',
+    category: 'ciberseguridad',
+  },
 ]
 
 export default function AIChatPanel() {
@@ -40,6 +116,7 @@ export default function AIChatPanel() {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const [suggestionTab, setSuggestionTab] = useState<'operacional' | 'ciberseguridad'>('operacional')
   const scrollRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const user = useAuthStore((s) => s.user)
@@ -154,7 +231,7 @@ export default function AIChatPanel() {
                 </div>
                 <div className="min-w-0">
                   <div className="text-sm font-semibold text-slate-100 flex items-center gap-1.5">
-                    MarÍA
+                    Victoria
                     <Badge variant="outline" className="bg-cyan-500/10 text-cyan-300 border-cyan-500/30 text-[9px] px-1 py-0">
                       AI
                     </Badge>
@@ -210,7 +287,7 @@ export default function AIChatPanel() {
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center mx-auto mb-2">
                       <Brain className="w-6 h-6 text-white" />
                     </div>
-                    <div className="text-sm font-medium text-slate-200">Hola, soy MarÍA</div>
+                    <div className="text-sm font-medium text-slate-200">Hola, soy Victoria</div>
                     <div className="text-xs text-slate-500 mt-1 px-2">
                       Asistente de IA del VTS. Tengo acceso al dashboard en vivo,
                       la base de datos TPS y búsqueda web.
@@ -218,22 +295,50 @@ export default function AIChatPanel() {
                   </motion.div>
 
                   <div className="space-y-1.5">
-                    <div className="text-[10px] text-slate-500 uppercase tracking-wider px-1">
-                      Sugerencias
+                    <div className="flex items-center gap-1 mb-2 p-1 bg-slate-900/60 rounded-md border border-slate-800">
+                      <button
+                        onClick={() => setSuggestionTab('operacional')}
+                        className={`flex-1 flex items-center justify-center gap-1 px-2 py-1 rounded text-[10px] font-medium transition-colors ${
+                          suggestionTab === 'operacional'
+                            ? 'bg-cyan-500/20 text-cyan-300'
+                            : 'text-slate-400 hover:text-slate-200'
+                        }`}
+                      >
+                        <Ship className="w-3 h-3" /> Operacional
+                      </button>
+                      <button
+                        onClick={() => setSuggestionTab('ciberseguridad')}
+                        className={`flex-1 flex items-center justify-center gap-1 px-2 py-1 rounded text-[10px] font-medium transition-colors ${
+                          suggestionTab === 'ciberseguridad'
+                            ? 'bg-red-500/20 text-red-300'
+                            : 'text-slate-400 hover:text-slate-200'
+                        }`}
+                      >
+                        <ShieldCheck className="w-3 h-3" /> Ciberseguridad
+                        <span className="ml-1 px-1 py-0 rounded bg-red-500/20 text-red-300 text-[8px]">12</span>
+                      </button>
                     </div>
-                    {SUGGESTED_PROMPTS.map((p, i) => {
+
+                    <div className="text-[10px] text-slate-500 uppercase tracking-wider px-1 mb-1">
+                      {suggestionTab === 'operacional' ? 'Sugerencias Operacionales' : 'Sugerencias de Auditoría'}
+                    </div>
+                    {(suggestionTab === 'operacional' ? SUGGESTED_PROMPTS : AUDIT_PROMPTS).map((p, i) => {
                       const Icon = p.icon
                       return (
                         <motion.button
-                          key={i}
+                          key={`${suggestionTab}-${i}`}
                           initial={{ opacity: 0, x: -10 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: i * 0.05 }}
                           onClick={() => send(p.text)}
-                          className="w-full flex items-center gap-2 p-2 rounded-md bg-slate-900/60 border border-slate-800 hover:border-slate-700 hover:bg-slate-800/60 transition-colors text-left"
+                          className={`w-full flex items-center gap-2 p-2 rounded-md bg-slate-900/60 border hover:bg-slate-800/60 transition-colors text-left ${
+                            suggestionTab === 'ciberseguridad'
+                              ? 'border-red-900/40 hover:border-red-700/50'
+                              : 'border-slate-800 hover:border-slate-700'
+                          }`}
                         >
                           <Icon className={`w-3.5 h-3.5 flex-shrink-0 ${p.color}`} />
-                          <span className="text-xs text-slate-300 truncate">{p.text}</span>
+                          <span className="text-xs text-slate-300 line-clamp-2">{p.text}</span>
                         </motion.button>
                       )
                     })}
@@ -252,7 +357,7 @@ export default function AIChatPanel() {
                     {msg.role === 'assistant' && (
                       <div className="flex items-center gap-1.5 mb-1 text-[9px] text-cyan-400">
                         <Sparkles className="w-2.5 h-2.5" />
-                        MarÍA
+                        Victoria
                       </div>
                     )}
                     <div className={`text-xs leading-relaxed whitespace-pre-wrap ${msg.role === 'user' ? 'text-slate-200' : 'text-slate-300'}`}>
@@ -328,7 +433,7 @@ export default function AIChatPanel() {
                 </Button>
               </form>
               <div className="text-[9px] text-slate-600 mt-1.5 text-center">
-                MarÍA accede a Internet · DB TPS · Dashboard VTS en tiempo real
+                Victoria accede a Internet · DB TPS · Dashboard VTS en tiempo real
               </div>
             </div>
 
