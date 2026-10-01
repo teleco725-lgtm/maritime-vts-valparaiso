@@ -52,3 +52,14 @@ prompt
 server.log
 # Skills directory
 /skills/
+
+# Marítimo VTS — archivos generados localmente
+/db/*.db
+/db/*.db-journal
+/download/
+/upload/
+/agent-ctx/
+/worklog.md
+*.tar
+audit-findings.json
+*zscripts*
