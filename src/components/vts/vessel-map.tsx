@@ -168,7 +168,15 @@ export default function VesselMap({ selectedVessel, onSelectVessel }: Props) {
           const isSelected = selectedVessel?.id === v.id
           const isRadioRecipient = activeRecipient?.mmsi === v.mmsi
           return (
-            <g key={v.id} className="cursor-pointer" onClick={() => onSelectVessel(v)}>
+            <g
+              key={v.id}
+              className="cursor-pointer"
+              onClick={() => {
+                // Click en buque = seleccionarlo para detalle Y setearlo como destinatario del radio
+                onSelectVessel(v)
+                setRecipient(v)
+              }}
+            >
               {/* Halo de selección */}
               {isSelected && (
                 <circle cx={v.x} cy={v.y} r="14" fill="none" stroke="#00D2FF" strokeWidth="2" opacity="0.8">

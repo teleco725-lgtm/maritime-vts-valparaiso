@@ -3,6 +3,7 @@
 import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { vessels, getVesselStatusColor, getVesselTypeLabel, getStatusLabel, type Vessel } from '@/lib/vts/data'
+import { useRadioStore } from '@/store/radio-store'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { Search, Ship, Anchor, Navigation, Gauge, MapPin, Clock } from 'lucide-react'
@@ -15,6 +16,7 @@ interface Props {
 export default function VesselTable({ selectedVessel, onSelectVessel }: Props) {
   const [query, setQuery] = useState('')
   const [filter, setFilter] = useState<'all' | Vessel['status']>('all')
+  const { setRecipient } = useRadioStore()
 
   const filtered = useMemo(() => {
     return vessels.filter((v) => {
@@ -78,7 +80,11 @@ export default function VesselTable({ selectedVessel, onSelectVessel }: Props) {
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                onClick={() => onSelectVessel(v)}
+                onClick={() => {
+                  // Click en buque = seleccionarlo para detalle Y setearlo como destinatario del radio
+                  onSelectVessel(v)
+                  setRecipient(v)
+                }}
                 className={`border-b border-slate-100 p-3 cursor-pointer transition-colors ${
                   isSelected ? 'bg-[#00D2FF]/10 border-l-4 border-l-sky-500' : 'hover:bg-[var(--vts-subcard)]'
                 }`}
