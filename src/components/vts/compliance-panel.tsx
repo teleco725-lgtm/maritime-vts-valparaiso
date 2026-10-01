@@ -77,7 +77,7 @@ export default function CompliancePanel() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.05 }}
           >
-            <Card className="bg-white border-slate-700/50 shadow-sm">
+            <Card className="bg-[#111927] border-slate-700/60 shadow-lg shadow-black/30">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs text-slate-500">{s.label}</span>
@@ -102,7 +102,7 @@ export default function CompliancePanel() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
             >
-              <Card className="bg-white border-slate-700/50 shadow-sm h-full">
+              <Card className="bg-[#111927] border-slate-700/60 shadow-lg shadow-black/30 h-full">
                 <CardHeader className="pb-3">
                   <CardTitle className="text-[#00FF66] text-base flex items-center gap-2">
                     <Icon className="w-4 h-4" />
@@ -129,7 +129,7 @@ export default function CompliancePanel() {
                         <div className="text-[10px] text-slate-500">{item.detail}</div>
                       </div>
                       {item.status === 'partial' && (
-                        <Badge variant="outline" className="bg-amber-500/10 text-amber-300 border-amber-500/30 text-[9px]">
+                        <Badge variant="outline" className="bg-amber-500/150/10 text-amber-300 border-amber-500/30 text-[9px]">
                           Parcial
                         </Badge>
                       )}
@@ -143,7 +143,7 @@ export default function CompliancePanel() {
       </div>
 
       {/* Auditorías recientes */}
-      <Card className="bg-white border-slate-700/50 shadow-sm">
+      <Card className="bg-[#111927] border-slate-700/60 shadow-lg shadow-black/30">
         <CardHeader>
           <CardTitle className="text-[#00FF66] text-base flex items-center gap-2">
             <FileText className="w-4 h-4" />
@@ -172,7 +172,7 @@ export default function CompliancePanel() {
                     <td className="py-2.5 text-slate-700">{a.auditor}</td>
                     <td className="py-2.5 text-slate-500">{a.scope}</td>
                     <td className="py-2.5">
-                      <Badge variant="outline" className="bg-emerald-500/10 text-emerald-300 border-emerald-500/30">
+                      <Badge variant="outline" className="bg-[#00FF66]/150/10 text-emerald-300 border-emerald-500/30">
                         {a.result}
                       </Badge>
                     </td>

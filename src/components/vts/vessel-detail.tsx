@@ -12,7 +12,7 @@ interface Props {
 export default function VesselDetail({ vessel }: Props) {
   if (!vessel) {
     return (
-      <div className="h-full flex items-center justify-center text-slate-500 text-sm text-center p-4 bg-white border border-slate-700/50 rounded-xl shadow-sm">
+      <div className="h-full flex items-center justify-center text-slate-500 text-sm text-center p-4 bg-[#111927] border border-slate-700/60 rounded-xl shadow-lg shadow-black/30">
         <div>
           <Ship className="w-12 h-12 mx-auto mb-3 opacity-30 text-slate-400" />
           <div className="font-medium text-slate-600 mb-1">Seleccione un buque</div>
@@ -38,7 +38,7 @@ export default function VesselDetail({ vessel }: Props) {
   ]
 
   return (
-    <div className="h-full flex flex-col bg-white border border-slate-700/50 rounded-xl overflow-hidden shadow-sm">
+    <div className="h-full flex flex-col bg-[#111927] border border-slate-700/60 rounded-xl overflow-hidden shadow-lg shadow-black/30">
       <div className="p-4 border-b border-slate-700/50 bg-[#0f1620]">
         <div className="flex items-center justify-between mb-1">
           <span className="font-bold text-slate-100 text-base truncate">{vessel.name}</span>
@@ -88,16 +88,16 @@ export default function VesselDetail({ vessel }: Props) {
                 initial={{ width: 0 }}
                 animate={{ width: `${vessel.confidence}%` }}
                 transition={{ duration: 0.6 }}
-                className={vessel.confidence > 98 ? 'bg-emerald-500' : vessel.confidence > 95 ? 'bg-amber-500' : 'bg-red-500'}
+                className={vessel.confidence > 98 ? 'bg-[#00FF66]/150' : vessel.confidence > 95 ? 'bg-amber-500/150' : 'bg-red-500'}
               />
             </div>
             <div className="text-xs text-slate-500 mt-1.5">Fusión Kalman + LSTM · actualizado {vessel.lastUpdate}</div>
           </div>
 
           {/* Registro */}
-          <div className="mt-3 flex items-center justify-between text-sm bg-sky-50 rounded-lg px-3 py-2 border border-sky-100">
+          <div className="mt-3 flex items-center justify-between text-sm bg-[#00D2FF]/10 rounded-lg px-3 py-2 border border-sky-100">
             <span className="text-slate-600">Registro:</span>
-            <Badge variant="outline" className="bg-white text-slate-700 border-slate-300">
+            <Badge variant="outline" className="bg-[#1a2433] text-slate-300 border-slate-700/60">
               {vessel.registry}
             </Badge>
           </div>

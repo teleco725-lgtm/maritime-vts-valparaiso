@@ -90,7 +90,7 @@ export default function ReportsPanel({ user }: Props) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
       {/* Configuración */}
-      <Card className="bg-white border-slate-700/50 shadow-sm">
+      <Card className="bg-[#111927] border-slate-700/60 shadow-lg shadow-black/30">
         <CardHeader className="pb-3">
           <CardTitle className="text-[#00FF66] text-base flex items-center gap-2">
             <FileText className="w-4 h-4" />
@@ -128,7 +128,7 @@ export default function ReportsPanel({ user }: Props) {
           <div>
             <Label className="text-slate-700 text-xs mb-1.5">Tipo de Informe</Label>
             <Select value={reportType} onValueChange={setReportType}>
-              <SelectTrigger className="bg-white border-slate-300 text-slate-700">
+              <SelectTrigger className="bg-[#1a2433] border-slate-700/60 text-slate-200">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent className="bg-[#1a2433] border-slate-300">
@@ -151,7 +151,7 @@ export default function ReportsPanel({ user }: Props) {
                 type="date"
                 value={dateFrom}
                 onChange={(e) => setDateFrom(e.target.value)}
-                className="bg-white border-slate-300 text-slate-700 text-sm"
+                className="bg-[#1a2433] border-slate-700/60 text-slate-200 text-sm"
               />
             </div>
             <div>
@@ -162,7 +162,7 @@ export default function ReportsPanel({ user }: Props) {
                 type="date"
                 value={dateTo}
                 onChange={(e) => setDateTo(e.target.value)}
-                className="bg-white border-slate-300 text-slate-700 text-sm"
+                className="bg-[#1a2433] border-slate-700/60 text-slate-200 text-sm"
               />
             </div>
           </div>
@@ -177,7 +177,7 @@ export default function ReportsPanel({ user }: Props) {
                   onClick={() => toggleSection(s.id)}
                   className={`flex items-center gap-2 px-3 py-1.5 rounded text-xs border transition-colors ${
                     includeSections.includes(s.id)
-                      ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-200'
+                      ? 'border-emerald-500/40 bg-[#00FF66]/150/10 text-emerald-200'
                       : 'border-slate-300 bg-[#1a2433]/50 text-slate-500'
                   }`}
                 >
@@ -211,7 +211,7 @@ export default function ReportsPanel({ user }: Props) {
             <motion.div
               initial={{ opacity: 0, y: 5 }}
               animate={{ opacity: 1, y: 0 }}
-              className="flex items-center gap-2 text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 rounded p-2"
+              className="flex items-center gap-2 text-xs text-emerald-400 bg-[#00FF66]/150/10 border border-emerald-500/30 rounded p-2"
             >
               <CheckCircle2 className="w-4 h-4" />
               Informe generado y descargado correctamente.
@@ -221,7 +221,7 @@ export default function ReportsPanel({ user }: Props) {
       </Card>
 
       {/* Vista previa */}
-      <Card className="bg-white border-slate-700/50 shadow-sm">
+      <Card className="bg-[#111927] border-slate-700/60 shadow-lg shadow-black/30">
         <CardHeader className="pb-3">
           <CardTitle className="text-[#00FF66] text-base">Vista Previa del Informe</CardTitle>
         </CardHeader>

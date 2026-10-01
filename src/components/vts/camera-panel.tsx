@@ -11,14 +11,14 @@ export default function CameraPanel() {
   const selectedCam = cameraFeeds.find((c) => c.id === selected)!
 
   return (
-    <div className="flex flex-col h-full bg-white border border-slate-700/50 rounded-xl overflow-hidden shadow-sm">
+    <div className="flex flex-col h-full bg-[#111927] border border-slate-700/60 rounded-xl overflow-hidden shadow-lg shadow-black/30">
       <div className="p-4 border-b border-slate-700/50 bg-[#0f1620]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-[#00FF66] text-base font-semibold">
             <Cctv className="w-5 h-5" />
             <span>CCTV en Vivo</span>
           </div>
-          <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200 text-xs px-2 py-0.5">
+          <Badge variant="outline" className="bg-[#00FF66]/15 text-emerald-700 border-emerald-200 text-xs px-2 py-0.5">
             {cameraFeeds.filter((c) => c.online).length} en línea
           </Badge>
         </div>
@@ -77,7 +77,7 @@ export default function CameraPanel() {
             className={`flex items-center gap-1 px-2 py-2 rounded-lg text-xs transition-colors border font-medium ${
               selected === cam.id
                 ? 'bg-sky-600 text-white border-sky-600 shadow-sm'
-                : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'
+                : 'bg-[#1a2433] text-slate-300 border border-slate-700/60 hover:border-[#00FF66]/40 hover:text-[#00FF66]'
             }`}
             title={cam.name}
           >

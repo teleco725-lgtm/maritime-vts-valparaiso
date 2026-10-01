@@ -41,7 +41,7 @@ export default function Dashboard() {
 
       {/* Mobile nav sheet */}
       <Sheet open={mobileNavOpen} onOpenChange={setMobileNavOpen}>
-        <SheetContent side="left" className="w-72 bg-sky-50/90 backdrop-blur-xl border-slate-700/60">
+        <SheetContent side="left" className="w-72 bg-[#111927]/95 backdrop-blur-xl border-slate-700/60">
           <div className="py-4">
             <div className="text-xs text-slate-500 uppercase tracking-wider px-3 mb-2 font-semibold">Navegación</div>
             {[

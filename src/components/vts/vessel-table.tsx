@@ -26,7 +26,7 @@ export default function VesselTable({ selectedVessel, onSelectVessel }: Props) {
   }, [query, filter])
 
   return (
-    <div className="flex flex-col h-full bg-white border border-slate-700/50 rounded-xl overflow-hidden shadow-sm">
+    <div className="flex flex-col h-full bg-[#111927] border border-slate-700/60 rounded-xl overflow-hidden shadow-lg shadow-black/30">
       <div className="p-4 border-b border-slate-700/50 space-y-3 bg-[#0f1620]">
         <div className="flex items-center gap-2 text-[#00FF66] text-base font-semibold">
           <Ship className="w-5 h-5" />
@@ -41,7 +41,7 @@ export default function VesselTable({ selectedVessel, onSelectVessel }: Props) {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Buscar por nombre, MMSI o IMO..."
-            className="pl-10 h-10 bg-white border-slate-300 text-slate-200 text-sm"
+            className="pl-10 h-10 bg-[#1a2433] border-slate-700/60 text-slate-200 text-sm"
           />
         </div>
         <div className="flex flex-wrap gap-1.5">
@@ -58,7 +58,7 @@ export default function VesselTable({ selectedVessel, onSelectVessel }: Props) {
               className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
                 filter === f.id
                   ? 'bg-sky-600 text-white shadow-sm'
-                  : 'bg-white text-slate-600 border border-slate-300 hover:bg-slate-50'
+                  : 'bg-[#1a2433] text-slate-300 border border-slate-700/60 hover:border-[#00FF66]/40 hover:text-[#00FF66]'
               }`}
             >
               {f.label}
@@ -80,7 +80,7 @@ export default function VesselTable({ selectedVessel, onSelectVessel }: Props) {
                 exit={{ opacity: 0 }}
                 onClick={() => onSelectVessel(v)}
                 className={`border-b border-slate-100 p-3 cursor-pointer transition-colors ${
-                  isSelected ? 'bg-sky-50 border-l-4 border-l-sky-500' : 'hover:bg-slate-50'
+                  isSelected ? 'bg-[#00D2FF]/10 border-l-4 border-l-sky-500' : 'hover:bg-[#1a2433]'
                 }`}
               >
                 <div className="flex items-start justify-between gap-2 mb-1.5">
@@ -120,7 +120,7 @@ export default function VesselTable({ selectedVessel, onSelectVessel }: Props) {
                   </div>
                 </div>
                 <div className="flex items-center justify-between mt-2">
-                  <Badge variant="outline" className="text-[10px] bg-white border-slate-300 text-slate-600">
+                  <Badge variant="outline" className="text-[10px] bg-[#1a2433] border-slate-700/60 text-slate-300">
                     {v.registry}
                   </Badge>
                   <div className="flex items-center gap-1 text-xs">

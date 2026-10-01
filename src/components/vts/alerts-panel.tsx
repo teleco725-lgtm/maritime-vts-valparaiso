@@ -7,10 +7,10 @@ import { Badge } from '@/components/ui/badge'
 import { AlertTriangle, ShieldAlert, ShieldCheck, Activity, Wind, Radio, Map } from 'lucide-react'
 
 const severityConfig: Record<AlertItem['severity'], { color: string; bg: string; border: string; label: string; text: string }> = {
-  critical: { color: 'text-red-600', bg: 'bg-red-50', border: 'border-red-200', label: 'CRÍTICA', text: 'text-red-700' },
-  high: { color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-200', label: 'ALTA', text: 'text-amber-700' },
-  medium: { color: 'text-yellow-700', bg: 'bg-yellow-50', border: 'border-yellow-200', label: 'MEDIA', text: 'text-yellow-800' },
-  low: { color: 'text-[#00FF66]', bg: 'bg-sky-50', border: 'border-slate-700/50', label: 'BAJA', text: 'text-sky-800' },
+  critical: { color: 'text-red-600', bg: 'bg-red-500/10', border: 'border-red-500/40', label: 'CRÍTICA', text: 'text-red-400' },
+  high: { color: 'text-amber-600', bg: 'bg-amber-500/15', border: 'border-amber-200', label: 'ALTA', text: 'text-amber-700' },
+  medium: { color: 'text-yellow-700', bg: 'bg-yellow-500/10', border: 'border-yellow-500/40', label: 'MEDIA', text: 'text-yellow-300' },
+  low: { color: 'text-[#00FF66]', bg: 'bg-[#00D2FF]/10', border: 'border-[#00D2FF]/30', label: 'BAJA', text: 'text-[#00D2FF]' },
 }
 
 const typeIcon: Record<AlertItem['type'], typeof AlertTriangle> = {
@@ -27,14 +27,14 @@ export default function AlertsPanel() {
   const items = initialAlerts.filter((a) => filter === 'all' || a.status === filter)
 
   return (
-    <div className="flex flex-col h-full bg-white border border-slate-700/50 rounded-xl overflow-hidden shadow-sm">
+    <div className="flex flex-col h-full bg-[#111927] border border-slate-700/60 rounded-xl overflow-hidden shadow-lg shadow-black/30">
       <div className="p-4 border-b border-slate-700/50 bg-[#0f1620]">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2 text-[#00FF66] text-base font-semibold">
             <ShieldAlert className="w-5 h-5" />
             <span>Centro de Alertas</span>
           </div>
-          <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200 text-xs px-2 py-0.5">
+          <Badge variant="outline" className="bg-red-500/15 text-red-400 border-red-500/40 text-xs px-2 py-0.5">
             {initialAlerts.filter((a) => a.status === 'active').length} activas
           </Badge>
         </div>
@@ -51,7 +51,7 @@ export default function AlertsPanel() {
               className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
                 filter === f.id
                   ? 'bg-sky-600 text-white shadow-sm'
-                  : 'bg-white text-slate-600 border border-slate-300 hover:bg-slate-50'
+                  : 'bg-[#1a2433] text-slate-300 border border-slate-700/60 hover:border-[#00FF66]/40 hover:text-[#00FF66]'
               }`}
             >
               {f.label}

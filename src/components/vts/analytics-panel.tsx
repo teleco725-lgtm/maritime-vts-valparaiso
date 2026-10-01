@@ -11,7 +11,7 @@ export default function AnalyticsPanel() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
       {/* Distribución por tipo */}
-      <div className="bg-white border border-slate-700/50 rounded-xl p-4 shadow-sm">
+      <div className="bg-[#111927] border border-slate-700/60 rounded-xl p-4 shadow-lg shadow-black/30">
         <div className="text-[#00FF66] text-sm font-semibold mb-3">Distribución por Tipo</div>
         <div className="h-44">
           <ResponsiveContainer width="100%" height="100%">
@@ -32,12 +32,12 @@ export default function AnalyticsPanel() {
               </Pie>
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#ffffff',
-                  border: '1px solid #e2e8f0',
+                  backgroundColor: '#111927',
+                  border: '1px solid #334155',
                   borderRadius: '8px',
                   fontSize: '12px',
-                  color: '#0f172a',
-                  boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
+                  color: '#e2e8f0',
+                  boxShadow: '0 4px 6px rgba(0,0,0,0.4)',
                 }}
               />
             </PieChart>
@@ -55,7 +55,7 @@ export default function AnalyticsPanel() {
       </div>
 
       {/* Distribución por bandera */}
-      <div className="bg-white border border-slate-700/50 rounded-xl p-4 shadow-sm">
+      <div className="bg-[#111927] border border-slate-700/60 rounded-xl p-4 shadow-lg shadow-black/30">
         <div className="text-[#00FF66] text-sm font-semibold mb-3">Distribución por Bandera</div>
         <div className="h-44">
           <ResponsiveContainer width="100%" height="100%">
@@ -65,12 +65,12 @@ export default function AnalyticsPanel() {
               <YAxis dataKey="flag" type="category" stroke="#64748b" fontSize={11} width={80} tick={{ fontSize: 11 }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#ffffff',
-                  border: '1px solid #e2e8f0',
+                  backgroundColor: '#111927',
+                  border: '1px solid #334155',
                   borderRadius: '8px',
                   fontSize: '12px',
-                  color: '#0f172a',
-                  boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
+                  color: '#e2e8f0',
+                  boxShadow: '0 4px 6px rgba(0,0,0,0.4)',
                 }}
               />
               <Bar dataKey="count" fill="#0284c7" radius={[0, 6, 6, 0]} />
@@ -80,7 +80,7 @@ export default function AnalyticsPanel() {
       </div>
 
       {/* Tendencia horaria de tráfico */}
-      <div className="bg-white border border-slate-700/50 rounded-xl p-4 shadow-sm">
+      <div className="bg-[#111927] border border-slate-700/60 rounded-xl p-4 shadow-lg shadow-black/30">
         <div className="text-[#00FF66] text-sm font-semibold mb-3">Tráfico por Hora (24h)</div>
         <div className="h-44">
           <ResponsiveContainer width="100%" height="100%">
@@ -90,12 +90,12 @@ export default function AnalyticsPanel() {
               <YAxis stroke="#94a3b8" fontSize={11} tick={{ fontSize: 11 }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#ffffff',
-                  border: '1px solid #e2e8f0',
+                  backgroundColor: '#111927',
+                  border: '1px solid #334155',
                   borderRadius: '8px',
                   fontSize: '12px',
-                  color: '#0f172a',
-                  boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
+                  color: '#e2e8f0',
+                  boxShadow: '0 4px 6px rgba(0,0,0,0.4)',
                 }}
               />
               <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '5px' }} />

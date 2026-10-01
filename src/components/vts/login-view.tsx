@@ -74,7 +74,7 @@ export default function LoginView() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <Badge variant="outline" className="mb-5 bg-white/10 text-sky-100 border-white/20 px-3 py-1 text-xs backdrop-blur">
+            <Badge variant="outline" className="mb-5 bg-white/15 text-[#00D2FF] border-[#00D2FF]/30 px-3 py-1 text-xs backdrop-blur">
               <ShieldCheck className="w-3.5 h-3.5 mr-1.5" /> Sistema conforme a IALA V-103 · Ley 21.719
             </Badge>
             <h2 className="text-4xl lg:text-5xl font-bold leading-tight mb-5 text-white">
@@ -94,7 +94,7 @@ export default function LoginView() {
                 { icon: Cctv, label: 'CCTV PTZ', desc: 'Visual en vivo' },
                 { icon: Waves, label: 'MET-OCEAN', desc: 'Clima marítimo' },
               ].map(({ icon: Icon, label, desc }) => (
-                <div key={label} className="rounded-xl bg-white/10 backdrop-blur border border-white/15 p-3 flex flex-col items-center gap-1.5 shadow-lg">
+                <div key={label} className="rounded-xl bg-white/10 backdrop-blur border border-[#00D2FF]/20 p-3 flex flex-col items-center gap-1.5 shadow-lg">
                   <Icon className="w-6 h-6 text-sky-200" strokeWidth={2} />
                   <span className="text-xs font-semibold text-white text-center">{label}</span>
                   <span className="text-[10px] text-sky-200/80 text-center">{desc}</span>
@@ -123,7 +123,7 @@ export default function LoginView() {
           transition={{ duration: 0.5 }}
           className="w-full max-w-md"
         >
-          <Card className="bg-white border-white/40 backdrop-blur-xl shadow-2xl shadow-sky-950/40">
+          <Card className="bg-[#111927]/95 backdrop-blur-xl shadow-2xl shadow-black/50 border-slate-700/60">
             <CardHeader className="space-y-2 pb-4">
               <CardTitle className="text-2xl text-slate-900">Acceso al Sistema</CardTitle>
               <CardDescription className="text-slate-600 text-base">
@@ -134,7 +134,7 @@ export default function LoginView() {
               <Button
                 onClick={() => handleLogin('microsoft')}
                 disabled={isAuthenticating}
-                className="w-full h-14 bg-white hover:bg-slate-50 text-slate-800 font-medium text-base border border-slate-300 shadow-sm"
+                className="w-full h-14 bg-[#1a2433] hover:bg-[#1a2433]/80 text-slate-200 font-medium text-base border border-slate-300 shadow-sm"
               >
                 {isAuthenticating && activeProvider === 'microsoft' ? (
                   <Loader2 className="w-5 h-5 mr-3 animate-spin" />
@@ -147,7 +147,7 @@ export default function LoginView() {
               <Button
                 onClick={() => handleLogin('google')}
                 disabled={isAuthenticating}
-                className="w-full h-14 bg-white hover:bg-slate-50 text-slate-800 font-medium text-base border border-slate-300 shadow-sm"
+                className="w-full h-14 bg-[#1a2433] hover:bg-[#1a2433]/80 text-slate-200 font-medium text-base border border-slate-300 shadow-sm"
               >
                 {isAuthenticating && activeProvider === 'google' ? (
                   <Loader2 className="w-5 h-5 mr-3 animate-spin" />

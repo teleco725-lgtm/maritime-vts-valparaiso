@@ -209,9 +209,9 @@ export default function VesselMap({ selectedVessel, onSelectVessel }: Props) {
       <div className="absolute bottom-2 left-2 z-20 bg-slate-900/90 backdrop-blur rounded-md border border-slate-700 p-2 text-[10px]">
         <div className="font-semibold text-slate-300 mb-1">Estado de Buques</div>
         <div className="grid grid-cols-2 gap-x-3 gap-y-0.5">
-          <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-sky-500" /><span className="text-slate-400">Navegando</span></div>
-          <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-500" /><span className="text-slate-400">Atracado</span></div>
-          <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-500" /><span className="text-slate-400">Fondeado</span></div>
+          <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#00D2FF]/100" /><span className="text-slate-400">Navegando</span></div>
+          <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#00FF66]/150" /><span className="text-slate-400">Atracado</span></div>
+          <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-500/150" /><span className="text-slate-400">Fondeado</span></div>
           <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-violet-500" /><span className="text-slate-400">Aproxim.</span></div>
         </div>
       </div>
