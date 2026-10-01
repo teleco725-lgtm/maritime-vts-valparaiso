@@ -90,7 +90,7 @@ export default function ReportsPanel({ user }: Props) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
       {/* Configuración */}
-      <Card className="bg-[#1B3A5F] border-slate-700/60 shadow-lg shadow-black/30">
+      <Card className="bg-[var(--vts-card)] border-slate-700/60 shadow-lg shadow-black/30">
         <CardHeader className="pb-3">
           <CardTitle className="text-[#00FF66] text-base flex items-center gap-2">
             <FileText className="w-4 h-4" />
@@ -111,7 +111,7 @@ export default function ReportsPanel({ user }: Props) {
                     className={`relative flex items-center gap-2 p-3 rounded-lg border transition-all ${
                       format === f.id
                         ? 'border-cyan-500 bg-cyan-500/10'
-                        : 'border-slate-300 bg-[#2A4D75]/50 hover:border-slate-600'
+                        : 'border-slate-300 bg-[var(--vts-subcard)]/50 hover:border-slate-600'
                     }`}
                   >
                     <div className={`w-8 h-8 rounded-md bg-gradient-to-br ${f.color} flex items-center justify-center`}>
@@ -128,10 +128,10 @@ export default function ReportsPanel({ user }: Props) {
           <div>
             <Label className="text-slate-700 text-xs mb-1.5">Tipo de Informe</Label>
             <Select value={reportType} onValueChange={setReportType}>
-              <SelectTrigger className="bg-[#2A4D75] border-slate-700/60 text-slate-200">
+              <SelectTrigger className="bg-[var(--vts-subcard)] border-slate-700/60 text-slate-200">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="bg-[#2A4D75] border-slate-300">
+              <SelectContent className="bg-[var(--vts-subcard)] border-slate-300">
                 <SelectItem value="daily">Informe Diario</SelectItem>
                 <SelectItem value="weekly">Informe Semanal</SelectItem>
                 <SelectItem value="monthly">Informe Mensual Ejecutivo</SelectItem>
@@ -151,7 +151,7 @@ export default function ReportsPanel({ user }: Props) {
                 type="date"
                 value={dateFrom}
                 onChange={(e) => setDateFrom(e.target.value)}
-                className="bg-[#2A4D75] border-slate-700/60 text-slate-200 text-sm"
+                className="bg-[var(--vts-subcard)] border-slate-700/60 text-slate-200 text-sm"
               />
             </div>
             <div>
@@ -162,7 +162,7 @@ export default function ReportsPanel({ user }: Props) {
                 type="date"
                 value={dateTo}
                 onChange={(e) => setDateTo(e.target.value)}
-                className="bg-[#2A4D75] border-slate-700/60 text-slate-200 text-sm"
+                className="bg-[var(--vts-subcard)] border-slate-700/60 text-slate-200 text-sm"
               />
             </div>
           </div>
@@ -178,7 +178,7 @@ export default function ReportsPanel({ user }: Props) {
                   className={`flex items-center gap-2 px-3 py-1.5 rounded text-xs border transition-colors ${
                     includeSections.includes(s.id)
                       ? 'border-emerald-500/40 bg-[#00FF66]/150/10 text-emerald-200'
-                      : 'border-slate-300 bg-[#2A4D75]/50 text-slate-500'
+                      : 'border-slate-300 bg-[var(--vts-subcard)]/50 text-slate-500'
                   }`}
                 >
                   <CheckCircle2 className={`w-3 h-3 ${includeSections.includes(s.id) ? 'opacity-100' : 'opacity-30'}`} />
@@ -221,12 +221,12 @@ export default function ReportsPanel({ user }: Props) {
       </Card>
 
       {/* Vista previa */}
-      <Card className="bg-[#1B3A5F] border-slate-700/60 shadow-lg shadow-black/30">
+      <Card className="bg-[var(--vts-card)] border-slate-700/60 shadow-lg shadow-black/30">
         <CardHeader className="pb-3">
           <CardTitle className="text-[#00FF66] text-base">Vista Previa del Informe</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
-          <div className="bg-[#2A4D75]/50 rounded-lg p-3 border border-slate-300">
+          <div className="bg-[var(--vts-subcard)]/50 rounded-lg p-3 border border-slate-300">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs text-slate-500">Encabezado</span>
               <Badge variant="outline" className="bg-cyan-500/10 text-[#00FF66] border-cyan-500/30 text-[9px]">
@@ -259,7 +259,7 @@ export default function ReportsPanel({ user }: Props) {
               <div className="text-[10px] text-cyan-400 uppercase tracking-wide mb-1">Registro de Buques</div>
               <div className="space-y-0.5">
                 {vessels.slice(0, 4).map((v) => (
-                  <div key={v.id} className="flex items-center justify-between text-[10px] bg-[#2A4D75]/30 rounded px-2 py-1">
+                  <div key={v.id} className="flex items-center justify-between text-[10px] bg-[var(--vts-subcard)]/30 rounded px-2 py-1">
                     <span className="text-slate-700">{v.name}</span>
                     <span className="text-slate-500">{v.mmsi} · {v.flag}</span>
                   </div>

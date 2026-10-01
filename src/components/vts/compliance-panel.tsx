@@ -77,14 +77,14 @@ export default function CompliancePanel() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.05 }}
           >
-            <Card className="bg-[#1B3A5F] border-slate-700/60 shadow-lg shadow-black/30">
+            <Card className="bg-[var(--vts-card)] border-slate-700/60 shadow-lg shadow-black/30">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs text-slate-500">{s.label}</span>
                   <Lock className="w-3 h-3 text-emerald-400" />
                 </div>
                 <div className="text-2xl font-bold text-slate-100 mb-1">{s.value}%</div>
-                <Progress value={s.value} className="h-1 bg-[#2A4D75]" />
+                <Progress value={s.value} className="h-1 bg-[var(--vts-subcard)]" />
               </CardContent>
             </Card>
           </motion.div>
@@ -102,7 +102,7 @@ export default function CompliancePanel() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
             >
-              <Card className="bg-[#1B3A5F] border-slate-700/60 shadow-lg shadow-black/30 h-full">
+              <Card className="bg-[var(--vts-card)] border-slate-700/60 shadow-lg shadow-black/30 h-full">
                 <CardHeader className="pb-3">
                   <CardTitle className="text-[#00FF66] text-base flex items-center gap-2">
                     <Icon className="w-4 h-4" />
@@ -113,7 +113,7 @@ export default function CompliancePanel() {
                   {cat.items.map((item) => (
                     <div
                       key={item.name}
-                      className="flex items-start gap-2 p-2 rounded-md bg-[#2A4D75]/40 border border-slate-800"
+                      className="flex items-start gap-2 p-2 rounded-md bg-[var(--vts-subcard)]/40 border border-slate-800"
                     >
                       <CheckCircle2
                         className={`w-4 h-4 mt-0.5 flex-shrink-0 ${
@@ -143,7 +143,7 @@ export default function CompliancePanel() {
       </div>
 
       {/* Auditorías recientes */}
-      <Card className="bg-[#1B3A5F] border-slate-700/60 shadow-lg shadow-black/30">
+      <Card className="bg-[var(--vts-card)] border-slate-700/60 shadow-lg shadow-black/30">
         <CardHeader>
           <CardTitle className="text-[#00FF66] text-base flex items-center gap-2">
             <FileText className="w-4 h-4" />

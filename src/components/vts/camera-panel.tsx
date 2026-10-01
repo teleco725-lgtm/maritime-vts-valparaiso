@@ -11,7 +11,7 @@ export default function CameraPanel() {
   const selectedCam = cameraFeeds.find((c) => c.id === selected)!
 
   return (
-    <div className="flex flex-col h-full bg-[#1B3A5F] border border-slate-700/60 rounded-xl overflow-hidden shadow-lg shadow-black/30">
+    <div className="flex flex-col h-full bg-[var(--vts-card)] border border-slate-700/60 rounded-xl overflow-hidden shadow-lg shadow-black/30">
       <div className="p-4 border-b border-slate-700/50 bg-[#0f1620]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-[#00FF66] text-base font-semibold">
@@ -77,7 +77,7 @@ export default function CameraPanel() {
             className={`flex items-center gap-1 px-2 py-2 rounded-lg text-xs transition-colors border font-medium ${
               selected === cam.id
                 ? 'bg-sky-600 text-white border-sky-600 shadow-sm'
-                : 'bg-[#2A4D75] text-slate-300 border border-slate-700/60 hover:border-[#00FF66]/40 hover:text-[#00FF66]'
+                : 'bg-[var(--vts-subcard)] text-slate-300 border border-slate-700/60 hover:border-[#00FF66]/40 hover:text-[#00FF66]'
             }`}
             title={cam.name}
           >

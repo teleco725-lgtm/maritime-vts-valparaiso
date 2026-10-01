@@ -12,7 +12,7 @@ interface Props {
 export default function VesselDetail({ vessel }: Props) {
   if (!vessel) {
     return (
-      <div className="h-full flex items-center justify-center text-slate-500 text-sm text-center p-4 bg-[#1B3A5F] border border-slate-700/60 rounded-xl shadow-lg shadow-black/30">
+      <div className="h-full flex items-center justify-center text-slate-500 text-sm text-center p-4 bg-[var(--vts-card)] border border-slate-700/60 rounded-xl shadow-lg shadow-black/30">
         <div>
           <Ship className="w-12 h-12 mx-auto mb-3 opacity-30 text-slate-400" />
           <div className="font-medium text-slate-600 mb-1">Seleccione un buque</div>
@@ -38,11 +38,11 @@ export default function VesselDetail({ vessel }: Props) {
   ]
 
   return (
-    <div className="h-full flex flex-col bg-[#1B3A5F] border border-slate-700/60 rounded-xl overflow-hidden shadow-lg shadow-black/30">
+    <div className="h-full flex flex-col bg-[var(--vts-card)] border border-slate-700/60 rounded-xl overflow-hidden shadow-lg shadow-black/30">
       <div className="p-4 border-b border-slate-700/50 bg-[#0f1620]">
         <div className="flex items-center justify-between mb-1">
           <span className="font-bold text-slate-100 text-base truncate">{vessel.name}</span>
-          <Badge variant="secondary" className="bg-[#2A4D75] text-sky-800 border-slate-700/50 text-xs px-2 py-0.5">
+          <Badge variant="secondary" className="bg-[var(--vts-subcard)] text-sky-800 border-slate-700/50 text-xs px-2 py-0.5">
             {vessel.flag}
           </Badge>
         </div>
@@ -64,7 +64,7 @@ export default function VesselDetail({ vessel }: Props) {
                 initial={{ opacity: 0, x: -5 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.02 }}
-                className="flex items-center gap-2 text-sm bg-[#2A4D75] rounded-lg px-3 py-2 border border-slate-700/40"
+                className="flex items-center gap-2 text-sm bg-[var(--vts-subcard)] rounded-lg px-3 py-2 border border-slate-700/40"
               >
                 <Icon className="w-4 h-4 text-[#00D2FF] flex-shrink-0" />
                 <span className="text-slate-500 w-20 flex-shrink-0 text-xs">{f.label}</span>
@@ -83,7 +83,7 @@ export default function VesselDetail({ vessel }: Props) {
                 {vessel.confidence.toFixed(1)}%
               </span>
             </div>
-            <div className="h-2 bg-[#2A4D75] rounded-full overflow-hidden">
+            <div className="h-2 bg-[var(--vts-subcard)] rounded-full overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${vessel.confidence}%` }}
@@ -97,7 +97,7 @@ export default function VesselDetail({ vessel }: Props) {
           {/* Registro */}
           <div className="mt-3 flex items-center justify-between text-sm bg-[#00D2FF]/10 rounded-lg px-3 py-2 border border-sky-100">
             <span className="text-slate-600">Registro:</span>
-            <Badge variant="outline" className="bg-[#2A4D75] text-slate-300 border-slate-700/60">
+            <Badge variant="outline" className="bg-[var(--vts-subcard)] text-slate-300 border-slate-700/60">
               {vessel.registry}
             </Badge>
           </div>

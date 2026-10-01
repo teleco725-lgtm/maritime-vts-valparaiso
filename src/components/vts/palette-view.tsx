@@ -165,7 +165,7 @@ export default function PaletteView() {
       </div>
 
       {/* Tabs por categoría */}
-      <div className="flex flex-wrap gap-2 p-2 bg-[#1B3A5F] border border-slate-700/60 rounded-xl shadow-lg shadow-black/30">
+      <div className="flex flex-wrap gap-2 p-2 bg-[var(--vts-card)] border border-slate-700/60 rounded-xl shadow-lg shadow-black/30">
         {paletteGroups.map((group) => {
           const Icon = group.icon
           const isActive = activeGroup === group.id
@@ -175,8 +175,8 @@ export default function PaletteView() {
               onClick={() => setActiveGroup(group.id)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${
                 isActive
-                  ? 'bg-[#2A4D75] text-slate-100 shadow-md border border-slate-600'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-[#2A4D75]/50 border border-transparent'
+                  ? 'bg-[var(--vts-subcard)] text-slate-100 shadow-md border border-slate-600'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-[var(--vts-subcard)]/50 border border-transparent'
               }`}
             >
               <Icon className="w-4 h-4" style={{ color: isActive ? group.accentColor : undefined }} />
@@ -196,7 +196,7 @@ export default function PaletteView() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Card className="bg-[#1B3A5F] border-slate-700/60 shadow-lg shadow-black/30">
+            <Card className="bg-[var(--vts-card)] border-slate-700/60 shadow-lg shadow-black/30">
               <CardHeader className="pb-3">
                 <CardTitle className="text-lg sm:text-xl text-slate-100 flex items-center gap-2">
                   <Icon className="w-5 h-5" style={{ color: group.accentColor }} />
@@ -213,7 +213,7 @@ export default function PaletteView() {
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: i * 0.05 }}
                       onClick={() => copyToClipboard(color.hex)}
-                      className="group text-left p-3 rounded-lg bg-[#2A4D75] border border-slate-700/40 hover:border-slate-600 transition-all cursor-pointer"
+                      className="group text-left p-3 rounded-lg bg-[var(--vts-subcard)] border border-slate-700/40 hover:border-slate-600 transition-all cursor-pointer"
                     >
                       <div className="flex items-center gap-3 mb-2">
                         <div
@@ -256,7 +256,7 @@ export default function PaletteView() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
               >
-                <Card className="bg-[#1B3A5F] border-slate-700/60 shadow-lg shadow-black/30 hover:border-slate-600 transition-all h-full">
+                <Card className="bg-[var(--vts-card)] border-slate-700/60 shadow-lg shadow-black/30 hover:border-slate-600 transition-all h-full">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-base text-slate-100 flex items-center gap-2">
                       <Icon className="w-4 h-4 text-[#00D2FF]" />
@@ -281,7 +281,7 @@ export default function PaletteView() {
                       {s.colors.map((c) => (
                         <span
                           key={c}
-                          className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#2A4D75] border border-slate-700/40 text-slate-400"
+                          className="text-[10px] font-mono px-2 py-0.5 rounded bg-[var(--vts-subcard)] border border-slate-700/40 text-slate-400"
                         >
                           {c}
                         </span>
@@ -298,7 +298,7 @@ export default function PaletteView() {
       </div>
 
       {/* Footer info */}
-      <Card className="bg-[#1B3A5F] border-slate-700/60 shadow-lg shadow-black/30">
+      <Card className="bg-[var(--vts-card)] border-slate-700/60 shadow-lg shadow-black/30">
         <CardContent className="p-4">
           <div className="flex items-start gap-3">
             <div className="w-8 h-8 rounded-lg bg-[#00D2FF]/10 flex items-center justify-center flex-shrink-0">
