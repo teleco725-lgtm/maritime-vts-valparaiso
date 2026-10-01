@@ -32,7 +32,7 @@ export default function Header({ activeView, onNavigate, onToggleMobileNav, mobi
   const { user, logout } = useAuthStore()
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur-md shadow-sm">
+    <header className="sticky top-0 z-40 border-b border-white/10 bg-sky-50/60 backdrop-blur-xl shadow-sm shadow-sky-950/20">
       <div className="flex h-16 items-center justify-between px-4 sm:px-6">
         <div className="flex items-center gap-3">
           <button

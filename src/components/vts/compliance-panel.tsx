@@ -84,7 +84,7 @@ export default function CompliancePanel() {
                   <Lock className="w-3 h-3 text-emerald-400" />
                 </div>
                 <div className="text-2xl font-bold text-slate-900 mb-1">{s.value}%</div>
-                <Progress value={s.value} className="h-1 bg-slate-100" />
+                <Progress value={s.value} className="h-1 bg-sky-100/60" />
               </CardContent>
             </Card>
           </motion.div>
@@ -113,7 +113,7 @@ export default function CompliancePanel() {
                   {cat.items.map((item) => (
                     <div
                       key={item.name}
-                      className="flex items-start gap-2 p-2 rounded-md bg-slate-100/40 border border-slate-800"
+                      className="flex items-start gap-2 p-2 rounded-md bg-sky-100/60/40 border border-slate-800"
                     >
                       <CheckCircle2
                         className={`w-4 h-4 mt-0.5 flex-shrink-0 ${

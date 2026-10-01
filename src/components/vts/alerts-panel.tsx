@@ -28,7 +28,7 @@ export default function AlertsPanel() {
 
   return (
     <div className="flex flex-col h-full bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
-      <div className="p-4 border-b border-slate-200 bg-slate-50/50">
+      <div className="p-4 border-b border-slate-200 bg-sky-100/40">
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-2 text-sky-700 text-base font-semibold">
             <ShieldAlert className="w-5 h-5" />

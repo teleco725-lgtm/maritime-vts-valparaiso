@@ -11,7 +11,7 @@ function KpiCard({ kpi, index }: { kpi: KPI; index: number }) {
     kpi.trend === 'down' ? 'text-amber-600' : 'text-slate-500'
   const trendBg =
     kpi.trend === 'up' ? 'bg-emerald-50' :
-    kpi.trend === 'down' ? 'bg-amber-50' : 'bg-slate-100'
+    kpi.trend === 'down' ? 'bg-amber-50' : 'bg-sky-100/60'
 
   return (
     <motion.div
