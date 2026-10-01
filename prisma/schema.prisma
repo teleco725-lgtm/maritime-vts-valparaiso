@@ -1,9 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -29,4 +26,93 @@ model Post {
   authorId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+// ============================================
+// MODELOS TPS — Terminal Pacífico Sur (TCP Valparaíso)
+// ============================================
+
+model VesselRecord {
+  id           String   @id @default(cuid())
+  mmsi         String   @unique
+  imo          String   @unique
+  name         String
+  flag         String
+  type         String   // container, tanker, bulk, etc.
+  lengthM      Float
+  beamM        Float
+  draftM       Float
+  grossTonnage Int
+  netTonnage   Int
+  yearBuilt    Int
+  operator     String   // Línea naviera
+  registry     String   // SNRB, IMO, SERNAPESCA
+  lastPort     String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  arrivals     Arrivals[]
+  containers   Container[]
+}
+
+model Berth {
+  id            String   @id @default(cuid())
+  berthCode     String   @unique // M1, M3, M5, M7
+  lengthM       Float
+  maxDraftM     Float
+  status        String   // operational, maintenance, reserved
+  operator      String   // TPS / TPSA / etc.
+  cranesCount   Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  arrivals      Arrivals[]
+}
+
+model Arrivals {
+  id             String   @id @default(cuid())
+  vesselId       String
+  berthId        String?
+  eta            DateTime
+  atd            DateTime? // Actual Time of Departure
+  ata            DateTime? // Actual Time of Arrival
+  status         String   // scheduled, arriving, alongside, departing, completed, cancelled
+  cargoType     String   // import, export, transhipment
+  teu           Int      // total TEU handled
+  pilotName     String?
+  tugCount      Int      @default(0)
+  notes         String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  vessel        VesselRecord @relation(fields: [vesselId], references: [id])
+  berth         Berth?       @relation(fields: [berthId], references: [id])
+}
+
+model Container {
+  id            String   @id @default(cuid())
+  containerCode String   @unique // AAAA1234567
+  isoCode      String   // 22G1, 42G1, 45G1
+  type         String   // GP, RF, OT, FR, TK
+  weightKg     Float
+  vesselId     String?
+  pod          String   // Port of Discharge
+  pol          String   // Port of Loading
+  status       String   // in_transit, discharged, loaded, gate_in, gate_out
+  dangerous    Boolean  @default(false)
+  reefer       Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  vessel       VesselRecord? @relation(fields: [vesselId], references: [id])
+}
+
+model OperationLog {
+  id           String   @id @default(cuid())
+  type         String   // arrival, departure, container_move, pilot_embark, alert, chat_message
+  severity     String   @default("info") // info, warning, critical
+  description  String
+  metadata     String? // JSON string
+  operator     String?
+  createdAt    DateTime @default(now())
 }

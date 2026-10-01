@@ -14,6 +14,7 @@ import CameraPanel from './camera-panel'
 import AnalyticsPanel from './analytics-panel'
 import ReportsPanel from './reports-panel'
 import CompliancePanel from './compliance-panel'
+import AIChatPanel from './ai-chat-panel'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { LayoutDashboard, FileText, ShieldCheck } from 'lucide-react'
 
@@ -128,10 +129,13 @@ export default function Dashboard() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-400" />
             </span>
-            <span>Sistema operacional · CSIRT activo</span>
+            <span>Sistema operacional · CSIRT activo · IA MarÍA activa</span>
           </div>
         </div>
       </footer>
+
+      {/* Asistente de IA flotante */}
+      <AIChatPanel />
     </div>
   )
 }
