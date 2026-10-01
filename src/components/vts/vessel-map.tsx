@@ -1,0 +1,220 @@
+'use client'
+
+import { motion } from 'framer-motion'
+import { vessels, getVesselStatusColor, getVesselTypeLabel, getStatusLabel, type Vessel } from '@/lib/vts/data'
+import { useState } from 'react'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import { Badge } from '@/components/ui/badge'
+import { Radar, Ship, Anchor, Navigation } from 'lucide-react'
+
+interface Props {
+  selectedVessel: Vessel | null
+  onSelectVessel: (v: Vessel) => void
+}
+
+export default function VesselMap({ selectedVessel, onSelectVessel }: Props) {
+  const [showTrails, setShowTrails] = useState(true)
+  const [showLabels, setShowLabels] = useState(true)
+
+  return (
+    <div className="relative w-full h-full bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 rounded-lg overflow-hidden border border-slate-700">
+      {/* Header */}
+      <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-4 py-2 bg-slate-900/80 backdrop-blur border-b border-slate-700">
+        <div className="flex items-center gap-2 text-cyan-400 text-sm font-medium">
+          <Radar className="w-4 h-4" />
+          <span>Mapa de Tráfico Marítimo — Bahía de Valparaíso</span>
+        </div>
+        <div className="flex items-center gap-2 text-xs">
+          <button
+            onClick={() => setShowTrails(!showTrails)}
+            className={`px-2 py-1 rounded ${showTrails ? 'bg-cyan-500/20 text-cyan-300' : 'bg-slate-800 text-slate-400'}`}
+          >
+            Estelas
+          </button>
+          <button
+            onClick={() => setShowLabels(!showLabels)}
+            className={`px-2 py-1 rounded ${showLabels ? 'bg-cyan-500/20 text-cyan-300' : 'bg-slate-800 text-slate-400'}`}
+          >
+            Etiquetas
+          </button>
+        </div>
+      </div>
+
+      {/* SVG Mapa */}
+      <svg viewBox="0 0 1000 600" className="w-full h-full" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <radialGradient id="oceanGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#0c4a6e" stopOpacity="0.5" />
+            <stop offset="100%" stopColor="#020617" stopOpacity="0.9" />
+          </radialGradient>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e3a5f" strokeWidth="0.5" opacity="0.4" />
+          </pattern>
+          <radialGradient id="radarSweep" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.3" />
+            <stop offset="100%" stopColor="#06b6d4" stopOpacity="0" />
+          </radialGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2" result="coloredBlur" />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {/* Fondo del océano */}
+        <rect width="1000" height="600" fill="url(#oceanGrad)" />
+        <rect width="1000" height="600" fill="url(#grid)" />
+
+        {/* Costa — Puerto de Valparaíso (norte) */}
+        <path
+          d="M 0 100 L 100 110 L 200 90 L 300 95 L 380 100 L 420 200 L 460 220 L 540 200 L 580 220 L 620 210 L 660 230 L 700 220 L 780 240 L 850 250 L 1000 260 L 1000 0 L 0 0 Z"
+          fill="#1e293b"
+          stroke="#475569"
+          strokeWidth="1"
+        />
+        {/* Espigón TCP */}
+        <path
+          d="M 380 100 L 420 200 L 460 220 L 540 200 L 580 220 L 620 210 L 660 230 L 700 220 L 700 240 L 660 250 L 620 240 L 580 250 L 540 230 L 460 240 L 420 220 L 380 120 Z"
+          fill="#0f172a"
+          stroke="#64748b"
+          strokeWidth="0.8"
+        />
+
+        {/* Muelles */}
+        {[200, 350, 480, 610, 740].map((x, i) => (
+          <rect
+            key={i}
+            x={x}
+            y={210 + (i % 2 === 0 ? 0 : 5)}
+            width={80}
+            height={10}
+            fill="#475569"
+            stroke="#94a3b8"
+            strokeWidth="0.5"
+          />
+        ))}
+
+        {/* Etiquetas geográficas */}
+        <text x="50" y="80" fill="#94a3b8" fontSize="10" fontFamily="monospace">Valparaíso</text>
+        <text x="500" y="195" fill="#64748b" fontSize="9" fontFamily="monospace">Espigón TCP</text>
+        <text x="850" y="280" fill="#475569" fontSize="8" fontFamily="monospace">Océano Pacífico</text>
+        <text x="900" y="350" fill="#475569" fontSize="8" fontFamily="monospace">12 mn (Mar Territorial)</text>
+
+        {/* Geofencing — jurisdicciones marítimas */}
+        <circle cx="500" cy="350" r="200" fill="none" stroke="#f59e0b" strokeWidth="0.8" strokeDasharray="4 4" opacity="0.4" />
+        <text x="640" y="170" fill="#f59e0b" fontSize="8" opacity="0.6" fontFamily="monospace">Zona VTS</text>
+
+        <circle cx="500" cy="350" r="280" fill="none" stroke="#ef4444" strokeWidth="0.5" strokeDasharray="2 6" opacity="0.3" />
+        <text x="760" y="120" fill="#ef4444" fontSize="8" opacity="0.5" fontFamily="monospace">Mar Territorial 12mn</text>
+
+        {/* Sweep radar animado */}
+        <motion.g
+          animate={{ rotate: 360 }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
+          style={{ transformOrigin: '500px 350px' }}
+        >
+          <path
+            d="M 500 350 L 700 350 A 200 200 0 0 1 590 530 Z"
+            fill="url(#radarSweep)"
+          />
+          <line x1="500" y1="350" x2="700" y2="350" stroke="#06b6d4" strokeWidth="1" opacity="0.6" />
+        </motion.g>
+
+        {/* Estelas */}
+        {showTrails && vessels.map((v) =>
+          v.trail.length > 1 && (
+            <polyline
+              key={`trail-${v.id}`}
+              points={v.trail.map((t) => `${t.x},${t.y}`).join(' ')}
+              fill="none"
+              stroke={getVesselStatusColor(v.status)}
+              strokeWidth="1.5"
+              strokeDasharray="2 3"
+              opacity="0.5"
+            />
+          )
+        )}
+
+        {/* Buques */}
+        <TooltipProvider delayDuration={100}>
+          {vessels.map((v) => {
+            const color = getVesselStatusColor(v.status)
+            const isSelected = selectedVessel?.id === v.id
+            return (
+              <g key={v.id} className="cursor-pointer" onClick={() => onSelectVessel(v)}>
+                {/* Halo de selección */}
+                {isSelected && (
+                  <circle cx={v.x} cy={v.y} r="14" fill="none" stroke="#06b6d4" strokeWidth="2" opacity="0.8">
+                    <animate attributeName="r" values="14;20;14" dur="1.5s" repeatCount="indefinite" />
+                  </circle>
+                )}
+
+                {/* Símbolo de buque */}
+                <g transform={`translate(${v.x},${v.y}) rotate(${v.heading})`}>
+                  <path
+                    d="M 0 -6 L 4 4 L 0 2 L -4 4 Z"
+                    fill={color}
+                    stroke="#fff"
+                    strokeWidth="0.4"
+                    filter="url(#glow)"
+                  />
+                </g>
+
+                {/* Vector de rumbo */}
+                {v.sog > 0.1 && (
+                  <line
+                    x1={v.x}
+                    y1={v.y}
+                    x2={v.x + Math.sin((v.cog * Math.PI) / 180) * v.sog * 3}
+                    y2={v.y - Math.cos((v.cog * Math.PI) / 180) * v.sog * 3}
+                    stroke={color}
+                    strokeWidth="1"
+                    opacity="0.7"
+                  />
+                )}
+
+                {/* Etiqueta */}
+                {showLabels && (
+                  <text
+                    x={v.x + 8}
+                    y={v.y - 6}
+                    fill="#e2e8f0"
+                    fontSize="7"
+                    fontFamily="monospace"
+                    opacity="0.9"
+                  >
+                    {v.name}
+                  </text>
+                )}
+              </g>
+            )
+          })}
+        </TooltipProvider>
+
+        {/* Rosa de los vientos */}
+        <g transform="translate(940, 540)" opacity="0.6">
+          <circle cx="0" cy="0" r="22" fill="none" stroke="#475569" strokeWidth="0.5" />
+          <line x1="0" y1="-22" x2="0" y2="22" stroke="#475569" strokeWidth="0.5" />
+          <line x1="-22" y1="0" x2="22" y2="0" stroke="#475569" strokeWidth="0.5" />
+          <text x="0" y="-25" fill="#94a3b8" fontSize="9" textAnchor="middle" fontFamily="monospace">N</text>
+          <text x="0" y="32" fill="#94a3b8" fontSize="9" textAnchor="middle" fontFamily="monospace">S</text>
+          <text x="28" y="3" fill="#94a3b8" fontSize="9" textAnchor="middle" fontFamily="monospace">E</text>
+          <text x="-28" y="3" fill="#94a3b8" fontSize="9" textAnchor="middle" fontFamily="monospace">W</text>
+        </g>
+      </svg>
+
+      {/* Leyenda */}
+      <div className="absolute bottom-2 left-2 z-20 bg-slate-900/90 backdrop-blur rounded-md border border-slate-700 p-2 text-[10px]">
+        <div className="font-semibold text-slate-300 mb-1">Estado de Buques</div>
+        <div className="grid grid-cols-2 gap-x-3 gap-y-0.5">
+          <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-sky-500" /><span className="text-slate-400">Navegando</span></div>
+          <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-500" /><span className="text-slate-400">Atracado</span></div>
+          <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-amber-500" /><span className="text-slate-400">Fondeado</span></div>
+          <div className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-violet-500" /><span className="text-slate-400">Aproxim.</span></div>
+        </div>
+      </div>
+    </div>
+  )
+}

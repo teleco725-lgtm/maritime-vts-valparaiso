@@ -1,0 +1,92 @@
+'use client'
+
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import { cameraFeeds } from '@/lib/vts/data'
+import { Badge } from '@/components/ui/badge'
+import { Cctv, Maximize2, Maximize, AlertCircle, Video, VideoOff } from 'lucide-react'
+
+export default function CameraPanel() {
+  const [selected, setSelected] = useState('cam5')
+  const selectedCam = cameraFeeds.find((c) => c.id === selected)!
+
+  return (
+    <div className="flex flex-col h-full bg-slate-900/50 border border-slate-700 rounded-lg overflow-hidden">
+      <div className="p-3 border-b border-slate-700">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 text-cyan-400 text-sm font-medium">
+            <Cctv className="w-4 h-4" />
+            <span>CCTV — Circuito de Cámaras</span>
+          </div>
+          <Badge variant="outline" className="bg-emerald-500/10 text-emerald-300 border-emerald-500/30 text-[10px]">
+            {cameraFeeds.filter((c) => c.online).length} en línea
+          </Badge>
+        </div>
+      </div>
+
+      {/* Vista principal de cámara */}
+      <div className="aspect-video bg-slate-950 relative overflow-hidden">
+        {selectedCam.online ? (
+          <div className="absolute inset-0">
+            {/* Simulación de feed de cámara con gradiente y elementos */}
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950" />
+            <div className="absolute inset-0 opacity-30" style={{
+              backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.05) 2px, rgba(255,255,255,0.05) 3px)'
+            }} />
+            {/* "Buque" simulado */}
+            <motion.div
+              initial={{ x: -50, y: 200 }}
+              animate={{ x: 400, y: 180 }}
+              transition={{ duration: 8, repeat: Infinity, repeatType: 'reverse' }}
+              className="absolute w-32 h-10 bg-slate-700 rounded-sm shadow-lg"
+              style={{ boxShadow: '0 0 10px rgba(6,182,212,0.4)' }}
+            />
+            {/* HUD overlay */}
+            <div className="absolute top-2 left-2 right-2 flex items-center justify-between text-[10px] font-mono text-emerald-400">
+              <span>{selectedCam.name}</span>
+              <span className="flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                REC
+              </span>
+            </div>
+            <div className="absolute bottom-2 left-2 right-2 flex items-center justify-between text-[10px] font-mono text-emerald-400/70">
+              <span>Zona: {selectedCam.zone}</span>
+              <span>{new Date().toLocaleTimeString('es-CL')}</span>
+            </div>
+            {/* Crosshair */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12">
+              <div className="absolute inset-0 border border-emerald-400/40 rounded-full" />
+              <div className="absolute top-1/2 left-0 right-0 h-px bg-emerald-400/40" />
+              <div className="absolute left-1/2 top-0 bottom-0 w-px bg-emerald-400/40" />
+            </div>
+          </div>
+        ) : (
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-600">
+            <VideoOff className="w-8 h-8 mb-2" />
+            <span className="text-xs">Cámara fuera de línea</span>
+          </div>
+        )}
+      </div>
+
+      {/* Selector de cámaras */}
+      <div className="p-2 grid grid-cols-2 sm:grid-cols-4 gap-1.5 max-h-32 overflow-y-auto">
+        {cameraFeeds.map((cam) => (
+          <button
+            key={cam.id}
+            onClick={() => setSelected(cam.id)}
+            className={`flex items-center gap-1 px-2 py-1.5 rounded text-[10px] transition-colors border ${
+              selected === cam.id
+                ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40'
+                : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700'
+            }`}
+            title={cam.name}
+          >
+            {cam.online ? <Video className="w-3 h-3 flex-shrink-0" /> : <VideoOff className="w-3 h-3 flex-shrink-0 opacity-50" />}
+            <span className="truncate">{cam.id.toUpperCase()}</span>
+            <span className="ml-auto text-[9px] text-slate-500">{cam.type}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
