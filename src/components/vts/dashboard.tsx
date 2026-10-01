@@ -15,9 +15,9 @@ import AnalyticsPanel from './analytics-panel'
 import ReportsPanel from './reports-panel'
 import CompliancePanel from './compliance-panel'
 import AIChatPanel from './ai-chat-panel'
-import ColorPaletteStrip from './color-palette-strip'
+import PaletteView from './palette-view'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
-import { LayoutDashboard, FileText, ShieldCheck } from 'lucide-react'
+import { LayoutDashboard, FileText, ShieldCheck, Palette } from 'lucide-react'
 
 export default function Dashboard() {
   const [activeView, setActiveView] = useState('dashboard')
@@ -46,6 +46,7 @@ export default function Dashboard() {
             <div className="text-xs text-slate-500 uppercase tracking-wider px-3 mb-2 font-semibold">Navegación</div>
             {[
               { id: 'dashboard', label: 'Dashboard Operacional', icon: LayoutDashboard },
+              { id: 'palette', label: 'Paleta de Colores', icon: Palette },
               { id: 'reports', label: 'Informes Ejecutivos', icon: FileText },
               { id: 'compliance', label: 'Cumplimiento', icon: ShieldCheck },
             ].map((item) => {
@@ -56,8 +57,8 @@ export default function Dashboard() {
                   onClick={() => { setActiveView(item.id); setMobileNavOpen(false) }}
                   className={`w-full flex items-center gap-3 px-3 py-3 text-base rounded-lg mb-1 font-medium transition-colors ${
                     activeView === item.id
-                      ? 'bg-[#1a2433] text-[#00FF66]'
-                      : 'text-slate-600 hover:text-slate-100 hover:bg-slate-100'
+                      ? 'bg-[#00D2FF]/15 text-[#00D2FF]'
+                      : 'text-slate-400 hover:text-slate-200 hover:bg-[#1a2433]'
                   }`}
                 >
                   <Icon className="w-5 h-5" />
@@ -70,11 +71,6 @@ export default function Dashboard() {
       </Sheet>
 
       <main className="flex-1 p-3 sm:p-4 lg:p-6">
-        {/* Franja de paleta de colores */}
-        <div className="mb-3 sm:mb-4">
-          <ColorPaletteStrip />
-        </div>
-
         {activeView === 'dashboard' && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -112,6 +108,12 @@ export default function Dashboard() {
                 <CameraPanel />
               </div>
             </div>
+          </motion.div>
+        )}
+
+        {activeView === 'palette' && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <PaletteView />
           </motion.div>
         )}
 

@@ -278,7 +278,7 @@ export const cameraFeeds = [
   { id: 'cam5', name: 'Cam 05 — Muelle 5 (Centro)', zone: 'Muelle 5', online: true, type: 'PTZ' },
   { id: 'cam6', name: 'Cam 06 — Muelle 7', zone: 'Muelle 7', online: true, type: 'Fija' },
   { id: 'cam7', name: 'Cam 07 — Zona de Fondeo', zone: 'Fondeo', online: true, type: 'Térmica' },
-  { id: 'cam8', name: 'Cam 08 — Espigón Sur', zone: 'Espigón', online: false, type: 'Térmica' },
+  { id: 'cam8', name: 'Cam 08 — Espigón Sur', zone: 'Espigón', online: true, type: 'Térmica' },
 ]
 
 export const getVesselStatusColor = (status: Vessel['status']): string => {
