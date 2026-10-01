@@ -7,33 +7,36 @@ import { TrendingUp, TrendingDown, Minus } from 'lucide-react'
 function KpiCard({ kpi, index }: { kpi: KPI; index: number }) {
   const TrendIcon = kpi.trend === 'up' ? TrendingUp : kpi.trend === 'down' ? TrendingDown : Minus
   const trendColor =
-    kpi.trend === 'up' ? 'text-emerald-400' :
-    kpi.trend === 'down' ? 'text-amber-400' : 'text-slate-400'
+    kpi.trend === 'up' ? 'text-emerald-600' :
+    kpi.trend === 'down' ? 'text-amber-600' : 'text-slate-500'
+  const trendBg =
+    kpi.trend === 'up' ? 'bg-emerald-50' :
+    kpi.trend === 'down' ? 'bg-amber-50' : 'bg-slate-100'
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
-      className="bg-slate-900/60 border border-slate-700 rounded-lg p-3 hover:border-slate-600 transition-colors"
+      className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm hover:shadow-md transition-shadow"
     >
-      <div className="text-[11px] text-slate-400 mb-1 truncate">{kpi.label}</div>
-      <div className="flex items-baseline gap-1 mb-1">
-        <span className="text-xl font-bold text-slate-100 tabular-nums">{kpi.value}</span>
-        <span className="text-[10px] text-slate-500">{kpi.unit}</span>
-        <span className={`ml-auto text-[10px] flex items-center gap-0.5 ${trendColor}`}>
-          <TrendIcon className="w-2.5 h-2.5" />
+      <div className="text-sm text-slate-600 mb-1 font-medium">{kpi.label}</div>
+      <div className="flex items-baseline gap-1.5 mb-2">
+        <span className="text-3xl font-bold text-slate-900 tabular-nums">{kpi.value}</span>
+        <span className="text-sm text-slate-500 font-medium">{kpi.unit}</span>
+        <span className={`ml-auto text-xs flex items-center gap-0.5 ${trendColor} ${trendBg} px-2 py-0.5 rounded-md font-semibold`}>
+          <TrendIcon className="w-3 h-3" />
           {kpi.trendValue}
         </span>
       </div>
-      <div className="text-[10px] text-slate-500 leading-tight line-clamp-2">{kpi.description}</div>
+      <div className="text-xs text-slate-500 leading-snug">{kpi.description}</div>
     </motion.div>
   )
 }
 
 export default function KpiPanel() {
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
       {kpis.map((kpi, i) => (
         <KpiCard key={kpi.label} kpi={kpi} index={i} />
       ))}

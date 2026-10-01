@@ -59,11 +59,11 @@ export default function CompliancePanel() {
     <div className="space-y-4">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-bold text-slate-100 flex items-center gap-2">
+        <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
           <ShieldCheck className="w-6 h-6 text-emerald-400" />
           Cumplimiento Normativo y Auditoría
         </h2>
-        <p className="text-sm text-slate-400 mt-1">
+        <p className="text-sm text-slate-500 mt-1">
           Estado de cumplimiento del sistema VTS conforme a normativa internacional, chilena y estándares técnicos.
         </p>
       </div>
@@ -77,14 +77,14 @@ export default function CompliancePanel() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.05 }}
           >
-            <Card className="bg-slate-900/60 border-slate-700">
+            <Card className="bg-white border-slate-200 shadow-sm">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs text-slate-400">{s.label}</span>
+                  <span className="text-xs text-slate-500">{s.label}</span>
                   <Lock className="w-3 h-3 text-emerald-400" />
                 </div>
-                <div className="text-2xl font-bold text-slate-100 mb-1">{s.value}%</div>
-                <Progress value={s.value} className="h-1 bg-slate-800" />
+                <div className="text-2xl font-bold text-slate-900 mb-1">{s.value}%</div>
+                <Progress value={s.value} className="h-1 bg-slate-100" />
               </CardContent>
             </Card>
           </motion.div>
@@ -102,9 +102,9 @@ export default function CompliancePanel() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: idx * 0.1 }}
             >
-              <Card className="bg-slate-900/60 border-slate-700 h-full">
+              <Card className="bg-white border-slate-200 shadow-sm h-full">
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-cyan-300 text-base flex items-center gap-2">
+                  <CardTitle className="text-sky-700 text-base flex items-center gap-2">
                     <Icon className="w-4 h-4" />
                     {cat.category}
                   </CardTitle>
@@ -113,7 +113,7 @@ export default function CompliancePanel() {
                   {cat.items.map((item) => (
                     <div
                       key={item.name}
-                      className="flex items-start gap-2 p-2 rounded-md bg-slate-800/40 border border-slate-800"
+                      className="flex items-start gap-2 p-2 rounded-md bg-slate-100/40 border border-slate-800"
                     >
                       <CheckCircle2
                         className={`w-4 h-4 mt-0.5 flex-shrink-0 ${
@@ -125,7 +125,7 @@ export default function CompliancePanel() {
                         }`}
                       />
                       <div className="min-w-0 flex-1">
-                        <div className="text-xs font-medium text-slate-200">{item.name}</div>
+                        <div className="text-xs font-medium text-slate-700">{item.name}</div>
                         <div className="text-[10px] text-slate-500">{item.detail}</div>
                       </div>
                       {item.status === 'partial' && (
@@ -143,9 +143,9 @@ export default function CompliancePanel() {
       </div>
 
       {/* Auditorías recientes */}
-      <Card className="bg-slate-900/60 border-slate-700">
+      <Card className="bg-white border-slate-200 shadow-sm">
         <CardHeader>
-          <CardTitle className="text-cyan-300 text-base flex items-center gap-2">
+          <CardTitle className="text-sky-700 text-base flex items-center gap-2">
             <FileText className="w-4 h-4" />
             Auditorías Recientes
           </CardTitle>
@@ -157,26 +157,26 @@ export default function CompliancePanel() {
           <div className="overflow-x-auto">
             <table className="w-full text-xs">
               <thead>
-                <tr className="text-left border-b border-slate-700">
-                  <th className="pb-2 text-slate-400 font-medium">Fecha</th>
-                  <th className="pb-2 text-slate-400 font-medium">Auditor</th>
-                  <th className="pb-2 text-slate-400 font-medium">Alcance</th>
-                  <th className="pb-2 text-slate-400 font-medium">Resultado</th>
-                  <th className="pb-2 text-slate-400 font-medium text-right">Hallazgos</th>
+                <tr className="text-left border-b border-slate-300">
+                  <th className="pb-2 text-slate-500 font-medium">Fecha</th>
+                  <th className="pb-2 text-slate-500 font-medium">Auditor</th>
+                  <th className="pb-2 text-slate-500 font-medium">Alcance</th>
+                  <th className="pb-2 text-slate-500 font-medium">Resultado</th>
+                  <th className="pb-2 text-slate-500 font-medium text-right">Hallazgos</th>
                 </tr>
               </thead>
               <tbody>
                 {recentAudits.map((a) => (
                   <tr key={a.date} className="border-b border-slate-800/50">
-                    <td className="py-2.5 text-slate-300">{a.date}</td>
-                    <td className="py-2.5 text-slate-300">{a.auditor}</td>
-                    <td className="py-2.5 text-slate-400">{a.scope}</td>
+                    <td className="py-2.5 text-slate-700">{a.date}</td>
+                    <td className="py-2.5 text-slate-700">{a.auditor}</td>
+                    <td className="py-2.5 text-slate-500">{a.scope}</td>
                     <td className="py-2.5">
                       <Badge variant="outline" className="bg-emerald-500/10 text-emerald-300 border-emerald-500/30">
                         {a.result}
                       </Badge>
                     </td>
-                    <td className="py-2.5 text-right text-slate-300">{a.findings}</td>
+                    <td className="py-2.5 text-right text-slate-700">{a.findings}</td>
                   </tr>
                 ))}
               </tbody>

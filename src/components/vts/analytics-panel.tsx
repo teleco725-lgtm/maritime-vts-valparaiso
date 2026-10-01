@@ -2,18 +2,18 @@
 
 import { motion } from 'framer-motion'
 import { vesselTypeDistribution, flagDistribution } from '@/lib/vts/data'
-import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, LineChart, Line } from 'recharts'
+import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, LineChart, Line, Legend } from 'recharts'
 import { trafficTrend } from '@/lib/vts/data'
 
 export default function AnalyticsPanel() {
   const total = vesselTypeDistribution.reduce((sum, v) => sum + v.value, 0)
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
       {/* Distribución por tipo */}
-      <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-3">
-        <div className="text-cyan-400 text-xs font-medium mb-2">Distribución por Tipo</div>
-        <div className="h-40">
+      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+        <div className="text-sky-700 text-sm font-semibold mb-3">Distribución por Tipo</div>
+        <div className="h-44">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie
@@ -22,8 +22,8 @@ export default function AnalyticsPanel() {
                 nameKey="name"
                 cx="50%"
                 cy="50%"
-                innerRadius={35}
-                outerRadius={60}
+                innerRadius={40}
+                outerRadius={65}
                 paddingAngle={2}
               >
                 {vesselTypeDistribution.map((entry, idx) => (
@@ -32,83 +32,77 @@ export default function AnalyticsPanel() {
               </Pie>
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#0f172a',
-                  border: '1px solid #1e293b',
-                  borderRadius: '6px',
-                  fontSize: '11px',
-                  color: '#e2e8f0',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '8px',
+                  fontSize: '12px',
+                  color: '#0f172a',
+                  boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
                 }}
               />
             </PieChart>
           </ResponsiveContainer>
         </div>
-        <div className="grid grid-cols-2 gap-1 mt-1">
+        <div className="grid grid-cols-2 gap-1.5 mt-2">
           {vesselTypeDistribution.map((v) => (
-            <div key={v.name} className="flex items-center gap-1.5 text-[10px]">
-              <span className="w-2 h-2 rounded-sm flex-shrink-0" style={{ backgroundColor: v.color }} />
-              <span className="text-slate-400 truncate">{v.name}</span>
-              <span className="text-slate-300 ml-auto font-medium">{v.value}</span>
+            <div key={v.name} className="flex items-center gap-1.5 text-xs">
+              <span className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ backgroundColor: v.color }} />
+              <span className="text-slate-600 truncate">{v.name}</span>
+              <span className="text-slate-900 ml-auto font-semibold">{v.value}</span>
             </div>
           ))}
         </div>
       </div>
 
       {/* Distribución por bandera */}
-      <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-3">
-        <div className="text-cyan-400 text-xs font-medium mb-2">Distribución por Bandera</div>
-        <div className="h-40">
+      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+        <div className="text-sky-700 text-sm font-semibold mb-3">Distribución por Bandera</div>
+        <div className="h-44">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={flagDistribution} layout="vertical" margin={{ left: 10, right: 10, top: 0, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-              <XAxis type="number" stroke="#475569" fontSize={9} tick={{ fontSize: 9 }} />
-              <YAxis dataKey="flag" type="category" stroke="#94a3b8" fontSize={9} width={75} tick={{ fontSize: 9 }} />
+            <BarChart data={flagDistribution} layout="vertical" margin={{ left: 10, right: 15, top: 0, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+              <XAxis type="number" stroke="#94a3b8" fontSize={11} tick={{ fontSize: 11 }} />
+              <YAxis dataKey="flag" type="category" stroke="#64748b" fontSize={11} width={80} tick={{ fontSize: 11 }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#0f172a',
-                  border: '1px solid #1e293b',
-                  borderRadius: '6px',
-                  fontSize: '11px',
-                  color: '#e2e8f0',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '8px',
+                  fontSize: '12px',
+                  color: '#0f172a',
+                  boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
                 }}
               />
-              <Bar dataKey="count" fill="#06b6d4" radius={[0, 4, 4, 0]} />
+              <Bar dataKey="count" fill="#0284c7" radius={[0, 6, 6, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
 
       {/* Tendencia horaria de tráfico */}
-      <div className="bg-slate-900/50 border border-slate-700 rounded-lg p-3">
-        <div className="text-cyan-400 text-xs font-medium mb-2">Tráfico por Hora</div>
-        <div className="h-40">
+      <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-sm">
+        <div className="text-sky-700 text-sm font-semibold mb-3">Tráfico por Hora (24h)</div>
+        <div className="h-44">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={trafficTrend} margin={{ left: -15, right: 5, top: 5, bottom: 0 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
-              <XAxis dataKey="hora" stroke="#475569" fontSize={9} tick={{ fontSize: 9 }} />
-              <YAxis stroke="#475569" fontSize={9} tick={{ fontSize: 9 }} />
+              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+              <XAxis dataKey="hora" stroke="#94a3b8" fontSize={11} tick={{ fontSize: 11 }} />
+              <YAxis stroke="#94a3b8" fontSize={11} tick={{ fontSize: 11 }} />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: '#0f172a',
-                  border: '1px solid #1e293b',
-                  borderRadius: '6px',
-                  fontSize: '11px',
-                  color: '#e2e8f0',
+                  backgroundColor: '#ffffff',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '8px',
+                  fontSize: '12px',
+                  color: '#0f172a',
+                  boxShadow: '0 4px 6px rgba(0,0,0,0.05)',
                 }}
               />
-              <Line type="monotone" dataKey="entradas" stroke="#10b981" strokeWidth={2} dot={{ r: 3 }} />
-              <Line type="monotone" dataKey="salidas" stroke="#f59e0b" strokeWidth={2} dot={{ r: 3 }} />
+              <Legend wrapperStyle={{ fontSize: '11px', paddingTop: '5px' }} />
+              <Line type="monotone" dataKey="entradas" stroke="#16a34a" strokeWidth={2.5} dot={{ r: 4 }} name="Entradas" />
+              <Line type="monotone" dataKey="salidas" stroke="#d97706" strokeWidth={2.5} dot={{ r: 4 }} name="Salidas" />
             </LineChart>
           </ResponsiveContainer>
-        </div>
-        <div className="flex items-center justify-center gap-3 mt-1 text-[10px]">
-          <span className="flex items-center gap-1">
-            <span className="w-2 h-0.5 bg-emerald-500" />
-            <span className="text-slate-400">Entradas</span>
-          </span>
-          <span className="flex items-center gap-1">
-            <span className="w-2 h-0.5 bg-amber-500" />
-            <span className="text-slate-400">Salidas</span>
-          </span>
         </div>
       </div>
     </div>

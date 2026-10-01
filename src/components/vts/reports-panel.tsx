@@ -90,9 +90,9 @@ export default function ReportsPanel({ user }: Props) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
       {/* Configuración */}
-      <Card className="bg-slate-900/50 border-slate-700">
+      <Card className="bg-white border-slate-200 shadow-sm">
         <CardHeader className="pb-3">
-          <CardTitle className="text-cyan-300 text-base flex items-center gap-2">
+          <CardTitle className="text-sky-700 text-base flex items-center gap-2">
             <FileText className="w-4 h-4" />
             Generador de Informes Ejecutivos
           </CardTitle>
@@ -100,7 +100,7 @@ export default function ReportsPanel({ user }: Props) {
         <CardContent className="space-y-4">
           {/* Formato */}
           <div>
-            <Label className="text-slate-300 text-xs mb-2">Formato de Exportación</Label>
+            <Label className="text-slate-700 text-xs mb-2">Formato de Exportación</Label>
             <div className="grid grid-cols-2 gap-2">
               {formats.map((f) => {
                 const Icon = f.icon
@@ -111,13 +111,13 @@ export default function ReportsPanel({ user }: Props) {
                     className={`relative flex items-center gap-2 p-3 rounded-lg border transition-all ${
                       format === f.id
                         ? 'border-cyan-500 bg-cyan-500/10'
-                        : 'border-slate-700 bg-slate-800/50 hover:border-slate-600'
+                        : 'border-slate-300 bg-slate-100/50 hover:border-slate-600'
                     }`}
                   >
                     <div className={`w-8 h-8 rounded-md bg-gradient-to-br ${f.color} flex items-center justify-center`}>
                       <Icon className="w-4 h-4 text-white" />
                     </div>
-                    <span className="text-xs text-slate-200 text-left">{f.label}</span>
+                    <span className="text-xs text-slate-700 text-left">{f.label}</span>
                   </button>
                 )
               })}
@@ -126,12 +126,12 @@ export default function ReportsPanel({ user }: Props) {
 
           {/* Tipo de informe */}
           <div>
-            <Label className="text-slate-300 text-xs mb-1.5">Tipo de Informe</Label>
+            <Label className="text-slate-700 text-xs mb-1.5">Tipo de Informe</Label>
             <Select value={reportType} onValueChange={setReportType}>
-              <SelectTrigger className="bg-slate-800 border-slate-700 text-slate-200">
+              <SelectTrigger className="bg-white border-slate-300 text-slate-700">
                 <SelectValue />
               </SelectTrigger>
-              <SelectContent className="bg-slate-800 border-slate-700">
+              <SelectContent className="bg-slate-100 border-slate-300">
                 <SelectItem value="daily">Informe Diario</SelectItem>
                 <SelectItem value="weekly">Informe Semanal</SelectItem>
                 <SelectItem value="monthly">Informe Mensual Ejecutivo</SelectItem>
@@ -144,32 +144,32 @@ export default function ReportsPanel({ user }: Props) {
           {/* Rango de fechas */}
           <div className="grid grid-cols-2 gap-2">
             <div>
-              <Label className="text-slate-300 text-xs mb-1.5 flex items-center gap-1">
+              <Label className="text-slate-700 text-xs mb-1.5 flex items-center gap-1">
                 <Calendar className="w-3 h-3" /> Desde
               </Label>
               <Input
                 type="date"
                 value={dateFrom}
                 onChange={(e) => setDateFrom(e.target.value)}
-                className="bg-slate-800 border-slate-700 text-slate-200 text-sm"
+                className="bg-white border-slate-300 text-slate-700 text-sm"
               />
             </div>
             <div>
-              <Label className="text-slate-300 text-xs mb-1.5 flex items-center gap-1">
+              <Label className="text-slate-700 text-xs mb-1.5 flex items-center gap-1">
                 <Calendar className="w-3 h-3" /> Hasta
               </Label>
               <Input
                 type="date"
                 value={dateTo}
                 onChange={(e) => setDateTo(e.target.value)}
-                className="bg-slate-800 border-slate-700 text-slate-200 text-sm"
+                className="bg-white border-slate-300 text-slate-700 text-sm"
               />
             </div>
           </div>
 
           {/* Secciones */}
           <div>
-            <Label className="text-slate-300 text-xs mb-1.5">Secciones a Incluir</Label>
+            <Label className="text-slate-700 text-xs mb-1.5">Secciones a Incluir</Label>
             <div className="grid grid-cols-1 gap-1.5">
               {sections.map((s) => (
                 <button
@@ -178,7 +178,7 @@ export default function ReportsPanel({ user }: Props) {
                   className={`flex items-center gap-2 px-3 py-1.5 rounded text-xs border transition-colors ${
                     includeSections.includes(s.id)
                       ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-200'
-                      : 'border-slate-700 bg-slate-800/50 text-slate-400'
+                      : 'border-slate-300 bg-slate-100/50 text-slate-500'
                   }`}
                 >
                   <CheckCircle2 className={`w-3 h-3 ${includeSections.includes(s.id) ? 'opacity-100' : 'opacity-30'}`} />
@@ -221,15 +221,15 @@ export default function ReportsPanel({ user }: Props) {
       </Card>
 
       {/* Vista previa */}
-      <Card className="bg-slate-900/50 border-slate-700">
+      <Card className="bg-white border-slate-200 shadow-sm">
         <CardHeader className="pb-3">
-          <CardTitle className="text-cyan-300 text-base">Vista Previa del Informe</CardTitle>
+          <CardTitle className="text-sky-700 text-base">Vista Previa del Informe</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
-          <div className="bg-slate-800/50 rounded-lg p-3 border border-slate-700">
+          <div className="bg-slate-100/50 rounded-lg p-3 border border-slate-300">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-xs text-slate-400">Encabezado</span>
-              <Badge variant="outline" className="bg-cyan-500/10 text-cyan-300 border-cyan-500/30 text-[9px]">
+              <span className="text-xs text-slate-500">Encabezado</span>
+              <Badge variant="outline" className="bg-cyan-500/10 text-sky-700 border-cyan-500/30 text-[9px]">
                 {reportType === 'daily' && 'DIARIO'}
                 {reportType === 'weekly' && 'SEMANAL'}
                 {reportType === 'monthly' && 'MENSUAL'}
@@ -237,18 +237,18 @@ export default function ReportsPanel({ user }: Props) {
                 {reportType === 'compliance' && 'AUDITORÍA'}
               </Badge>
             </div>
-            <div className="text-slate-100 font-semibold">Informe de Tráfico Marítimo</div>
-            <div className="text-xs text-slate-400">TCP Valparaíso · {dateFrom} → {dateTo}</div>
+            <div className="text-slate-900 font-semibold">Informe de Tráfico Marítimo</div>
+            <div className="text-xs text-slate-500">TCP Valparaíso · {dateFrom} → {dateTo}</div>
             <div className="text-[10px] text-slate-500 mt-1">Operador: {user?.name} · {user?.organization}</div>
           </div>
 
           {includeSections.includes('summary') && (
             <div>
               <div className="text-[10px] text-cyan-400 uppercase tracking-wide mb-1">Resumen Ejecutivo</div>
-              <div className="text-xs text-slate-300 leading-relaxed">
-                Durante el período reportado se registraron <b className="text-slate-100">{vessels.length}</b> naves en zona VTS,
-                con <b className="text-slate-100">{vessels.filter(v => v.status === 'moored').length}</b> atracadas y
-                <b className="text-slate-100"> {vessels.filter(v => v.status === 'arrival').length}</b> en aproximación.
+              <div className="text-xs text-slate-700 leading-relaxed">
+                Durante el período reportado se registraron <b className="text-slate-900">{vessels.length}</b> naves en zona VTS,
+                con <b className="text-slate-900">{vessels.filter(v => v.status === 'moored').length}</b> atracadas y
+                <b className="text-slate-900"> {vessels.filter(v => v.status === 'arrival').length}</b> en aproximación.
                 Precisión GPS media con fusión IA: <b className="text-emerald-400">{kpis[3].value}%</b>.
               </div>
             </div>
@@ -259,8 +259,8 @@ export default function ReportsPanel({ user }: Props) {
               <div className="text-[10px] text-cyan-400 uppercase tracking-wide mb-1">Registro de Buques</div>
               <div className="space-y-0.5">
                 {vessels.slice(0, 4).map((v) => (
-                  <div key={v.id} className="flex items-center justify-between text-[10px] bg-slate-800/30 rounded px-2 py-1">
-                    <span className="text-slate-200">{v.name}</span>
+                  <div key={v.id} className="flex items-center justify-between text-[10px] bg-slate-100/30 rounded px-2 py-1">
+                    <span className="text-slate-700">{v.name}</span>
                     <span className="text-slate-500">{v.mmsi} · {v.flag}</span>
                   </div>
                 ))}
@@ -272,7 +272,7 @@ export default function ReportsPanel({ user }: Props) {
           {includeSections.includes('alerts') && (
             <div>
               <div className="text-[10px] text-cyan-400 uppercase tracking-wide mb-1">Alertas Activas</div>
-              <div className="text-xs text-slate-300">
+              <div className="text-xs text-slate-700">
                 {alerts.filter(a => a.status === 'active').length} alertas activas ·
                 <span className="text-red-400"> {alerts.filter(a => a.severity === 'critical').length} crítica</span> ·
                 <span className="text-amber-400"> {alerts.filter(a => a.severity === 'high').length} alta</span>
@@ -283,7 +283,7 @@ export default function ReportsPanel({ user }: Props) {
           {includeSections.includes('compliance') && (
             <div>
               <div className="text-[10px] text-cyan-400 uppercase tracking-wide mb-1">Cumplimiento Normativo</div>
-              <div className="text-xs text-slate-300 space-y-0.5">
+              <div className="text-xs text-slate-700 space-y-0.5">
                 <div className="flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-emerald-400" /> IALA V-103</div>
                 <div className="flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-emerald-400" /> IMO MSC.428(98)</div>
                 <div className="flex items-center gap-1"><CheckCircle2 className="w-3 h-3 text-emerald-400" /> Ley 21.719 Ciberseguridad</div>

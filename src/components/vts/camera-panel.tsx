@@ -11,25 +11,25 @@ export default function CameraPanel() {
   const selectedCam = cameraFeeds.find((c) => c.id === selected)!
 
   return (
-    <div className="flex flex-col h-full bg-slate-900/50 border border-slate-700 rounded-lg overflow-hidden">
-      <div className="p-3 border-b border-slate-700">
+    <div className="flex flex-col h-full bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+      <div className="p-4 border-b border-slate-200 bg-slate-50/50">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-cyan-400 text-sm font-medium">
-            <Cctv className="w-4 h-4" />
-            <span>CCTV — Circuito de Cámaras</span>
+          <div className="flex items-center gap-2 text-sky-700 text-base font-semibold">
+            <Cctv className="w-5 h-5" />
+            <span>CCTV en Vivo</span>
           </div>
-          <Badge variant="outline" className="bg-emerald-500/10 text-emerald-300 border-emerald-500/30 text-[10px]">
+          <Badge variant="outline" className="bg-emerald-50 text-emerald-700 border-emerald-200 text-xs px-2 py-0.5">
             {cameraFeeds.filter((c) => c.online).length} en línea
           </Badge>
         </div>
       </div>
 
       {/* Vista principal de cámara */}
-      <div className="aspect-video bg-slate-950 relative overflow-hidden">
+      <div className="aspect-video bg-slate-900 relative overflow-hidden">
         {selectedCam.online ? (
           <div className="absolute inset-0">
-            {/* Simulación de feed de cámara con gradiente y elementos */}
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-800 via-slate-900 to-slate-950" />
+            {/* Simulación de feed */}
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-700 via-slate-800 to-slate-950" />
             <div className="absolute inset-0 opacity-30" style={{
               backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.05) 2px, rgba(255,255,255,0.05) 3px)'
             }} />
@@ -61,7 +61,7 @@ export default function CameraPanel() {
             </div>
           </div>
         ) : (
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-600">
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-500">
             <VideoOff className="w-8 h-8 mb-2" />
             <span className="text-xs">Cámara fuera de línea</span>
           </div>
@@ -69,19 +69,19 @@ export default function CameraPanel() {
       </div>
 
       {/* Selector de cámaras */}
-      <div className="p-2 grid grid-cols-2 sm:grid-cols-4 gap-1.5 max-h-32 overflow-y-auto">
+      <div className="p-3 grid grid-cols-2 sm:grid-cols-4 gap-1.5 max-h-32 overflow-y-auto">
         {cameraFeeds.map((cam) => (
           <button
             key={cam.id}
             onClick={() => setSelected(cam.id)}
-            className={`flex items-center gap-1 px-2 py-1.5 rounded text-[10px] transition-colors border ${
+            className={`flex items-center gap-1 px-2 py-2 rounded-lg text-xs transition-colors border font-medium ${
               selected === cam.id
-                ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/40'
-                : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700'
+                ? 'bg-sky-600 text-white border-sky-600 shadow-sm'
+                : 'bg-white text-slate-700 border-slate-300 hover:bg-slate-50'
             }`}
             title={cam.name}
           >
-            {cam.online ? <Video className="w-3 h-3 flex-shrink-0" /> : <VideoOff className="w-3 h-3 flex-shrink-0 opacity-50" />}
+            {cam.online ? <Video className="w-3.5 h-3.5 flex-shrink-0" /> : <VideoOff className="w-3.5 h-3.5 flex-shrink-0 opacity-50" />}
             <span className="truncate">{cam.id.toUpperCase()}</span>
             <span className="ml-auto text-[9px] text-slate-500">{cam.type}</span>
           </button>

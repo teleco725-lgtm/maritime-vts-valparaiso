@@ -26,25 +26,25 @@ export default function VesselTable({ selectedVessel, onSelectVessel }: Props) {
   }, [query, filter])
 
   return (
-    <div className="flex flex-col h-full bg-slate-900/50 border border-slate-700 rounded-lg overflow-hidden">
-      <div className="p-3 border-b border-slate-700 space-y-2">
-        <div className="flex items-center gap-2 text-cyan-400 text-sm font-medium">
-          <Ship className="w-4 h-4" />
-          <span>Registro de Buques — AIS / SNRB / IMO</span>
-          <Badge variant="outline" className="ml-auto bg-slate-800 text-slate-300 border-slate-600">
+    <div className="flex flex-col h-full bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+      <div className="p-4 border-b border-slate-200 space-y-3 bg-slate-50/50">
+        <div className="flex items-center gap-2 text-sky-700 text-base font-semibold">
+          <Ship className="w-5 h-5" />
+          <span>Registro de Buques</span>
+          <Badge variant="secondary" className="ml-auto bg-sky-100 text-sky-700 border-sky-200 text-xs px-2 py-0.5">
             {filtered.length} naves
           </Badge>
         </div>
         <div className="relative">
-          <Search className="absolute left-2 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
           <Input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Buscar por nombre, MMSI o IMO..."
-            className="pl-8 h-8 bg-slate-800 border-slate-700 text-slate-200 text-sm"
+            className="pl-10 h-10 bg-white border-slate-300 text-slate-800 text-sm"
           />
         </div>
-        <div className="flex flex-wrap gap-1">
+        <div className="flex flex-wrap gap-1.5">
           {[
             { id: 'all', label: 'Todos' },
             { id: 'underway', label: 'Navegando' },
@@ -55,10 +55,10 @@ export default function VesselTable({ selectedVessel, onSelectVessel }: Props) {
             <button
               key={f.id}
               onClick={() => setFilter(f.id as any)}
-              className={`px-2 py-1 text-[11px] rounded ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
                 filter === f.id
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
-                  : 'bg-slate-800 text-slate-400 border border-slate-700'
+                  ? 'bg-sky-600 text-white shadow-sm'
+                  : 'bg-white text-slate-600 border border-slate-300 hover:bg-slate-50'
               }`}
             >
               {f.label}
@@ -79,53 +79,53 @@ export default function VesselTable({ selectedVessel, onSelectVessel }: Props) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
                 onClick={() => onSelectVessel(v)}
-                className={`border-b border-slate-800 p-3 cursor-pointer transition-colors ${
-                  isSelected ? 'bg-cyan-500/10 border-l-2 border-l-cyan-400' : 'hover:bg-slate-800/50'
+                className={`border-b border-slate-100 p-3 cursor-pointer transition-colors ${
+                  isSelected ? 'bg-sky-50 border-l-4 border-l-sky-500' : 'hover:bg-slate-50'
                 }`}
               >
                 <div className="flex items-start justify-between gap-2 mb-1.5">
                   <div className="flex items-center gap-2 min-w-0">
                     <span
-                      className="w-2 h-2 rounded-full flex-shrink-0"
+                      className="w-2.5 h-2.5 rounded-full flex-shrink-0 ring-2 ring-offset-1 ring-slate-200"
                       style={{ backgroundColor: getVesselStatusColor(v.status) }}
                     />
-                    <span className="font-semibold text-sm text-slate-100 truncate">{v.name}</span>
+                    <span className="font-semibold text-sm text-slate-900 truncate">{v.name}</span>
                   </div>
-                  <span className="text-[10px] text-slate-500 flex-shrink-0">{v.flag}</span>
+                  <span className="text-xs text-slate-500 flex-shrink-0 font-medium">{v.flag}</span>
                 </div>
-                <div className="grid grid-cols-2 gap-x-2 gap-y-1 text-[11px] text-slate-400">
+                <div className="grid grid-cols-2 gap-x-3 gap-y-1 text-xs text-slate-600">
                   <div className="flex items-center gap-1">
-                    <span className="text-slate-500">MMSI:</span>
-                    <span className="font-mono text-slate-300">{v.mmsi}</span>
+                    <span className="text-slate-400">MMSI:</span>
+                    <span className="font-mono text-slate-700">{v.mmsi}</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <span className="text-slate-500">IMO:</span>
-                    <span className="font-mono text-slate-300">{v.imo}</span>
+                    <span className="text-slate-400">IMO:</span>
+                    <span className="font-mono text-slate-700">{v.imo}</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <Ship className="w-2.5 h-2.5" />
+                    <Ship className="w-3 h-3 text-sky-600" />
                     <span>{getVesselTypeLabel(v.type)}</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    {v.status === 'moored' ? <Anchor className="w-2.5 h-2.5" /> : <Navigation className="w-2.5 h-2.5" />}
+                    {v.status === 'moored' ? <Anchor className="w-3 h-3 text-emerald-600" /> : <Navigation className="w-3 h-3 text-sky-600" />}
                     <span>{getStatusLabel(v.status)}</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <Gauge className="w-2.5 h-2.5" />
+                    <Gauge className="w-3 h-3 text-violet-600" />
                     <span>{v.sog.toFixed(1)} kn</span>
                   </div>
                   <div className="flex items-center gap-1">
-                    <Clock className="w-2.5 h-2.5" />
+                    <Clock className="w-3 h-3 text-amber-600" />
                     <span className="truncate">{v.eta}</span>
                   </div>
                 </div>
-                <div className="flex items-center justify-between mt-1.5">
-                  <Badge variant="outline" className="text-[9px] bg-slate-800/60 border-slate-700 text-slate-300">
+                <div className="flex items-center justify-between mt-2">
+                  <Badge variant="outline" className="text-[10px] bg-white border-slate-300 text-slate-600">
                     {v.registry}
                   </Badge>
-                  <div className="flex items-center gap-1 text-[10px]">
-                    <span className="text-slate-500">IA:</span>
-                    <span className={v.confidence > 98 ? 'text-emerald-400' : v.confidence > 95 ? 'text-amber-400' : 'text-red-400'}>
+                  <div className="flex items-center gap-1 text-xs">
+                    <span className="text-slate-400">Precisión IA:</span>
+                    <span className={`font-semibold ${v.confidence > 98 ? 'text-emerald-600' : v.confidence > 95 ? 'text-amber-600' : 'text-red-600'}`}>
                       {v.confidence.toFixed(1)}%
                     </span>
                   </div>
@@ -139,7 +139,8 @@ export default function VesselTable({ selectedVessel, onSelectVessel }: Props) {
       <style jsx>{`
         .custom-scroll::-webkit-scrollbar { width: 6px; }
         .custom-scroll::-webkit-scrollbar-track { background: transparent; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
       `}</style>
     </div>
   )

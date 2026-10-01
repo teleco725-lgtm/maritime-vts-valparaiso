@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Loader2, ShieldCheck, Ship, Radar, Cctv, Waves, Lock, Globe2 } from 'lucide-react'
+import { Loader2, ShieldCheck, Ship, Radar, Cctv, Waves, Lock, Globe2, Anchor } from 'lucide-react'
 import { useAuthStore } from '@/store/auth-store'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -41,28 +41,29 @@ export default function LoginView() {
   }
 
   return (
-    <div
-      className="min-h-screen flex flex-col lg:flex-row text-slate-100"
+    <div className="min-h-screen flex flex-col lg:flex-row text-slate-800"
       style={{
-        background:
-          'linear-gradient(135deg, #1a1d24 0%, #1b1f26 30%, #1c1e22 60%, #1d1c1f 100%)',
+        background: 'linear-gradient(135deg, #dbeafe 0%, #e0f2fe 25%, #f0f9ff 55%, #ffffff 100%)',
       }}
     >
       {/* Panel izquierdo — branding */}
       <div className="lg:w-1/2 flex flex-col justify-between p-8 lg:p-14 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <div className="absolute top-20 left-10 w-64 h-64 rounded-full blur-3xl" style={{ background: 'radial-gradient(circle, #06b6d4 0%, transparent 70%)' }} />
-          <div className="absolute bottom-10 right-10 w-80 h-80 rounded-full blur-3xl" style={{ background: 'radial-gradient(circle, #10b981 0%, transparent 70%)' }} />
+        {/* Decoración suave */}
+        <div className="absolute inset-0 opacity-30 pointer-events-none">
+          <div className="absolute top-20 left-10 w-72 h-72 rounded-full blur-3xl"
+            style={{ background: 'radial-gradient(circle, #38bdf8 0%, transparent 70%)' }} />
+          <div className="absolute bottom-10 right-10 w-96 h-96 rounded-full blur-3xl"
+            style={{ background: 'radial-gradient(circle, #60a5fa 0%, transparent 70%)' }} />
         </div>
 
         <div className="relative z-10">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/30">
-              <Ship className="w-6 h-6 text-white" />
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center shadow-lg shadow-sky-500/30">
+              <Ship className="w-7 h-7 text-white" strokeWidth={2.5} />
             </div>
             <div>
-              <h1 className="text-xl font-bold tracking-tight">MaritimeVTS</h1>
-              <p className="text-xs text-slate-400">Control de Tráfico Marítimo · TCP Valparaíso</p>
+              <h1 className="text-2xl font-bold tracking-tight text-slate-900">MaritimeVTS</h1>
+              <p className="text-sm text-slate-600">Control de Tráfico Marítimo · TCP Valparaíso</p>
             </div>
           </div>
         </div>
@@ -73,42 +74,48 @@ export default function LoginView() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <Badge variant="outline" className="mb-4 bg-cyan-500/10 text-cyan-300 border-cyan-500/30">
-              <ShieldCheck className="w-3 h-3 mr-1" /> Sistema conforme a IALA V-103 · Ley 21.719
+            <Badge variant="outline" className="mb-5 bg-sky-50 text-sky-700 border-sky-200 px-3 py-1 text-xs">
+              <ShieldCheck className="w-3.5 h-3.5 mr-1.5" /> Sistema conforme a IALA V-103 · Ley 21.719
             </Badge>
-            <h2 className="text-3xl lg:text-5xl font-bold leading-tight mb-4">
+            <h2 className="text-4xl lg:text-5xl font-bold leading-tight mb-5 text-slate-900">
               Plataforma Ejecutiva de<br/>
-              <span className="bg-gradient-to-r from-cyan-400 to-emerald-400 bg-clip-text text-transparent">
-                Vigilancia Marítima Inteligente
+              <span className="bg-gradient-to-r from-sky-600 to-blue-700 bg-clip-text text-transparent">
+                Vigilancia Marítima
               </span>
             </h2>
-            <p className="text-slate-300 text-base lg:text-lg max-w-md leading-relaxed">
-              Integración AIS · Radar · Cámaras con fusión de sensores basada en IA.
-              Trazabilidad de buques conforme a registro SNRB, IMO y SERNAPESCA.
+            <p className="text-slate-600 text-base lg:text-lg max-w-md leading-relaxed mb-6">
+              Sistema integrado AIS, Radar y Cámaras con fusión de sensores basada en IA.
+              Diseñado para operadores con cualquier nivel de experiencia.
             </p>
 
             <div className="grid grid-cols-3 gap-3 mt-8 max-w-md">
               {[
-                { icon: Radar, label: 'Radar ARPA' },
-                { icon: Cctv, label: 'CCTV PTZ' },
-                { icon: Waves, label: 'MET-OCEAN' },
-              ].map(({ icon: Icon, label }) => (
-                <div key={label} className="rounded-lg bg-white/5 border border-white/10 p-3 flex flex-col items-center gap-2">
-                  <Icon className="w-5 h-5 text-cyan-400" />
-                  <span className="text-xs text-slate-300 text-center">{label}</span>
+                { icon: Radar, label: 'Radar ARPA', desc: 'Detección 24/7' },
+                { icon: Cctv, label: 'CCTV PTZ', desc: 'Visual en vivo' },
+                { icon: Waves, label: 'MET-OCEAN', desc: 'Clima marítimo' },
+              ].map(({ icon: Icon, label, desc }) => (
+                <div key={label} className="rounded-xl bg-white/80 backdrop-blur border border-sky-100 p-3 flex flex-col items-center gap-1.5 shadow-sm">
+                  <Icon className="w-6 h-6 text-sky-600" strokeWidth={2} />
+                  <span className="text-xs font-semibold text-slate-700 text-center">{label}</span>
+                  <span className="text-[10px] text-slate-500 text-center">{desc}</span>
                 </div>
               ))}
+            </div>
+
+            <div className="mt-8 flex items-center gap-2 text-sm text-slate-600">
+              <Anchor className="w-4 h-4 text-sky-600" />
+              <span>Puerto de Valparaíso · Terminal Pacífico Sur</span>
             </div>
           </motion.div>
         </div>
 
         <div className="relative z-10 text-xs text-slate-500 space-y-1">
-          <p className="flex items-center gap-2"><Lock className="w-3 h-3" /> Conexión cifrada TLS 1.3 · Cumplimiento Ley 19.628 / 21.719</p>
-          <p className="flex items-center gap-2"><Globe2 className="w-3 h-3" /> Operación dentro de jurisdicción marítima chilena (12 mn)</p>
+          <p className="flex items-center gap-2"><Lock className="w-3.5 h-3.5" /> Conexión cifrada TLS 1.3 · Ley 19.628 / 21.719</p>
+          <p className="flex items-center gap-2"><Globe2 className="w-3.5 h-3.5" /> Operación en jurisdicción marítima chilena (12 mn)</p>
         </div>
       </div>
 
-      {/* Panel derecho — formulario de acceso */}
+      {/* Panel derecho — formulario */}
       <div className="lg:w-1/2 flex items-center justify-center p-6 lg:p-12">
         <motion.div
           initial={{ opacity: 0, scale: 0.96 }}
@@ -116,67 +123,64 @@ export default function LoginView() {
           transition={{ duration: 0.5 }}
           className="w-full max-w-md"
         >
-          <Card className="border-slate-700/60 backdrop-blur-xl shadow-2xl" style={{ background: 'rgba(26, 30, 38, 0.65)' }}>
-            <CardHeader className="space-y-1">
-              <CardTitle className="text-2xl text-white">Acceso Ejecutivo</CardTitle>
-              <CardDescription className="text-slate-400">
-                Seleccione su proveedor de identidad institucional para continuar.
+          <Card className="bg-white/95 border-slate-200 backdrop-blur-xl shadow-2xl shadow-sky-900/10">
+            <CardHeader className="space-y-2 pb-4">
+              <CardTitle className="text-2xl text-slate-900">Acceso al Sistema</CardTitle>
+              <CardDescription className="text-slate-600 text-base">
+                Seleccione su cuenta institucional para continuar.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-3">
               <Button
                 onClick={() => handleLogin('microsoft')}
                 disabled={isAuthenticating}
-                className="w-full h-12 bg-white hover:bg-slate-100 text-slate-900 font-medium border border-slate-300"
+                className="w-full h-14 bg-white hover:bg-slate-50 text-slate-800 font-medium text-base border border-slate-300 shadow-sm"
               >
                 {isAuthenticating && activeProvider === 'microsoft' ? (
-                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  <Loader2 className="w-5 h-5 mr-3 animate-spin" />
                 ) : (
-                  <MicrosoftIcon className="w-5 h-5 mr-3" />
+                  <MicrosoftIcon className="w-6 h-6 mr-3" />
                 )}
                 Continuar con Microsoft 365
-                <span className="ml-2 text-[10px] text-slate-500 font-normal">Azure AD</span>
               </Button>
 
               <Button
                 onClick={() => handleLogin('google')}
                 disabled={isAuthenticating}
-                className="w-full h-12 bg-white hover:bg-slate-100 text-slate-900 font-medium border border-slate-300"
+                className="w-full h-14 bg-white hover:bg-slate-50 text-slate-800 font-medium text-base border border-slate-300 shadow-sm"
               >
                 {isAuthenticating && activeProvider === 'google' ? (
-                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  <Loader2 className="w-5 h-5 mr-3 animate-spin" />
                 ) : (
-                  <GoogleIcon className="w-5 h-5 mr-3" />
+                  <GoogleIcon className="w-6 h-6 mr-3" />
                 )}
-                Continuar con Google Workspace
-                <span className="ml-2 text-[10px] text-slate-500 font-normal">OAuth 2.0</span>
+                Continuar con Google
               </Button>
 
-              <div className="relative my-2">
-                <Separator className="bg-slate-700" />
-                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-900 px-3 text-xs text-slate-500">
-                  o
+              <div className="relative my-3">
+                <Separator className="bg-slate-200" />
+                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-3 text-xs text-slate-500 font-medium">
+                  o acceso rápido
                 </span>
               </div>
 
               <Button
                 onClick={() => handleLogin('guest')}
                 disabled={isAuthenticating}
-                variant="outline"
-                className="w-full h-12 bg-transparent border-slate-600 text-slate-200 hover:bg-slate-800"
+                className="w-full h-14 bg-sky-600 hover:bg-sky-700 text-white font-medium text-base shadow-md shadow-sky-500/30"
               >
                 {isAuthenticating && activeProvider === 'guest' ? (
-                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  <Loader2 className="w-5 h-5 mr-3 animate-spin" />
                 ) : (
-                  <ShieldCheck className="w-5 h-5 mr-2" />
+                  <ShieldCheck className="w-5 h-5 mr-3" />
                 )}
                 Acceso de Demostración
               </Button>
 
-              <p className="text-[11px] leading-relaxed text-slate-500 text-center pt-2">
+              <p className="text-xs leading-relaxed text-slate-500 text-center pt-3">
                 Al continuar, el usuario acepta la política de tratamiento de datos personales
-                conforme a la <span className="text-slate-400">Ley 21.719</span> y los protocolos
-                de la <span className="text-slate-400">Directemar</span>.
+                conforme a la <span className="font-semibold text-slate-700">Ley 21.719</span> y los protocolos
+                de la <span className="font-semibold text-slate-700">Directemar</span>.
               </p>
             </CardContent>
           </Card>

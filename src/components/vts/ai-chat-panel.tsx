@@ -217,26 +217,25 @@ export default function AIChatPanel() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 50, scale: 0.95 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed bottom-6 right-6 z-50 w-[calc(100vw-3rem)] sm:w-[400px] md:w-[440px] h-[600px] max-h-[calc(100vh-3rem)] flex flex-col border border-slate-700/70 rounded-xl shadow-2xl overflow-hidden"
+            className="fixed bottom-6 right-6 z-50 w-[calc(100vw-3rem)] sm:w-[400px] md:w-[440px] h-[600px] max-h-[calc(100vh-3rem)] flex flex-col border border-slate-200 rounded-xl shadow-2xl overflow-hidden bg-white"
             style={{
-              background: 'linear-gradient(135deg, #1a1d24 0%, #1b1f26 35%, #1c1e22 70%, #1d1c1f 100%)',
-              backdropFilter: 'blur(12px)',
+              boxShadow: '0 20px 25px -5px rgba(0,0,0,0.15), 0 10px 10px -5px rgba(0,0,0,0.04)',
             }}
           >
             {/* Header */}
-            <div className="flex items-center justify-between p-3 border-b border-slate-700/60" style={{ background: 'rgba(15, 18, 22, 0.6)' }}>
+            <div className="flex items-center justify-between p-3 border-b border-slate-200 bg-sky-50/60">
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center flex-shrink-0 shadow-md">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-sm font-semibold text-slate-100 flex items-center gap-1.5">
+                  <div className="text-base font-bold text-slate-900 flex items-center gap-1.5">
                     Victoria
-                    <Badge variant="outline" className="bg-cyan-500/10 text-cyan-300 border-cyan-500/30 text-[9px] px-1 py-0">
-                      AI
+                    <Badge variant="outline" className="bg-sky-100 text-sky-700 border-sky-200 text-[10px] px-1.5 py-0">
+                      IA
                     </Badge>
                   </div>
-                  <div className="text-[10px] text-slate-500 truncate">
+                  <div className="text-xs text-slate-600 truncate">
                     Asistente Marítimo · TCP Valparaíso
                   </div>
                 </div>
@@ -244,15 +243,15 @@ export default function AIChatPanel() {
               <div className="flex items-center gap-1">
                 <button
                   onClick={clearChat}
-                  className="p-1.5 rounded hover:bg-slate-800 text-slate-400 hover:text-slate-200"
+                  className="p-2 rounded-lg hover:bg-slate-200 text-slate-500 hover:text-slate-700"
                   aria-label="Limpiar conversación"
                   title="Limpiar conversación"
                 >
-                  <Trash2 className="w-3.5 h-3.5" />
+                  <Trash2 className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-1.5 rounded hover:bg-slate-800 text-slate-400 hover:text-slate-200"
+                  className="p-2 rounded-lg hover:bg-slate-200 text-slate-500 hover:text-slate-700"
                   aria-label="Cerrar chat"
                 >
                   <X className="w-4 h-4" />
@@ -261,22 +260,22 @@ export default function AIChatPanel() {
             </div>
 
             {/* Status bar con fuentes de información */}
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-900/50 border-b border-slate-800 text-[9px]">
-              <span className="flex items-center gap-1 text-emerald-400">
-                <Globe2 className="w-2.5 h-2.5" /> Internet
+            <div className="flex items-center gap-2 px-3 py-2 bg-slate-50 border-b border-slate-200 text-xs">
+              <span className="flex items-center gap-1 text-emerald-600 font-medium">
+                <Globe2 className="w-3 h-3" /> Internet
               </span>
-              <span className="text-slate-700">·</span>
-              <span className="flex items-center gap-1 text-cyan-400">
-                <Database className="w-2.5 h-2.5" /> DB TPS
+              <span className="text-slate-300">·</span>
+              <span className="flex items-center gap-1 text-sky-600 font-medium">
+                <Database className="w-3 h-3" /> DB TPS
               </span>
-              <span className="text-slate-700">·</span>
-              <span className="flex items-center gap-1 text-violet-400">
-                <Activity className="w-2.5 h-2.5" /> Dashboard
+              <span className="text-slate-300">·</span>
+              <span className="flex items-center gap-1 text-violet-600 font-medium">
+                <Activity className="w-3 h-3" /> Dashboard
               </span>
             </div>
 
             {/* Messages */}
-            <div ref={scrollRef} className="flex-1 overflow-y-auto custom-scroll p-3 space-y-3">
+            <div ref={scrollRef} className="flex-1 overflow-y-auto custom-scroll p-4 space-y-3 bg-white">
               {messages.length === 0 && (
                 <div className="space-y-3">
                   <motion.div
@@ -284,42 +283,42 @@ export default function AIChatPanel() {
                     animate={{ opacity: 1 }}
                     className="text-center py-4"
                   >
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center mx-auto mb-2">
-                      <Brain className="w-6 h-6 text-white" />
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-sky-400 to-blue-600 flex items-center justify-center mx-auto mb-3 shadow-md">
+                      <Brain className="w-8 h-8 text-white" />
                     </div>
-                    <div className="text-sm font-medium text-slate-200">Hola, soy Victoria</div>
-                    <div className="text-xs text-slate-500 mt-1 px-2">
+                    <div className="text-lg font-bold text-slate-900">Hola, soy Victoria</div>
+                    <div className="text-sm text-slate-600 mt-1 px-2">
                       Asistente de IA del VTS. Tengo acceso al dashboard en vivo,
                       la base de datos TPS y búsqueda web.
                     </div>
                   </motion.div>
 
                   <div className="space-y-1.5">
-                    <div className="flex items-center gap-1 mb-2 p-1 bg-slate-900/60 rounded-md border border-slate-800">
+                    <div className="flex items-center gap-1 mb-2 p-1 bg-slate-100 rounded-lg border border-slate-200">
                       <button
                         onClick={() => setSuggestionTab('operacional')}
-                        className={`flex-1 flex items-center justify-center gap-1 px-2 py-1 rounded text-[10px] font-medium transition-colors ${
+                        className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-md text-xs font-semibold transition-colors ${
                           suggestionTab === 'operacional'
-                            ? 'bg-cyan-500/20 text-cyan-300'
-                            : 'text-slate-400 hover:text-slate-200'
+                            ? 'bg-white text-sky-700 shadow-sm'
+                            : 'text-slate-500 hover:text-slate-700'
                         }`}
                       >
-                        <Ship className="w-3 h-3" /> Operacional
+                        <Ship className="w-3.5 h-3.5" /> Operacional
                       </button>
                       <button
                         onClick={() => setSuggestionTab('ciberseguridad')}
-                        className={`flex-1 flex items-center justify-center gap-1 px-2 py-1 rounded text-[10px] font-medium transition-colors ${
+                        className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-md text-xs font-semibold transition-colors ${
                           suggestionTab === 'ciberseguridad'
-                            ? 'bg-red-500/20 text-red-300'
-                            : 'text-slate-400 hover:text-slate-200'
+                            ? 'bg-white text-red-700 shadow-sm'
+                            : 'text-slate-500 hover:text-slate-700'
                         }`}
                       >
-                        <ShieldCheck className="w-3 h-3" /> Ciberseguridad
-                        <span className="ml-1 px-1 py-0 rounded bg-red-500/20 text-red-300 text-[8px]">12</span>
+                        <ShieldCheck className="w-3.5 h-3.5" /> Ciberseguridad
+                        <span className="ml-1 px-1.5 py-0 rounded bg-red-100 text-red-700 text-[9px] font-bold">12</span>
                       </button>
                     </div>
 
-                    <div className="text-[10px] text-slate-500 uppercase tracking-wider px-1 mb-1">
+                    <div className="text-xs text-slate-500 uppercase tracking-wider px-1 mb-1 font-semibold">
                       {suggestionTab === 'operacional' ? 'Sugerencias Operacionales' : 'Sugerencias de Auditoría'}
                     </div>
                     {(suggestionTab === 'operacional' ? SUGGESTED_PROMPTS : AUDIT_PROMPTS).map((p, i) => {
@@ -331,14 +330,14 @@ export default function AIChatPanel() {
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: i * 0.05 }}
                           onClick={() => send(p.text)}
-                          className={`w-full flex items-center gap-2 p-2 rounded-md bg-slate-900/60 border hover:bg-slate-800/60 transition-colors text-left ${
+                          className={`w-full flex items-center gap-2 p-2.5 rounded-lg border hover:bg-slate-50 transition-colors text-left ${
                             suggestionTab === 'ciberseguridad'
-                              ? 'border-red-900/40 hover:border-red-700/50'
-                              : 'border-slate-800 hover:border-slate-700'
+                              ? 'border-red-100 hover:border-red-300 bg-red-50/30'
+                              : 'border-slate-200 hover:border-sky-300 bg-white'
                           }`}
                         >
-                          <Icon className={`w-3.5 h-3.5 flex-shrink-0 ${p.color}`} />
-                          <span className="text-xs text-slate-300 line-clamp-2">{p.text}</span>
+                          <Icon className={`w-4 h-4 flex-shrink-0 ${p.color}`} />
+                          <span className="text-sm text-slate-700 line-clamp-2">{p.text}</span>
                         </motion.button>
                       )
                     })}
@@ -353,30 +352,30 @@ export default function AIChatPanel() {
                   animate={{ opacity: 1, y: 0 }}
                   className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <div className={`max-w-[88%] ${msg.role === 'user' ? 'bg-cyan-500/15 border-cyan-500/30' : 'bg-slate-900/70 border-slate-700'} border rounded-lg p-2.5`}>
+                  <div className={`max-w-[88%] ${msg.role === 'user' ? 'bg-sky-600 text-white border-sky-600' : 'bg-slate-50 border-slate-200'} border rounded-2xl p-3 ${msg.role === 'user' ? 'rounded-tr-sm' : 'rounded-tl-sm'}`}>
                     {msg.role === 'assistant' && (
-                      <div className="flex items-center gap-1.5 mb-1 text-[9px] text-cyan-400">
-                        <Sparkles className="w-2.5 h-2.5" />
+                      <div className="flex items-center gap-1.5 mb-1.5 text-xs text-sky-700 font-semibold">
+                        <Sparkles className="w-3 h-3" />
                         Victoria
                       </div>
                     )}
-                    <div className={`text-xs leading-relaxed whitespace-pre-wrap ${msg.role === 'user' ? 'text-slate-200' : 'text-slate-300'}`}>
+                    <div className={`text-sm leading-relaxed whitespace-pre-wrap ${msg.role === 'user' ? 'text-white' : 'text-slate-800'}`}>
                       {msg.content}
                     </div>
                     {msg.meta && (
-                      <div className="flex items-center gap-1.5 mt-1.5 pt-1.5 border-t border-slate-700/50 flex-wrap">
+                      <div className="flex items-center gap-1.5 mt-2 pt-2 border-t border-slate-200/50 flex-wrap">
                         {msg.meta.usedWebSearch && (
-                          <span className="text-[8px] flex items-center gap-0.5 text-emerald-400">
-                            <Globe2 className="w-2 h-2" /> Web
+                          <span className="text-[10px] flex items-center gap-0.5 text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full font-medium">
+                            <Globe2 className="w-2.5 h-2.5" /> Web
                           </span>
                         )}
                         {msg.meta.usedTPSDb && (
-                          <span className="text-[8px] flex items-center gap-0.5 text-cyan-400">
-                            <Database className="w-2 h-2" /> TPS
+                          <span className="text-[10px] flex items-center gap-0.5 text-sky-700 bg-sky-50 px-2 py-0.5 rounded-full font-medium">
+                            <Database className="w-2.5 h-2.5" /> TPS
                           </span>
                         )}
                         {msg.meta.webResultsCount ? (
-                          <span className="text-[8px] text-slate-500">
+                          <span className="text-[10px] text-slate-500 font-medium">
                             {msg.meta.webResultsCount} fuentes web
                           </span>
                         ) : null}
@@ -392,17 +391,17 @@ export default function AIChatPanel() {
                   animate={{ opacity: 1 }}
                   className="flex justify-start"
                 >
-                  <div className="bg-slate-900/70 border border-slate-700 rounded-lg p-3">
+                  <div className="bg-slate-50 border border-slate-200 rounded-2xl rounded-tl-sm p-3">
                     <div className="flex items-center gap-2">
-                      <Loader2 className="w-3 h-3 animate-spin text-cyan-400" />
-                      <span className="text-xs text-slate-400">Consultando fuentes...</span>
+                      <Loader2 className="w-4 h-4 animate-spin text-sky-600" />
+                      <span className="text-sm text-slate-600">Consultando fuentes...</span>
                     </div>
-                    <div className="flex items-center gap-1.5 mt-1.5 text-[8px] text-slate-500">
-                      <span className="flex items-center gap-0.5"><Globe2 className="w-2 h-2" /> Internet</span>
+                    <div className="flex items-center gap-1.5 mt-2 text-xs text-slate-500">
+                      <span className="flex items-center gap-0.5"><Globe2 className="w-3 h-3 text-emerald-600" /> Internet</span>
                       <span>·</span>
-                      <span className="flex items-center gap-0.5"><Database className="w-2 h-2" /> TPS</span>
+                      <span className="flex items-center gap-0.5"><Database className="w-3 h-3 text-sky-600" /> TPS</span>
                       <span>·</span>
-                      <span className="flex items-center gap-0.5"><Activity className="w-2 h-2" /> VTS</span>
+                      <span className="flex items-center gap-0.5"><Activity className="w-3 h-3 text-violet-600" /> VTS</span>
                     </div>
                   </div>
                 </motion.div>
@@ -410,7 +409,7 @@ export default function AIChatPanel() {
             </div>
 
             {/* Input */}
-            <div className="p-3 border-t border-slate-700/60" style={{ background: 'rgba(15, 18, 22, 0.7)' }}>
+            <div className="p-3 border-t border-slate-200 bg-slate-50/50">
               <form
                 onSubmit={(e) => { e.preventDefault(); send() }}
                 className="flex items-center gap-2"
@@ -421,18 +420,18 @@ export default function AIChatPanel() {
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Escribe tu consulta..."
                   disabled={loading}
-                  className="flex-1 h-9 bg-slate-900 border-slate-700 text-slate-200 text-xs placeholder:text-slate-600"
+                  className="flex-1 h-11 bg-white border-slate-300 text-slate-800 text-sm"
                 />
                 <Button
                   type="submit"
                   disabled={loading || !input.trim()}
                   size="icon"
-                  className="h-9 w-9 bg-gradient-to-br from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500"
+                  className="h-11 w-11 bg-gradient-to-br from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 shadow-md"
                 >
-                  <Send className="w-4 h-4" />
+                  <Send className="w-5 h-5" />
                 </Button>
               </form>
-              <div className="text-[9px] text-slate-600 mt-1.5 text-center">
+              <div className="text-xs text-slate-500 mt-2 text-center">
                 Victoria accede a Internet · DB TPS · Dashboard VTS en tiempo real
               </div>
             </div>

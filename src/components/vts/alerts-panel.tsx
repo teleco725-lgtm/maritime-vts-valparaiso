@@ -6,11 +6,11 @@ import { useState } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { AlertTriangle, ShieldAlert, ShieldCheck, Activity, Wind, Radio, Map } from 'lucide-react'
 
-const severityConfig: Record<AlertItem['severity'], { color: string; bg: string; border: string; label: string }> = {
-  critical: { color: 'text-red-300', bg: 'bg-red-500/10', border: 'border-red-500/40', label: 'CRÍTICA' },
-  high: { color: 'text-amber-300', bg: 'bg-amber-500/10', border: 'border-amber-500/40', label: 'ALTA' },
-  medium: { color: 'text-yellow-200', bg: 'bg-yellow-500/10', border: 'border-yellow-500/30', label: 'MEDIA' },
-  low: { color: 'text-sky-200', bg: 'bg-sky-500/10', border: 'border-sky-500/30', label: 'BAJA' },
+const severityConfig: Record<AlertItem['severity'], { color: string; bg: string; border: string; label: string; text: string }> = {
+  critical: { color: 'text-red-600', bg: 'bg-red-50', border: 'border-red-200', label: 'CRÍTICA', text: 'text-red-700' },
+  high: { color: 'text-amber-600', bg: 'bg-amber-50', border: 'border-amber-200', label: 'ALTA', text: 'text-amber-700' },
+  medium: { color: 'text-yellow-700', bg: 'bg-yellow-50', border: 'border-yellow-200', label: 'MEDIA', text: 'text-yellow-800' },
+  low: { color: 'text-sky-700', bg: 'bg-sky-50', border: 'border-sky-200', label: 'BAJA', text: 'text-sky-800' },
 }
 
 const typeIcon: Record<AlertItem['type'], typeof AlertTriangle> = {
@@ -27,31 +27,31 @@ export default function AlertsPanel() {
   const items = initialAlerts.filter((a) => filter === 'all' || a.status === filter)
 
   return (
-    <div className="flex flex-col h-full bg-slate-900/50 border border-slate-700 rounded-lg overflow-hidden">
-      <div className="p-3 border-b border-slate-700">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2 text-cyan-400 text-sm font-medium">
-            <ShieldAlert className="w-4 h-4" />
+    <div className="flex flex-col h-full bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+      <div className="p-4 border-b border-slate-200 bg-slate-50/50">
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2 text-sky-700 text-base font-semibold">
+            <ShieldAlert className="w-5 h-5" />
             <span>Centro de Alertas</span>
           </div>
-          <Badge variant="outline" className="bg-red-500/10 text-red-300 border-red-500/30 text-[10px]">
+          <Badge variant="outline" className="bg-red-50 text-red-700 border-red-200 text-xs px-2 py-0.5">
             {initialAlerts.filter((a) => a.status === 'active').length} activas
           </Badge>
         </div>
-        <div className="flex flex-wrap gap-1">
+        <div className="flex flex-wrap gap-1.5">
           {[
             { id: 'all', label: 'Todas' },
             { id: 'active', label: 'Activas' },
-            { id: 'acknowledged', label: 'Reconocidas' },
+            { id: 'acknowledged', label: 'Reconoc.' },
             { id: 'resolved', label: 'Resueltas' },
           ].map((f) => (
             <button
               key={f.id}
               onClick={() => setFilter(f.id as any)}
-              className={`px-2 py-0.5 text-[10px] rounded ${
+              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
                 filter === f.id
-                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
-                  : 'bg-slate-800 text-slate-400 border border-slate-700'
+                  ? 'bg-sky-600 text-white shadow-sm'
+                  : 'bg-white text-slate-600 border border-slate-300 hover:bg-slate-50'
               }`}
             >
               {f.label}
@@ -60,7 +60,7 @@ export default function AlertsPanel() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto custom-scroll p-2 space-y-2">
+      <div className="flex-1 overflow-y-auto p-3 space-y-2 custom-scroll">
         <AnimatePresence>
           {items.map((a) => {
             const sc = severityConfig[a.severity]
@@ -72,21 +72,24 @@ export default function AlertsPanel() {
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0 }}
-                className={`rounded-lg border p-2.5 ${sc.bg} ${sc.border}`}
+                className={`rounded-lg border p-3 ${sc.bg} ${sc.border}`}
               >
                 <div className="flex items-start gap-2">
-                  <Icon className={`w-4 h-4 mt-0.5 flex-shrink-0 ${sc.color}`} />
+                  <Icon className={`w-5 h-5 mt-0.5 flex-shrink-0 ${sc.color}`} />
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5 mb-0.5">
-                      <span className={`text-[9px] font-bold ${sc.color}`}>{sc.label}</span>
-                      <span className="text-[9px] text-slate-500">·</span>
-                      <span className="text-[9px] text-slate-500">{a.timestamp}</span>
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${sc.bg} ${sc.text} border ${sc.border}`}>
+                        {sc.label}
+                      </span>
+                      <span className="text-[10px] text-slate-500">·</span>
+                      <span className="text-[10px] text-slate-500">{a.timestamp}</span>
                     </div>
-                    <div className="text-xs font-medium text-slate-100 mb-1">{a.title}</div>
-                    <div className="text-[10px] text-slate-400 leading-snug line-clamp-3">{a.description}</div>
+                    <div className="text-sm font-semibold text-slate-900 mb-1">{a.title}</div>
+                    <div className="text-xs text-slate-600 leading-snug">{a.description}</div>
                     {a.vessel && (
-                      <div className="mt-1 text-[10px] text-slate-500">
-                        Buque: <span className="text-slate-300">{a.vessel}</span>
+                      <div className="mt-1.5 text-xs text-slate-500 flex items-center gap-1">
+                        <span>🚢</span>
+                        <span className="font-medium text-slate-700">{a.vessel}</span>
                       </div>
                     )}
                   </div>
@@ -100,7 +103,8 @@ export default function AlertsPanel() {
       <style jsx>{`
         .custom-scroll::-webkit-scrollbar { width: 5px; }
         .custom-scroll::-webkit-scrollbar-track { background: transparent; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
       `}</style>
     </div>
   )

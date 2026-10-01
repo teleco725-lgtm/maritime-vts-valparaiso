@@ -12,10 +12,11 @@ interface Props {
 export default function VesselDetail({ vessel }: Props) {
   if (!vessel) {
     return (
-      <div className="h-full flex items-center justify-center text-slate-500 text-xs text-center p-4">
+      <div className="h-full flex items-center justify-center text-slate-500 text-sm text-center p-4 bg-white border border-slate-200 rounded-xl shadow-sm">
         <div>
-          <Ship className="w-8 h-8 mx-auto mb-2 opacity-30" />
-          Seleccione un buque del mapa o de la lista para ver sus detalles.
+          <Ship className="w-12 h-12 mx-auto mb-3 opacity-30 text-slate-400" />
+          <div className="font-medium text-slate-600 mb-1">Seleccione un buque</div>
+          <div className="text-xs text-slate-500">Haga clic en el mapa o en la lista para ver detalles</div>
         </div>
       </div>
     )
@@ -26,34 +27,34 @@ export default function VesselDetail({ vessel }: Props) {
     { label: 'IMO', value: vessel.imo, icon: Database },
     { label: 'Tipo', value: getVesselTypeLabel(vessel.type), icon: Ship },
     { label: 'Estado', value: getStatusLabel(vessel.status), icon: vessel.status === 'moored' ? Anchor : Navigation },
-    { label: 'SOG', value: `${vessel.sog.toFixed(1)} kn`, icon: Gauge },
+    { label: 'Velocidad', value: `${vessel.sog.toFixed(1)} nudos`, icon: Gauge },
     { label: 'Rumbo', value: `${vessel.cog}°`, icon: Compass },
     { label: 'Eslora', value: `${vessel.length} m`, icon: Ruler },
     { label: 'Manga', value: `${vessel.beam} m`, icon: Ruler },
     { label: 'Calado', value: `${vessel.draft} m`, icon: Ruler },
-    { label: 'Lat.', value: vessel.lat.toFixed(4), icon: MapPin },
-    { label: 'Lng.', value: vessel.lng.toFixed(4), icon: MapPin },
-    { label: 'ETA', value: vessel.eta, icon: Clock },
+    { label: 'Latitud', value: vessel.lat.toFixed(4), icon: MapPin },
+    { label: 'Longitud', value: vessel.lng.toFixed(4), icon: MapPin },
+    { label: 'Llegada', value: vessel.eta, icon: Clock },
   ]
 
   return (
-    <div className="h-full flex flex-col bg-slate-900/50 border border-slate-700 rounded-lg overflow-hidden">
-      <div className="p-3 border-b border-slate-700 bg-slate-900/70">
+    <div className="h-full flex flex-col bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+      <div className="p-4 border-b border-slate-200 bg-slate-50/50">
         <div className="flex items-center justify-between mb-1">
-          <span className="font-semibold text-slate-100 text-sm truncate">{vessel.name}</span>
-          <Badge variant="outline" className="bg-slate-800 text-slate-300 border-slate-600 text-[9px]">
+          <span className="font-bold text-slate-900 text-base truncate">{vessel.name}</span>
+          <Badge variant="secondary" className="bg-sky-100 text-sky-800 border-sky-200 text-xs px-2 py-0.5">
             {vessel.flag}
           </Badge>
         </div>
-        <div className="text-[10px] text-slate-500">{vessel.destination}</div>
+        <div className="text-xs text-slate-600">{vessel.destination}</div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-3 custom-scroll">
+      <div className="flex-1 overflow-y-auto p-4 custom-scroll">
         <motion.div
           key={vessel.id}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="space-y-1.5"
+          className="space-y-2"
         >
           {fields.map((f, i) => {
             const Icon = f.icon
@@ -63,26 +64,26 @@ export default function VesselDetail({ vessel }: Props) {
                 initial={{ opacity: 0, x: -5 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.02 }}
-                className="flex items-center gap-2 text-xs bg-slate-800/40 rounded px-2 py-1.5"
+                className="flex items-center gap-2 text-sm bg-slate-50 rounded-lg px-3 py-2 border border-slate-100"
               >
-                <Icon className="w-3 h-3 text-cyan-400 flex-shrink-0" />
-                <span className="text-slate-500 w-14 flex-shrink-0">{f.label}</span>
-                <span className="text-slate-200 font-mono ml-auto text-right">{f.value}</span>
+                <Icon className="w-4 h-4 text-sky-600 flex-shrink-0" />
+                <span className="text-slate-500 w-20 flex-shrink-0 text-xs">{f.label}</span>
+                <span className="text-slate-900 font-mono ml-auto text-right font-medium">{f.value}</span>
               </motion.div>
             )
           })}
 
           {/* Confidence IA */}
-          <div className="mt-3 pt-3 border-t border-slate-700">
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-[10px] text-slate-400 flex items-center gap-1">
-                <Cpu className="w-3 h-3 text-cyan-400" /> Confianza IA Fusión
+          <div className="mt-4 pt-4 border-t border-slate-200">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-sm text-slate-600 flex items-center gap-1.5 font-medium">
+                <Cpu className="w-4 h-4 text-sky-600" /> Precisión IA
               </span>
-              <span className={vessel.confidence > 98 ? 'text-emerald-400' : vessel.confidence > 95 ? 'text-amber-400' : 'text-red-400'}>
+              <span className={`font-bold text-base ${vessel.confidence > 98 ? 'text-emerald-600' : vessel.confidence > 95 ? 'text-amber-600' : 'text-red-600'}`}>
                 {vessel.confidence.toFixed(1)}%
               </span>
             </div>
-            <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">
+            <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${vessel.confidence}%` }}
@@ -90,13 +91,13 @@ export default function VesselDetail({ vessel }: Props) {
                 className={vessel.confidence > 98 ? 'bg-emerald-500' : vessel.confidence > 95 ? 'bg-amber-500' : 'bg-red-500'}
               />
             </div>
-            <div className="text-[9px] text-slate-500 mt-1">Fusión Kalman + LSTM · última actualización {vessel.lastUpdate}</div>
+            <div className="text-xs text-slate-500 mt-1.5">Fusión Kalman + LSTM · actualizado {vessel.lastUpdate}</div>
           </div>
 
           {/* Registro */}
-          <div className="mt-2 flex items-center justify-between text-[10px]">
-            <span className="text-slate-500">Registro:</span>
-            <Badge variant="outline" className="bg-slate-800 text-slate-300 border-slate-700">
+          <div className="mt-3 flex items-center justify-between text-sm bg-sky-50 rounded-lg px-3 py-2 border border-sky-100">
+            <span className="text-slate-600">Registro:</span>
+            <Badge variant="outline" className="bg-white text-slate-700 border-slate-300">
               {vessel.registry}
             </Badge>
           </div>
@@ -106,7 +107,8 @@ export default function VesselDetail({ vessel }: Props) {
       <style jsx>{`
         .custom-scroll::-webkit-scrollbar { width: 5px; }
         .custom-scroll::-webkit-scrollbar-track { background: transparent; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
       `}</style>
     </div>
   )
