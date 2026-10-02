@@ -43,45 +43,53 @@ async function buildTPSContext(userQuery: string) {
   const q = userQuery.toLowerCase()
   const tpsData: any = {}
 
+  // Si no hay DB disponible, retornar vacío (la app sigue funcionando)
+  if (!db) return tpsData
+
   const wantsBerths = /muelle|atraque|berth|m[1-7]/i.test(q)
   const wantsVessels = /buque|nave|vessel|navío|barco/i.test(q)
   const wantsContainers = /contenedor|teu|container|carga/i.test(q)
   const wantsArrivals = /arribo|llegada|arrival|eta|programa|operaci/i.test(q)
   const wantsLogs = /log|auditor|historial|evento|alerta/i.test(q)
 
-  if (wantsBerths || (!wantsVessels && !wantsContainers && !wantsArrivals && !wantsLogs)) {
-    tpsData.berths = await db.berth.findMany()
-  }
-  if (wantsVessels || (!wantsBerths && !wantsContainers && !wantsArrivals && !wantsLogs)) {
-    tpsData.vessels = await db.vesselRecord.findMany({ take: 8 })
-  }
-  if (wantsContainers) {
-    tpsData.containersSummary = {
-      total: await db.container.count(),
-      byType: await db.container.groupBy({ by: ['type'], _count: true }),
-      byStatus: await db.container.groupBy({ by: ['status'], _count: true }),
-      reefer: await db.container.count({ where: { reefer: true } }),
-      dangerous: await db.container.count({ where: { dangerous: true } }),
-      sample: await db.container.findMany({ take: 5, orderBy: { createdAt: 'desc' } }),
+  try {
+    if (wantsBerths || (!wantsVessels && !wantsContainers && !wantsArrivals && !wantsLogs)) {
+      tpsData.berths = await db.berth.findMany()
     }
-  }
-  if (wantsArrivals) {
-    tpsData.arrivals = await db.arrivals.findMany({
-      include: { vessel: true, berth: true },
-      orderBy: { eta: 'asc' },
-      take: 10,
-    })
-  }
-  if (wantsLogs) {
-    tpsData.logs = await db.operationLog.findMany({ take: 10, orderBy: { createdAt: 'desc' } })
-  }
+    if (wantsVessels || (!wantsBerths && !wantsContainers && !wantsArrivals && !wantsLogs)) {
+      tpsData.vessels = await db.vesselRecord.findMany({ take: 8 })
+    }
+    if (wantsContainers) {
+      tpsData.containersSummary = {
+        total: await db.container.count(),
+        byType: await db.container.groupBy({ by: ['type'], _count: true }),
+        byStatus: await db.container.groupBy({ by: ['status'], _count: true }),
+        reefer: await db.container.count({ where: { reefer: true } }),
+        dangerous: await db.container.count({ where: { dangerous: true } }),
+        sample: await db.container.findMany({ take: 5, orderBy: { createdAt: 'desc' } }),
+      }
+    }
+    if (wantsArrivals) {
+      tpsData.arrivals = await db.arrivals.findMany({
+        include: { vessel: true, berth: true },
+        orderBy: { eta: 'asc' },
+        take: 10,
+      })
+    }
+    if (wantsLogs) {
+      tpsData.logs = await db.operationLog.findMany({ take: 10, orderBy: { createdAt: 'desc' } })
+    }
 
-  tpsData.totals = {
-    berths: await db.berth.count(),
-    vessels: await db.vesselRecord.count(),
-    arrivals: await db.arrivals.count(),
-    containers: await db.container.count(),
-    logs: await db.operationLog.count(),
+    tpsData.totals = {
+      berths: await db.berth.count(),
+      vessels: await db.vesselRecord.count(),
+      arrivals: await db.arrivals.count(),
+      containers: await db.container.count(),
+      logs: await db.operationLog.count(),
+    }
+  } catch (e) {
+    // Si la DB falla, retornar lo que tengamos
+    console.error('DB query failed in buildTPSContext:', e)
   }
 
   return tpsData
@@ -240,29 +248,29 @@ export async function POST(req: NextRequest) {
     // === Memoria: cargar conversaciones previas del operador para aprendizaje ===
     let previousConversations: any[] = []
     try {
-      const prev = await db.operationLog.findMany({
-        where: {
-          type: 'chat_message',
-          operator: operatorName || 'unknown',
-        },
-        orderBy: { createdAt: 'desc' },
-        take: 20, // últimas 20 conversaciones para contexto de aprendizaje
-      })
-      previousConversations = prev.map((log) => {
-        try {
-          const meta = JSON.parse(log.metadata || '{}')
-          return {
-            consulta: log.description.substring(0, 200),
-            timestamp: log.createdAt.toISOString(),
-            usoweb: meta.usedWebSearch,
-            cantFuentesWeb: meta.webResultsCount,
-            // La respuesta no la guardamos en metadata para no duplicar tamaño,
-            // pero el operador y su patrón de consulta nos sirve para personalizar
+      if (db) {
+        const prev = await db.operationLog.findMany({
+          where: {
+            type: 'chat_message',
+            operator: operatorName || 'unknown',
+          },
+          orderBy: { createdAt: 'desc' },
+          take: 20,
+        })
+        previousConversations = prev.map((log) => {
+          try {
+            const meta = JSON.parse(log.metadata || '{}')
+            return {
+              consulta: log.description.substring(0, 200),
+              timestamp: log.createdAt.toISOString(),
+              usoweb: meta.usedWebSearch,
+              cantFuentesWeb: meta.webResultsCount,
+            }
+          } catch {
+            return null
           }
-        } catch {
-          return null
-        }
-      }).filter(Boolean)
+        }).filter(Boolean)
+      }
     } catch (e) {
       // Si no hay DB disponible, no hay memoria
     }
@@ -379,19 +387,21 @@ INSTRUCCIONES DE RESPUESTA:
     const response = await chatWithAI(messages || [{ role: 'user', content: userQuery }], systemPrompt, userQuery, pageContext)
 
     try {
-      await db.operationLog.create({
-        data: {
-          type: 'chat_message',
-          severity: 'info',
-          description: `Consulta IA de ${operatorName || 'operador'}: "${userQuery.substring(0, 200)}"`,
-          operator: operatorName || 'unknown',
-          metadata: JSON.stringify({
-            usedWebSearch: needsWebSearch,
-            webResultsCount: webResults.length,
-            queryLength: userQuery.length,
-          }),
-        },
-      })
+      if (db) {
+        await db.operationLog.create({
+          data: {
+            type: 'chat_message',
+            severity: 'info',
+            description: `Consulta IA de ${operatorName || 'operador'}: "${userQuery.substring(0, 200)}"`,
+            operator: operatorName || 'unknown',
+            metadata: JSON.stringify({
+              usedWebSearch: needsWebSearch,
+              webResultsCount: webResults.length,
+              queryLength: userQuery.length,
+            }),
+          },
+        })
+      }
     } catch (e) {
       console.error('No se pudo registrar log de chat:', e)
     }
