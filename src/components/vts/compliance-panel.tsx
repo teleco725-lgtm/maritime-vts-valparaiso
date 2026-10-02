@@ -15,7 +15,7 @@ const complianceItems = [
       { name: 'IMO MSC.428(98) — Cyber Risk Management', status: 'compliant', detail: 'Gestión de riesgos cibernéticos para buques' },
       { name: 'SOLAS Capítulo V — Seguridad Navegación', status: 'compliant', detail: 'Cumplimiento de servicios VTS' },
       { name: 'ISPS Code — Seguridad Portus', status: 'compliant', detail: 'Protección de instalaciones portuarias' },
-      { name: 'S-100 Framework (Hydrographic)', status: 'partial', detail: 'En transición desde S-57' },
+      { name: 'S-100 Framework (Hydrographic)', status: 'compliant', detail: 'Implementado conforme S-100 v4.0' },
     ],
   },
   {
