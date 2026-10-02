@@ -109,7 +109,7 @@ export default function Dashboard() {
                 <AlertsPanel />
               </div>
               <div className="lg:col-span-4 h-[400px]">
-                <CameraPanel />
+                <CameraPanel selectedVessel={selectedVessel} />
               </div>
             </div>
 
