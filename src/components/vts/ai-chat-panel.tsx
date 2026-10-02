@@ -210,7 +210,7 @@ export default function AIChatPanel() {
     }
   }, [isOpen])
 
-  const send = async (text?: string) => {
+  const send = async (text?: string, retryCount = 0) => {
     const query = (text ?? input).trim()
     if (!query || loading) return
 
@@ -225,6 +225,10 @@ export default function AIChatPanel() {
         content: m.content,
       }))
 
+      // Fetch con timeout de 45 segundos (Vercel free tier tiene 60s max)
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 45000)
+
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -233,10 +237,14 @@ export default function AIChatPanel() {
           userQuery: query,
           operatorName: user?.name,
         }),
+        signal: controller.signal,
       })
 
+      clearTimeout(timeoutId)
+
       if (!res.ok) {
-        throw new Error('Error en la respuesta del servidor')
+        const errorData = await res.json().catch(() => ({}))
+        throw new Error(errorData?.error || `Error del servidor (${res.status})`)
       }
 
       const data = await res.json()
@@ -247,12 +255,29 @@ export default function AIChatPanel() {
       }
       setMessages(prev => [...prev, aiMsg])
     } catch (e) {
-      toast.error('No se pudo conectar con el asistente IA', {
-        description: e instanceof Error ? e.message : 'Error desconocido',
+      // Retry automático: si es la primera vez y no fue abort por timeout, reintentar
+      if (retryCount < 2 && !(e instanceof DOMException && e.name === 'AbortError')) {
+        console.log(`🔄 Reintentando (intento ${retryCount + 1}/2)...`)
+        setLoading(false)
+        // Quitar el mensaje del usuario del estado para re-enviarlo
+        setMessages(prev => prev.slice(0, -1))
+        await new Promise(r => setTimeout(r, 1500))
+        return send(text || query, retryCount + 1)
+      }
+
+      const isTimeout = e instanceof DOMException && e.name === 'AbortError'
+      const errorMsg = isTimeout
+        ? 'Victoria tardó demasiado en responder (timeout). El servidor podría estar sobrecargado.'
+        : e instanceof Error ? e.message : 'Error desconocido'
+
+      toast.error('Victoria no pudo responder', {
+        description: errorMsg,
       })
       setMessages(prev => [...prev, {
         role: 'assistant',
-        content: 'Disculpa, hubo un problema técnico. Por favor intenta nuevamente en unos segundos.',
+        content: isTimeout
+          ? '⏳ Disculpa, tardé demasiado en procesar tu consulta. El servidor podría estar sobrecargado. Por favor intenta nuevamente.'
+          : '⚠️ No pude conectarme con el servidor de IA. Esto puede ser temporal.\n\nPosibles causas:\n• El servidor está reiniciándose\n• Límite de cuota alcanzado\n• Conexión intermitente\n\n**Intenta nuevamente en unos segundos.**',
       }])
     } finally {
       setLoading(false)
