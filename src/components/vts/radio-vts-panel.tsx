@@ -60,15 +60,31 @@ export default function RadioVTSPanel() {
     }
   }, [])
 
-  // PTT con barra espaciadora
+  // PTT con barra espaciadora — SOLO cuando NO se está escribiendo en un input/textarea
   useEffect(() => {
+    const isTypingInField = () => {
+      const el = document.activeElement
+      if (!el) return false
+      const tag = el.tagName.toLowerCase()
+      // Si el foco está en un input, textarea o contenteditable, NO activar PTT
+      if (tag === 'input' || tag === 'textarea') return true
+      if (el.isContentEditable) return true
+      // También verificar si el elemento tiene role=textbox
+      if (el.getAttribute('role') === 'textbox') return true
+      return false
+    }
+
     const handleKeyDown = (e: KeyboardEvent) => {
+      // No activar PTT si se está escribiendo en cualquier campo de texto
+      if (isTypingInField()) return
       if (e.code === 'Space' && !e.repeat && !isRecording && !isProcessing && activeRecipient) {
         e.preventDefault()
         startRecording()
       }
     }
     const handleKeyUp = (e: KeyboardEvent) => {
+      // No procesar si se está escribiendo
+      if (isTypingInField()) return
       if (e.code === 'Space' && isRecording) {
         e.preventDefault()
         stopRecording()
