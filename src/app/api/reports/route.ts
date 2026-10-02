@@ -339,7 +339,7 @@ async function generatePowerPoint(params: ReturnType<typeof getQueryParams>): Pr
     const header = ['Nombre', 'MMSI', 'Tipo', 'Estado', 'SOG', 'Conf.IA']
     const rows = vessels.map(v => [v.name, v.mmsi, v.type, v.status, `${v.sog.toFixed(1)} kn`, `${v.confidence.toFixed(1)}%`])
 
-    slide5.addTable([header, ...rows], {
+    slide5.addTable([header, ...rows] as any, {
       x: 0.5, y: 1.3, w: 12.3, h: 5.5,
       fontSize: 10,
       border: { type: 'solid', color: '334155', pt: 1 },
@@ -360,7 +360,7 @@ async function generatePowerPoint(params: ReturnType<typeof getQueryParams>): Pr
     const header = ['Severidad', 'Título', 'Buque', 'Estado']
     const rows = alerts.map(a => [a.severity.toUpperCase(), a.title, a.vessel || '-', a.status])
 
-    slide6.addTable([header, ...rows], {
+    slide6.addTable([header, ...rows] as any, {
       x: 0.5, y: 1.3, w: 12.3, h: 5.5,
       fontSize: 10,
       border: { type: 'solid', color: '334155', pt: 1 },
