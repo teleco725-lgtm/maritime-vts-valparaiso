@@ -114,19 +114,44 @@ async function chatWithAI(messages: any[], systemPrompt: string) {
   try {
     const ZAI = (await import('z-ai-web-dev-sdk')).default
     const zai = await ZAI.create()
+    // ZAI SDK requires 'user' role for system prompt, not 'assistant'
+    // Also filter out any empty/invalid messages
+    const validMessages = messages.filter(m => m.content && m.content.trim().length > 0)
     const completion = await zai.chat.completions.create({
       messages: [
-        { role: 'assistant', content: systemPrompt },
-        ...messages,
+        { role: 'user', content: systemPrompt },
+        ...validMessages.map(m => ({
+          role: m.role === 'assistant' ? 'assistant' : 'user',
+          content: m.content,
+        })),
       ],
       thinking: { type: 'disabled' },
     })
     return completion.choices[0]?.message?.content || 'No se pudo obtener respuesta.'
   } catch (e) {
     console.error('LLM failed:', e)
-    return `Lo siento, hubo un problema al procesar la consulta con el modelo de IA. Detalle: ${e instanceof Error ? e.message : 'desconocido'}`
+    // Fallback: try with simpler message format
+    try {
+      const ZAI = (await import('z-ai-web-dev-sdk')).default
+      const zai = await ZAI.create()
+      const simpleMessages = [
+        { role: 'user', content: systemPrompt },
+        { role: 'user', content: messages[messages.length - 1]?.content || userQueryFallback },
+      ]
+      const completion = await zai.chat.completions.create({
+        messages: simpleMessages,
+        thinking: { type: 'disabled' },
+      })
+      return completion.choices[0]?.message?.content || 'No se pudo obtener respuesta.'
+    } catch (e2) {
+      console.error('LLM fallback also failed:', e2)
+      return `Lo siento, el servicio de IA está temporalmente no disponible. Intenta nuevamente en unos segundos. Detalle: ${e instanceof Error ? e.message : 'desconocido'}`
+    }
   }
 }
+
+// Fallback query if messages array is empty
+const userQueryFallback = 'Hola Victoria'
 
 // ============== Route handler ==============
 export async function POST(req: NextRequest) {
