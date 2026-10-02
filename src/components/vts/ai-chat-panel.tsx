@@ -12,7 +12,8 @@ import {
   Brain, Send, X, Sparkles, Globe2, Database, Activity,
   MessageSquare, Loader2, Trash2, ChevronDown, ChevronUp,
   Ship, AlertTriangle, FileText, ShieldCheck, Mic,
-  ShieldAlert, Lock, KeyRound, FileWarning, Network
+  ShieldAlert, Lock, KeyRound, FileWarning, Network,
+  Heart, Waves, Anchor
 } from 'lucide-react'
 
 interface Message {
@@ -111,12 +112,88 @@ const AUDIT_PROMPTS = [
   },
 ]
 
+// Sugerencias bíblicas con temática marítima
+const BIBLICAL_PROMPTS = [
+  {
+    icon: Heart,
+    text: 'Estoy pasando por una tempestad en mi vida, ¿qué versículo me recomiendas?',
+    color: 'text-amber-400',
+    category: 'biblico',
+  },
+  {
+    icon: Waves,
+    text: 'Léeme el Salmo 107 (los que descienden al mar en naves)',
+    color: 'text-sky-400',
+    category: 'biblico',
+  },
+  {
+    icon: Anchor,
+    text: '¿Cómo calmó Jesús la tempestad en Mateo 8?',
+    color: 'text-cyan-400',
+    category: 'biblico',
+  },
+  {
+    icon: Ship,
+    text: 'Cuéntame la historia de Jonás y el gran pez',
+    color: 'text-emerald-400',
+    category: 'biblico',
+  },
+  {
+    icon: Heart,
+    text: 'Me siento solo y cansado en este turno, ¿puedes darme ánimo?',
+    color: 'text-violet-400',
+    category: 'biblico',
+  },
+  {
+    icon: Waves,
+    text: '¿Qué dice Isaías 43 sobre pasar por las aguas?',
+    color: 'text-blue-400',
+    category: 'biblico',
+  },
+  {
+    icon: Anchor,
+    text: 'Dame un versículo para fortalecer mi fe antes de mi jornada',
+    color: 'text-rose-400',
+    category: 'biblico',
+  },
+  {
+    icon: Heart,
+    text: 'Tengo miedo por la operación de hoy, ayúdame con la Palabra',
+    color: 'text-pink-400',
+    category: 'biblico',
+  },
+  {
+    icon: Ship,
+    text: '¿Qué nos enseña el naufragio de Pablo en Hechos 27?',
+    color: 'text-teal-400',
+    category: 'biblico',
+  },
+  {
+    icon: Waves,
+    text: 'Jesús caminó sobre el agua — ¿qué significa para mí hoy?',
+    color: 'text-indigo-400',
+    category: 'biblico',
+  },
+  {
+    icon: Anchor,
+    text: 'Oración por los marineros y navegantes del día',
+    color: 'text-emerald-300',
+    category: 'biblico',
+  },
+  {
+    icon: Heart,
+    text: 'Necesito esperanza, ¿qué me dice Adonai hoy?',
+    color: 'text-amber-300',
+    category: 'biblico',
+  },
+]
+
 export default function AIChatPanel() {
   const [isOpen, setIsOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
-  const [suggestionTab, setSuggestionTab] = useState<'operacional' | 'ciberseguridad'>('operacional')
+  const [suggestionTab, setSuggestionTab] = useState<'operacional' | 'ciberseguridad' | 'biblico'>('operacional')
   const scrollRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const user = useAuthStore((s) => s.user)
@@ -266,11 +343,15 @@ export default function AIChatPanel() {
               </span>
               <span className="text-slate-300">·</span>
               <span className="flex items-center gap-1 text-[#00D2FF] font-medium">
-                <Database className="w-3 h-3" /> DB TPS
+                <Database className="w-3 h-3" /> TPS
               </span>
               <span className="text-slate-300">·</span>
               <span className="flex items-center gap-1 text-violet-600 font-medium">
-                <Activity className="w-3 h-3" /> Dashboard
+                <Activity className="w-3 h-3" /> VTS
+              </span>
+              <span className="text-slate-300">·</span>
+              <span className="flex items-center gap-1 text-amber-500 font-medium">
+                <Heart className="w-3 h-3" /> Fe
               </span>
             </div>
 
@@ -297,31 +378,51 @@ export default function AIChatPanel() {
                     <div className="flex items-center gap-1 mb-2 p-1 bg-[#0f1620] backdrop-blur-sm rounded-lg border border-slate-700/40">
                       <button
                         onClick={() => setSuggestionTab('operacional')}
-                        className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-md text-xs font-semibold transition-colors ${
+                        className={`flex-1 flex items-center justify-center gap-1 px-2 py-2 rounded-md text-xs font-semibold transition-colors ${
                           suggestionTab === 'operacional'
                             ? 'bg-[#00FF66]/15 text-[#00FF66] shadow-sm'
                             : 'text-slate-600 hover:text-slate-100'
                         }`}
                       >
-                        <Ship className="w-3.5 h-3.5" /> Operacional
+                        <Ship className="w-3.5 h-3.5" /> Oper.
                       </button>
                       <button
                         onClick={() => setSuggestionTab('ciberseguridad')}
-                        className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2 rounded-md text-xs font-semibold transition-colors ${
+                        className={`flex-1 flex items-center justify-center gap-1 px-2 py-2 rounded-md text-xs font-semibold transition-colors ${
                           suggestionTab === 'ciberseguridad'
                             ? 'bg-red-500/15 text-red-900 shadow-sm'
                             : 'text-slate-600 hover:text-slate-100'
                         }`}
                       >
-                        <ShieldCheck className="w-3.5 h-3.5" /> Ciberseguridad
+                        <ShieldCheck className="w-3.5 h-3.5" /> Ciber
                         <span className="ml-1 px-1.5 py-0 rounded bg-red-100 text-red-700 text-[9px] font-bold">12</span>
+                      </button>
+                      <button
+                        onClick={() => setSuggestionTab('biblico')}
+                        className={`flex-1 flex items-center justify-center gap-1 px-2 py-2 rounded-md text-xs font-semibold transition-colors ${
+                          suggestionTab === 'biblico'
+                            ? 'bg-amber-500/15 text-amber-300 shadow-sm'
+                            : 'text-slate-600 hover:text-slate-100'
+                        }`}
+                      >
+                        <Heart className="w-3.5 h-3.5" /> Bíblico
+                        <span className="ml-1 px-1.5 py-0 rounded bg-amber-100 text-amber-700 text-[9px] font-bold">12</span>
                       </button>
                     </div>
 
                     <div className="text-xs text-slate-500 uppercase tracking-wider px-1 mb-1 font-semibold">
-                      {suggestionTab === 'operacional' ? 'Sugerencias Operacionales' : 'Sugerencias de Auditoría'}
+                      {suggestionTab === 'operacional'
+                        ? 'Sugerencias Operacionales'
+                        : suggestionTab === 'ciberseguridad'
+                        ? 'Sugerencias de Auditoría'
+                        : 'Palabras de Vida — Temática Marítima'}
                     </div>
-                    {(suggestionTab === 'operacional' ? SUGGESTED_PROMPTS : AUDIT_PROMPTS).map((p, i) => {
+                    {(suggestionTab === 'operacional'
+                      ? SUGGESTED_PROMPTS
+                      : suggestionTab === 'ciberseguridad'
+                      ? AUDIT_PROMPTS
+                      : BIBLICAL_PROMPTS
+                    ).map((p, i) => {
                       const Icon = p.icon
                       return (
                         <motion.button
@@ -333,7 +434,9 @@ export default function AIChatPanel() {
                           className={`w-full flex items-center gap-2 p-2.5 rounded-lg border hover:bg-[var(--vts-subcard)] transition-colors text-left ${
                             suggestionTab === 'ciberseguridad'
                               ? 'border-red-100 hover:border-red-300 bg-red-50/30'
-                              : 'border-slate-700/50/60 hover:border-sky-300 bg-[var(--vts-subcard)]'
+                              : suggestionTab === 'biblico'
+                              ? 'border-amber-100 hover:border-amber-300 bg-amber-50/5'
+                              : 'border-slate-700/50 hover:border-sky-300 bg-[var(--vts-subcard)]'
                           }`}
                         >
                           <Icon className={`w-4 h-4 flex-shrink-0 ${p.color}`} />
