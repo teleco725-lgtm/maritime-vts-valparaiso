@@ -222,6 +222,7 @@ export interface AlertItem {
   description: string
   timestamp: string
   status: 'active' | 'acknowledged' | 'resolved'
+  source?: 'SHOA' | 'MeteoChile' | 'SERVIMET' | 'Directemar' | 'Sistema VTS' | 'CSIRT'
 }
 
 export const alerts: AlertItem[] = [
@@ -259,7 +260,74 @@ export const alerts: AlertItem[] = [
     id: 'a6', severity: 'low', type: 'comms', vessel: 'PACIFIC STAR',
     title: 'Discrepancia AIS vs Radar',
     description: 'PACIFIC STAR muestra posición AIS desfasada 4m respecto a plot radar. Fusión IA corrigió a 97.4% confianza.',
-    timestamp: 'hace 8 min', status: 'resolved',
+    timestamp: 'hace 8 min', status: 'resolved', source: 'Sistema VTS',
+  },
+  // === ALERTAS METEOROLÓGICAS Y OCEANOGRÁFICAS — SHOA + MeteoChile/SERVIMET ===
+
+  // CRÍTICAS — Cierre de Puerto / Marejadas Severas
+  {
+    id: 'm1', severity: 'critical', type: 'metocean',
+    title: 'AVISO SHOA: Marejada Prominente en Bahía de Valparaíso',
+    description: 'SHOA emite Aviso de Marejadas Prominentes. Altura significativa 3.5m con períodos 14-16s desde sector SW. Restricción total de maniobras de practicaje. Suspender atraques en Muelles 1, 3 y 5 del espigón TCP.',
+    timestamp: 'hace 15 min', status: 'active', source: 'SHOA',
+  },
+  {
+    id: 'm2', severity: 'critical', type: 'metocean',
+    title: 'CIERRE DE PUERTO — Gobernación Marítima Valparaíso',
+    description: 'Capitanía de Puerto ordena CIERRE TEMPORAL de maniobras por marejadas severas (Hs > 3.0m). Suspensión total de atraques y zarpe hasta nuevo aviso. Buques en aproximación derivar a zona de fondeo No.1.',
+    timestamp: 'hace 18 min', status: 'active', source: 'Directemar',
+  },
+  {
+    id: 'm3', severity: 'critical', type: 'metocean',
+    title: 'Restricción de Calado por Marea — SHOA',
+    description: 'Marea baja extraordinaria (-0.32m sobre cero de bajamar). Calado máximo permitido en canal de acceso reducido a 11.2m. Buques con calado >11.0m deben esperar pleamar próxima (14:52 CLT).',
+    timestamp: 'hace 25 min', status: 'active', source: 'SHOA',
+  },
+
+  // MEDIAS — Ráfagas de Viento / Niebla Densa
+  {
+    id: 'm4', severity: 'medium', type: 'metocean',
+    title: 'Viento Fuerte en Puerto — MeteoChile/SERVIMET (>20 nudos)',
+    description: 'Pronóstico MeteoChile: viento SO 22-28 nudos con ráfagas hasta 35 nudos en próximas 6 horas. Restricción de velocidad en canal de acceso a 8 nudos. Detención preventiva de grúas STS en Muelles 5 y 7 cuando ráfaga >30kn.',
+    timestamp: 'hace 32 min', status: 'active', source: 'MeteoChile',
+  },
+  {
+    id: 'm5', severity: 'medium', type: 'metocean',
+    title: 'Baja Visibilidad por Niebla — SERVIMET (<0.5 MN)',
+    description: 'Niebla costera advección desde sector SW. Visibilidad actual: 0.4 MN en zona de aproximación. Restricción de maniobras a un buque a la vez en canal. Activar cámara térmica de Muelle 1.',
+    timestamp: 'hace 40 min', status: 'active', source: 'SERVIMET',
+  },
+  {
+    id: 'm6', severity: 'medium', type: 'metocean',
+    title: 'Aviso de Ráfagas para Grúas STS — MeteoChile',
+    description: 'Ráfagas previstas de 30-38 nudos entre 16:00-20:00 CLT. Suspensión preventiva de operación de grúas gantry en Muelles 5 y 7. Reanudación sujeta a confirmación de viento <25kn sostenido.',
+    timestamp: 'hace 48 min', status: 'acknowledged', source: 'MeteoChile',
+  },
+  {
+    id: 'm7', severity: 'medium', type: 'metocean',
+    title: 'Estado del Mar en Bahía — SHOA',
+    description: 'Estado del mar: Mar gruesa (Douglas 5). Altura significativa 2.1m, dirección SW. Período pico 11s. Restricción de transferencia de prácticos en zona de embarque No.1 — usar zona No.2.',
+    timestamp: 'hace 55 min', status: 'active', source: 'SHOA',
+  },
+
+  // INFORMATIVAS — Boletín Meteorológico Diario
+  {
+    id: 'm8', severity: 'low', type: 'metocean',
+    title: 'Boletín Meteorológico Diario — MeteoChile/SHOA',
+    description: 'Pronóstico 24h: Viento SO 15-20kn disminuyendo. Marea alta 14:52 (+1.18m), baja 21:15 (-0.15m). Oleaje SW 1.8m. Visibilidad >5MN. Temperatura 14-19°C. Condiciones operativas favorables para ventana de arribos 06:00-14:00.',
+    timestamp: 'hace 1 h', status: 'active', source: 'MeteoChile',
+  },
+  {
+    id: 'm9', severity: 'low', type: 'metocean',
+    title: 'Tabla de Marea — SHOA Valparaíso',
+    description: 'Pleamar: 14:52 CLT (+1.18m). Bajamar: 21:15 CLT (-0.15m). Próxima pleamar: 03:08 (+1.22m). Ventana operativa de calado máximo: 13:00-16:00 (calado máx 14.5m). Planificación de arribos pesados recomendada en esta ventana.',
+    timestamp: 'hace 1 h', status: 'active', source: 'SHOA',
+  },
+  {
+    id: 'm10', severity: 'low', type: 'metocean',
+    title: 'Pronóstico Océano — SHOA/SECOSTA',
+    description: 'Corriente superficial SO 0.5-0.8 nudos. Temperatura superficie mar: 13.8°C. Salinidad: 34.5‰. Sin alerta de tsunami activa. Estado de alerta sísmica costera: VERDE (sin novedad).',
+    timestamp: 'hace 2 h', status: 'active', source: 'SHOA',
   },
 ]
 

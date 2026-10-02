@@ -77,10 +77,22 @@ export default function AlertsPanel() {
                 <div className="flex items-start gap-2">
                   <Icon className={`w-5 h-5 mt-0.5 flex-shrink-0 ${sc.color}`} />
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5 mb-1">
+                    <div className="flex items-center gap-1.5 mb-1 flex-wrap">
                       <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${sc.bg} ${sc.text} border ${sc.border}`}>
                         {sc.label}
                       </span>
+                      {a.source && (
+                        <span className={`text-[9px] font-mono px-1.5 py-0.5 rounded border ${
+                          a.source === 'SHOA' ? 'bg-sky-500/10 text-sky-400 border-sky-500/30' :
+                          a.source === 'MeteoChile' ? 'bg-amber-500/10 text-amber-400 border-amber-500/30' :
+                          a.source === 'SERVIMET' ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30' :
+                          a.source === 'Directemar' ? 'bg-red-500/10 text-red-400 border-red-500/30' :
+                          a.source === 'CSIRT' ? 'bg-violet-500/10 text-violet-400 border-violet-500/30' :
+                          'bg-slate-700/30 text-slate-400 border-slate-600'
+                        }`}>
+                          📡 {a.source}
+                        </span>
+                      )}
                       <span className="text-[10px] text-slate-500">·</span>
                       <span className="text-[10px] text-slate-500">{a.timestamp}</span>
                     </div>
