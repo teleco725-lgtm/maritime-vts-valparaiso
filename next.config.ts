@@ -7,24 +7,19 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   reactStrictMode: false,
   // ⚠️ z-ai-web-dev-sdk es server-only, evitar que se incluya en client bundle
-  experimental: {
-    serverComponentsExternalPackages: [
-      'z-ai-web-dev-sdk',
-      'pptxgenjs',
-      'docx',
-      'xlsx',
-      'jspdf',
-      'jspdf-autotable',
-      '@prisma/client',
-      'prisma',
-      'sharp',
-    ],
-  },
+  serverExternalPackages: [
+    'z-ai-web-dev-sdk',
+    'pptxgenjs',
+    'docx',
+    'xlsx',
+    'jspdf',
+    'jspdf-autotable',
+    '@prisma/client',
+    'prisma',
+    'sharp',
+  ],
   // Headers de seguridad (aplica a todas las rutas)
   async headers() {
     return [
