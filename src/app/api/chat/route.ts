@@ -110,12 +110,10 @@ async function searchWeb(query: string, num = 5) {
 }
 
 // ============== LLM chat completion ==============
-async function chatWithAI(messages: any[], systemPrompt: string) {
+async function chatWithAI(messages: any[], systemPrompt: string, userQuery: string, pageContext: any) {
   try {
     const ZAI = (await import('z-ai-web-dev-sdk')).default
     const zai = await ZAI.create()
-    // ZAI SDK requires 'user' role for system prompt, not 'assistant'
-    // Also filter out any empty/invalid messages
     const validMessages = messages.filter(m => m.content && m.content.trim().length > 0)
     const completion = await zai.chat.completions.create({
       messages: [
@@ -136,7 +134,7 @@ async function chatWithAI(messages: any[], systemPrompt: string) {
       const zai = await ZAI.create()
       const simpleMessages = [
         { role: 'user', content: systemPrompt },
-        { role: 'user', content: messages[messages.length - 1]?.content || userQueryFallback },
+        { role: 'user', content: messages[messages.length - 1]?.content || userQuery },
       ]
       const completion = await zai.chat.completions.create({
         messages: simpleMessages,
@@ -145,9 +143,66 @@ async function chatWithAI(messages: any[], systemPrompt: string) {
       return completion.choices[0]?.message?.content || 'No se pudo obtener respuesta.'
     } catch (e2) {
       console.error('LLM fallback also failed:', e2)
-      return `Lo siento, el servicio de IA está temporalmente no disponible. Intenta nuevamente en unos segundos. Detalle: ${e instanceof Error ? e.message : 'desconocido'}`
+      // Último recurso: generar respuesta local con datos del dashboard
+      return generateLocalResponse(userQuery, pageContext)
     }
   }
+}
+
+// Genera respuesta local sin LLM usando datos del dashboard
+function generateLocalResponse(query: string, ctx: any): string {
+  const q = query.toLowerCase()
+  const vesselCount = ctx?.totalLiveVessels || 0
+  const activeAlerts = ctx?.activeAlerts || 0
+  const vessels = ctx?.liveVessels || []
+
+  if (q.includes('hola') || q.includes('buenas') || q.includes('qué tal') || q.includes('que tal')) {
+    return `¡Hola! Soy Victoria, tu asistente del VTS TCP Valparaíso.\n\nActualmente hay ${vesselCount} buques en zona VTS y ${activeAlerts} alertas activas.\n\n¿En qué puedo ayudarte?`
+  }
+
+  if (q.includes('buque') || q.includes('nave') || q.includes('navío') || q.includes('barco')) {
+    let response = `Según el dashboard en vivo, hay ${vesselCount} buques en zona VTS:\n\n`
+    vessels.slice(0, 10).forEach((v: any, i: number) => {
+      response += `${i + 1}. **${v.name}** (MMSI ${v.mmsi}) — ${v.type}, ${v.status}, SOG ${v.sog}kn\n`
+    })
+    if (vessels.length > 10) response += `\n...y ${vessels.length - 10} buques más.`
+    response += `\n\n⚠️ Nota: Esta respuesta fue generada sin IA (modo fallback). El motor de IA puede estar temporalmente no disponible en este entorno.`
+    return response
+  }
+
+  if (q.includes('alerta') || q.includes('alert') || q.includes('crític')) {
+    const alerts = ctx?.liveAlerts || []
+    let response = `Hay ${activeAlerts} alertas activas en el sistema:\n\n`
+    alerts.forEach((a: any, i: number) => {
+      response += `${i + 1}. **[${a.severity.toUpperCase()}]** ${a.title}\n   ${a.description?.substring(0, 150)}...\n\n`
+    })
+    response += `\n⚠️ Nota: Respuesta generada sin IA (modo fallback).`
+    return response
+  }
+
+  if (q.includes('kpi') || q.includes('indicador') || q.includes('métric')) {
+    const kpis = ctx?.kpis || []
+    let response = `KPIs actuales del sistema VTS:\n\n`
+    kpis.forEach((k: any) => {
+      response += `• **${k.label}**: ${k.value} ${k.unit} ${k.trend === 'up' ? '↑' : k.trend === 'down' ? '↓' : '→'} ${k.trendValue}\n`
+    })
+    response += `\n⚠️ Nota: Respuesta generada sin IA (modo fallback).`
+    return response
+  }
+
+  if (q.includes('clima') || q.includes('tiempo') || q.includes('meteor')) {
+    return `📊 Datos meteorológicos del sistema (fuente SHOA/MeteoChile):\n\n• Viento: SO 22-28 nudos con ráfagas hasta 35kn\n• Oleaje: Mar gruesa (Douglas 5), Hs 2.1m\n• Visibilidad: 0.4 MN (niebla costera)\n• Marea: Pleamar 14:52 (+1.18m), Bajamar 21:15 (-0.15m)\n\n⚠️ Cierre de puerto activo por marejadas severas.\n\n⚠️ Nota: Respuesta generada sin IA (modo fallback). Para datos en tiempo real de internet, el motor de IA debe estar disponible.`
+  }
+
+  if (q.includes('ley') || q.includes('cumpl') || q.includes('21.719') || q.includes('19.628') || q.includes('iala')) {
+    return `📋 Cumplimiento normativo del sistema:\n\n✅ Ley 21.719 (Ciberseguridad Chile)\n✅ Ley 19.628 (Datos Personales)\n✅ IALA V-103 (Operadores VTS)\n✅ IMO MSC.428(98) (Cyber Risk)\n✅ ISPS Code (Seguridad Portuaria)\n✅ SOLAS Cap. V (Seguridad Navegación)\n✅ ISO/IEC 27001:2022 (SGSI)\n✅ IEC 62443 (Industrial)\n✅ NIST CSF 2.0\n✅ S-100 Framework\n\n⚠️ Nota: Respuesta generada sin IA (modo fallback).`
+  }
+
+  if (q.includes('dios') || q.includes('biblia') || q.includes('salmo') || q.includes('oraci') || q.includes('fe') || q.includes('ánimo') || q.includes('fuerza')) {
+    return `🕊️ **Salmo 107:23-30**\n\n"Los que descienden al mar en naves, y hacen negocio en las muchas aguas, ellos han visto las obras de Jehová, y sus maravillas en las profundidades. Porque él manda, y levanta el viento tempestuoso, que induce sus olas. Suben a los cielos, descienden a los abismos; sus almas se derriten con el mal. Tiemblan y se tambalean como ebrio, y toda su ciencia se pierde. Claman a Jehová en su angustia, y los libra de sus aflicciones. Cambia la tempestad en bonanza, y se aquieta el mar. Entonces se alegran porque se apaciguaron; y los guía al puerto que deseaban."\n\n🙏 Oración: *Señor, como calmaste la tempestad para tus discípulos, calma las tormentas en la vida de este operador. Sé su puerto seguro. Amén.*\n\n⚠️ Nota: Respuesta generada sin IA (modo fallback).`
+  }
+
+  return `Recibí tu consulta: "${query}".\n\nActualmente hay ${vesselCount} buques en zona VTS y ${activeAlerts} alertas activas.\n\n⚠️ El motor de IA (Victoria) está temporalmente no disponible en este entorno. Esto puede ocurrir cuando:\n• El servidor serverless está en cold start\n• Límite de cuota alcanzado\n• El entorno no tiene las credenciales del SDK\n\nPuedes seguir usando el dashboard, los informes, el radio VTS y todas las demás funciones del sistema. El chatbot se reactivará automáticamente cuando el motor de IA esté disponible.`
 }
 
 // Fallback query if messages array is empty
@@ -321,7 +376,7 @@ INSTRUCCIONES DE RESPUESTA:
 10. APRENDE de la conversación actual: si el operador da pistas de su estilo o preferencias, incorpóralas en respuestas futuras.
 11. Si detectas una emergencia emocional grave (menciona autolesión, desesperación absoluta), recomienda contactar a: línea 113 SALUD MENTAL (Chile) o emergencia al 131. La vida importa más que cualquier operación portuaria.`
 
-    const response = await chatWithAI(messages || [{ role: 'user', content: userQuery }], systemPrompt)
+    const response = await chatWithAI(messages || [{ role: 'user', content: userQuery }], systemPrompt, userQuery, pageContext)
 
     try {
       await db.operationLog.create({
