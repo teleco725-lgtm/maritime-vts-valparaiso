@@ -15,6 +15,7 @@ import { Badge } from '@/components/ui/badge'
 import { Ship, LogOut, User, ShieldCheck, ChevronDown, Activity, Menu, X, Palette } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { ThemePicker } from './theme-picker'
+import RoleSelector from './role-selector'
 
 interface Props {
   activeView: string
@@ -84,6 +85,9 @@ export default function Header({ activeView, onNavigate, onToggleMobileNav, mobi
           <Badge variant="outline" className="hidden xl:flex bg-[#00D2FF]/10 text-[#00D2FF] border-[#00D2FF]/30 text-xs px-2.5 py-1">
             <ShieldCheck className="w-3 h-3 mr-1" /> Ley 21.719
           </Badge>
+
+          {/* Matriz de Roles — selector de perfil */}
+          <RoleSelector />
 
           {/* Theme picker — selector de paleta de colores */}
           <ThemePicker />

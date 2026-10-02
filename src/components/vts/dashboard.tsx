@@ -16,14 +16,19 @@ import ReportsPanel from './reports-panel'
 import CompliancePanel from './compliance-panel'
 import AIChatPanel from './ai-chat-panel'
 import RadioVTSPanel from './radio-vts-panel'
+import OperationalAlertsPanel from './operational-alerts-panel'
+import VesselTimeline from './vessel-timeline'
+import AuditLogPanel from './audit-log-panel'
+import { useRealtimeVessels } from '@/hooks/use-realtime-vessels'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
-import { LayoutDashboard, FileText, ShieldCheck } from 'lucide-react'
+import { LayoutDashboard, FileText, ShieldCheck, History } from 'lucide-react'
 
 export default function Dashboard() {
   const [activeView, setActiveView] = useState('dashboard')
   const [selectedVessel, setSelectedVessel] = useState<Vessel | null>(null)
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const user = useAuthStore((s) => s.user)
+  const { vessels } = useRealtimeVessels(2000)
 
   return (
     <div
@@ -106,6 +111,21 @@ export default function Dashboard() {
               <div className="lg:col-span-4 h-[400px]">
                 <CameraPanel />
               </div>
+            </div>
+
+            {/* Pilar 1: Alertas Operacionales (CPA/TCPA, geofence, maniobra) */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-3">
+              <div className="lg:col-span-6 h-[400px]">
+                <OperationalAlertsPanel vessels={vessels} />
+              </div>
+              <div className="lg:col-span-6 h-[400px]">
+                <VesselTimeline vessel={selectedVessel} />
+              </div>
+            </div>
+
+            {/* Pilar 4: Logs de Auditoría */}
+            <div className="h-[400px]">
+              <AuditLogPanel />
             </div>
 
             {/* Radio VTS — Walkie-Talkie Virtual con IA */}
