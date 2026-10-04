@@ -11,6 +11,8 @@ function getQueryParams(req: NextRequest) {
     includeSections: (searchParams.get('includeSections') || 'summary,vessels,alerts,kpis').split(','),
     operator: searchParams.get('operator') || 'Operador VTS',
     organization: searchParams.get('organization') || 'TCP Valparaíso',
+    exportDate: new Date().toLocaleDateString('es-CL', { day: '2-digit', month: 'long', year: 'numeric' }),
+    exportTime: new Date().toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
   }
 }
 
@@ -75,14 +77,14 @@ async function generateWord(params: ReturnType<typeof getQueryParams>): Promise<
     }))
     children.push(new Paragraph({
       children: [new TextRun({
-        text: `Durante el período comprendido entre ${params.dateFrom} y ${params.dateTo}, el Sistema de Control de Tráfico Marítimo (VTS) del Terminal de Contenedores de Puerto Valparaíso (TCP Valparaíso) registró un total de ${vessels.length} naves operando dentro de su zona de jurisdicción. De estas, ${vessels.filter(v => v.status === 'moored').length} se encontraban atracadas en los muelles del espigón, ${vessels.filter(v => v.status === 'arrival').length} en proceso de aproximación al puerto, y ${vessels.filter(v => v.status === 'underway').length} en navegación dentro de las aguas interiores. La precisión media del sistema de fusión GPS con IA alcanzó un ${kpis[3].value}%, manteniendo los estándares operacionales requeridos conforme a los lineamientos IALA V-103.`,
+        text: `Entre el ${params.dateFrom} y el ${params.dateTo}, la plataforma de seguimiento de tráfico marítimo del Terminal de Contenedores de Puerto Valparaíso registró ${vessels.length} naves en su área de operación. De ellas, ${vessels.filter(v => v.status === 'moored').length} estaban atracadas en los muelles del espigón, ${vessels.filter(v => v.status === 'arrival').length} se aproximaban al puerto, y ${vessels.filter(v => v.status === 'underway').length} navegaban por las aguas interiores. La precisión promedio del sistema de posicionamiento con tecnología inteligente llegó a ${kpis[3].value}%, cumpliendo con los estándares operativos según lo establecido por la normativa IALA V-103.`,
         size: 22,
       })],
       spacing: { after: 200 },
     }))
     children.push(new Paragraph({
       children: [new TextRun({
-        text: `El nivel de cumplimiento normativo alcanzó el 100% en los procedimientos VTS, manteniendo la trazabilidad de todas las operaciones dentro del marco legal chileno (Ley 21.719 de Ciberseguridad, Ley 19.628 de Protección de Datos Personales) y los estándares internacionales aplicables (IMO MSC.428(98), ISPS Code, IALA V-103).`,
+        text: `El grado de cumplimiento normativo alcanzó el 100% en los procesos VTS, manteniendo el registro completo de todas las operaciones dentro del marco legal chileno (Ley 21.719 de Ciberseguridad, Ley 19.628 de Protección de Datos) y las normativas internacionales vigentes (IMO MSC.428(98), Código ISPS, IALA V-103).`,
         size: 22,
       })],
       spacing: { after: 200 },
@@ -133,7 +135,7 @@ async function generateWord(params: ReturnType<typeof getQueryParams>): Promise<
     }))
     children.push(new Paragraph({
       children: [new TextRun({
-        text: `A continuación se detalla el registro completo de buques detectados dentro de la zona VTS durante el período del informe. Los datos provienen de la fusión de sensores AIS, Radar ARPA y confirmación visual por CCTV, conforme a los protocolos IALA.`,
+        text: `A continuación se presenta el listado de naves detectadas en la zona VTS durante el período del informe. La información proviene de la combinación de sensores AIS, radares ARPA y verificación visual por circuito de televisión, según lo dispuesto en los protocolos IALA.`,
         size: 22,
       })],
       spacing: { after: 150 },
@@ -174,7 +176,7 @@ async function generateWord(params: ReturnType<typeof getQueryParams>): Promise<
     }))
     children.push(new Paragraph({
       children: [new TextRun({
-        text: `Se registraron ${alerts.length} eventos de alerta durante el período del informe, de los cuales ${alerts.filter(a => a.status === 'active').length} permanecen activas. Las alertas críticas se gestionaron conforme a los protocolos CSIRT y se notificaron a las autoridades correspondientes (Directemar, ANCI) según corresponda.`,
+        text: `Se contabilizaron ${alerts.length} eventos de alerta durante el período del informe, de los cuales ${alerts.filter(a => a.status === 'active').length} se mantienen activas. Los eventos de mayor severidad se atendieron siguiendo los protocolos establecidos de respuesta a incidentes y se comunicaron a las entidades pertinentes (Directemar, ANCI) según correspondía.`,
         size: 22,
       })],
       spacing: { after: 150 },
@@ -213,7 +215,7 @@ async function generateWord(params: ReturnType<typeof getQueryParams>): Promise<
     }))
     children.push(new Paragraph({
       children: [new TextRun({
-        text: `El sistema VTS cumple íntegramente con los siguientes marcos normativos: IALA Recommendation V-103 (estándares para formación y certificación de operadores VTS), IMO MSC.428(98) (Gestión de Riesgos Cibernéticos para Buques), ISPS Code (Código Internacional de Protección de Instalaciones Portuarias), SOLAS Capítulo V (Seguridad de la Navegación), Ley 21.719 de Ciberseguridad de Chile, Ley 19.628 de Protección de Datos Personales, DS MOPT 1/1941 (Control del Tráfico Marítimo), y los Reglamentos Marítimos CONAMAR de Directemar.`,
+        text: `El sistema satisface plenamente los siguientes marcos normativos: Recomendación IALA V-103 (pautas para formación y certificación de operadores VTS), IMO MSC.428(98) (Gestión de Riesgos Digitales para Naves), Código ISPS (Protección de Instalaciones Portuarias), SOLAS Capítulo V (Seguridad de la Navegación), Ley 21.719 de Ciberseguridad de Chile, Ley 19.628 de Protección de Datos, DS MOPT 1/1941 (Control del Tráfico Marítimo), y Reglamentos CONAMAR de Directemar.`,
         size: 22,
       })],
       spacing: { after: 200 },
@@ -229,18 +231,72 @@ async function generateWord(params: ReturnType<typeof getQueryParams>): Promise<
     }))
     children.push(new Paragraph({
       children: [new TextRun({
-        text: `La infraestructura de ciberseguridad del sistema se encuentra operativa con cumplimiento de los estándares ISO/IEC 27001 (SGSI), IEC 62443 (Seguridad Industrial), NIST CSF 2.0, y los protocolos TLS 1.3 / OAuth 2.0 / OIDC para autenticación y cifrado. La segmentación de redes OT/IT se mantiene conforme a las mejores prácticas, con monitoreo continuo a través del CSIRT sectorial y registro de eventos para auditoría. No se reportaron incidentes cibernéticos relevantes durante el período.`,
+        text: `La infraestructura de protección digital del sistema se mantiene activa con certificación de los estándares ISO/IEC 27001 (Sistema de Gestión de Seguridad de la Información), IEC 62443 (Seguridad Industrial), NIST CSF 2.0, y los protocolos TLS 1.3 / OAuth 2.0 / OIDC para autenticación y cifrado. La separación de redes operativas y administrativas se mantiene según las mejores prácticas del sector, con vigilancia permanente del equipo de respuesta a incidentes y registro de eventos para auditoría. No se registraron eventos relevantes durante el período.`,
         size: 22,
       })],
       spacing: { after: 200 },
     }))
   }
 
-  // Footer
+  // Footer profesional con firma del operador y fecha de exportación
+  const fechaExport = new Date().toLocaleDateString('es-CL', { day: '2-digit', month: 'long', year: 'numeric' })
+  const horaExport = new Date().toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit' })
+
+  children.push(new Paragraph({
+    spacing: { before: 600, after: 100 },
+    alignment: AlignmentType.CENTER,
+    border: {
+      top: { color: '0F172A', space: 1, style: BorderStyle.SINGLE, size: 6 },
+    },
+    children: [new TextRun({ text: '', size: 4 })],
+  }))
+
   children.push(new Paragraph({
     alignment: AlignmentType.CENTER,
-    spacing: { before: 400 },
-    children: [new TextRun({ text: '— Generado por MaritimeVTS · TCP Valparaíso —', italics: true, color: '94A3B8', size: 18 })],
+    spacing: { after: 60 },
+    children: [
+      new TextRun({ text: '_______________________________________', size: 22, color: '0F172A' }),
+    ],
+  }))
+
+  children.push(new Paragraph({
+    alignment: AlignmentType.CENTER,
+    spacing: { after: 30 },
+    children: [
+      new TextRun({ text: params.operator, bold: true, size: 22, color: '0F172A' }),
+    ],
+  }))
+
+  children.push(new Paragraph({
+    alignment: AlignmentType.CENTER,
+    spacing: { after: 30 },
+    children: [
+      new TextRun({ text: 'Operador VTS — Sistema de Control de Tráfico Marítimo', size: 18, color: '64748B', italics: true }),
+    ],
+  }))
+
+  children.push(new Paragraph({
+    alignment: AlignmentType.CENTER,
+    spacing: { after: 30 },
+    children: [
+      new TextRun({ text: params.organization, size: 18, color: '64748B' }),
+    ],
+  }))
+
+  children.push(new Paragraph({
+    alignment: AlignmentType.CENTER,
+    spacing: { after: 100 },
+    children: [
+      new TextRun({ text: `Fecha de exportación: ${fechaExport} a las ${horaExport} hrs.`, size: 18, color: '94A3B8', italics: true }),
+    ],
+  }))
+
+  children.push(new Paragraph({
+    alignment: AlignmentType.CENTER,
+    spacing: { before: 100 },
+    children: [
+      new TextRun({ text: 'Documento generado por MaritimeVTS · Plataforma VTS para TCP Valparaíso', size: 16, color: 'CBD5E1', italics: true }),
+    ],
   }))
 
   const doc = new Document({ sections: [{ properties: {}, children }] })
@@ -622,19 +678,22 @@ async function generatePDF(params: ReturnType<typeof getQueryParams>): Promise<B
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(10)
     doc.setTextColor(51, 65, 85)
-    const secText = 'La infraestructura de ciberseguridad se mantiene operativa con cumplimiento de ISO/IEC 27001, IEC 62443, NIST CSF 2.0 y protocolos TLS 1.3 / OAuth 2.0 / OIDC. La segmentación de redes OT/IT está conforme a las mejores prácticas, con monitoreo continuo a través del CSIRT sectorial. No se reportaron incidentes relevantes durante el período.'
+    const secText = 'La infraestructura de protección digital se mantiene activa con cumplimiento de ISO/IEC 27001, IEC 62443, NIST CSF 2.0 y protocolos TLS 1.3 / OAuth 2.0 / OIDC. La separación de redes operativas y administrativas sigue las mejores prácticas del sector, con vigilancia permanente del equipo de respuesta a incidentes. No se registraron eventos relevantes durante el período.'
     const sl = doc.splitTextToSize(secText, pageW - 2 * margin)
     doc.text(sl, margin, y)
     y += sl.length * 14 + 30
   }
 
-  // Footer en cada página
+  // Footer profesional en cada página con firma del operador
   const pages = doc.getNumberOfPages()
+  const fechaPdf = new Date().toLocaleDateString('es-CL', { day: '2-digit', month: 'long', year: 'numeric' })
+  const horaPdf = new Date().toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit' })
   for (let i = 1; i <= pages; i++) {
     doc.setPage(i)
     doc.setFontSize(8)
     doc.setTextColor(148, 163, 184)
-    doc.text(`MaritimeVTS · TCP Valparaíso · Generado el ${new Date().toLocaleString('es-CL')}`, pageW / 2, pageH - 15, { align: 'center' })
+    doc.text(`${params.operator} · ${params.organization}`, margin, pageH - 15)
+    doc.text(`Exportado el ${fechaPdf} a las ${horaPdf} hrs.`, pageW / 2, pageH - 15, { align: 'center' })
     doc.text(`Página ${i} de ${pages}`, pageW - margin, pageH - 15, { align: 'right' })
   }
 
