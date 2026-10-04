@@ -211,6 +211,43 @@ export const vessels: Vessel[] = [
     lastUpdate: 'hace 8 seg', x: 980, y: 590,
     trail: [{ x: 980, y: 590 }, { x: 970, y: 595 }],
   },
+  // === 4 BUQUES ADICIONALES — POTENCIA NAVIS ===
+  {
+    id: 'v21', mmsi: '563158000', imo: '9726901', name: 'ONE INNOVATION',
+    flag: 'Singapur', type: 'container', length: 366, beam: 51, draft: 14.8,
+    sog: 17.2, cog: 55, heading: 53, lat: -33.0980, lng: -71.7100,
+    eta: '2026-10-02 22:00', destination: 'TCP Valparaíso — Muelle 5',
+    status: 'arrival', flag_state: 'SG', registry: 'IMO', confidence: 98.5,
+    lastUpdate: 'hace 5 seg', x: 950, y: 575,
+    trail: [{ x: 950, y: 575 }, { x: 930, y: 580 }],
+  },
+  {
+    id: 'v22', mmsi: '431739000', imo: '9811242', name: 'NYK CONSTELLATION',
+    flag: 'Japón', type: 'container', length: 320, beam: 48, draft: 12.0,
+    sog: 0.0, cog: 0, heading: 90, lat: -33.0370, lng: -71.6360,
+    eta: 'Atracado', destination: 'TCP Valparaíso — Muelle 1',
+    status: 'moored', flag_state: 'JP', registry: 'IMO', confidence: 100,
+    lastUpdate: 'hace 1 seg', x: 250, y: 350,
+    trail: [{ x: 250, y: 350 }],
+  },
+  {
+    id: 'v23', mmsi: '725004900', imo: '9665234', name: 'PIL KOTA TENAGA',
+    flag: 'Singapur', type: 'container', length: 279, beam: 40, draft: 11.5,
+    sog: 13.8, cog: 85, heading: 83, lat: -33.1080, lng: -71.7300,
+    eta: '2026-10-02 16:30', destination: 'TCP Valparaíso — Muelle 7',
+    status: 'arrival', flag_state: 'SG', registry: 'IMO', confidence: 98.1,
+    lastUpdate: 'hace 6 seg', x: 970, y: 585,
+    trail: [{ x: 970, y: 585 }, { x: 950, y: 590 }],
+  },
+  {
+    id: 'v24', mmsi: '209613000', imo: '9454521', name: 'YANG MING FRIEND',
+    flag: 'Taiwan', type: 'container', length: 332, beam: 45, draft: 13.2,
+    sog: 0.0, cog: 0, heading: 180, lat: -33.0380, lng: -71.6470,
+    eta: 'En fondeo', destination: 'Zona de fondeo No.2',
+    status: 'anchored', flag_state: 'TW', registry: 'IMO', confidence: 99.2,
+    lastUpdate: 'hace 18 seg', x: 660, y: 480,
+    trail: [{ x: 660, y: 480 }],
+  },
 ]
 
 export interface AlertItem {
@@ -343,17 +380,17 @@ export interface KPI {
 export const kpis: KPI[] = [
   {
     label: 'Buques en Zona VTS',
-    value: '12', unit: 'naves', trend: 'up', trendValue: '+2',
+    value: '24', unit: 'naves', trend: 'up', trendValue: '+4',
     description: 'Operando dentro del mar territorial de Valparaíso',
   },
   {
     label: 'Buques Atracados',
-    value: '4', unit: 'naves', trend: 'stable', trendValue: '0',
+    value: '6', unit: 'naves', trend: 'up', trendValue: '+2',
     description: 'En muelles TCP 1, 3, 5 y 7',
   },
   {
     label: 'Buques en Aproximación',
-    value: '3', unit: 'naves', trend: 'up', trendValue: '+1',
+    value: '8', unit: 'naves', trend: 'up', trendValue: '+5',
     description: 'Con ETA programada en próximas 6 horas',
   },
   {
@@ -368,7 +405,7 @@ export const kpis: KPI[] = [
   },
   {
     label: 'Alertas Activas',
-    value: '5', unit: 'ev', trend: 'down', trendValue: '-2',
+    value: '16', unit: 'ev', trend: 'up', trendValue: '+11',
     description: 'Distribuidas: 1 crítica, 2 medias, 2 bajas',
   },
   {
@@ -394,21 +431,26 @@ export const trafficTrend = [
 ]
 
 export const vesselTypeDistribution = [
-  { name: 'Portacontenedores', value: 6, color: '#0ea5e9' },
-  { name: 'Remolcador', value: 2, color: '#10b981' },
-  { name: 'Pesquero', value: 1, color: '#f59e0b' },
+  { name: 'Portacontenedores', value: 16, color: '#0ea5e9' },
+  { name: 'Remolcador', value: 3, color: '#10b981' },
+  { name: 'Pesquero', value: 2, color: '#f59e0b' },
   { name: 'Granelero', value: 1, color: '#8b5cf6' },
   { name: 'Tanquero', value: 1, color: '#ef4444' },
   { name: 'Otros', value: 1, color: '#6b7280' },
 ]
 
 export const flagDistribution = [
-  { flag: '🇨🇱 Chile', count: 3 },
-  { flag: '🇵🇦 Panamá', count: 4 },
-  { flag: '🇱🇷 Liberia', count: 2 },
+  { flag: '🇨🇱 Chile', count: 4 },
+  { flag: '🇵🇦 Panamá', count: 5 },
+  { flag: '🇸🇬 Singapur', count: 4 },
+  { flag: '🇱🇷 Liberia', count: 3 },
+  { flag: '🇯🇵 Japón', count: 1 },
   { flag: '🇨🇳 China', count: 1 },
   { flag: '🇺🇸 EEUU', count: 1 },
-  { flag: '🇸🇬 Singapur', count: 1 },
+  { flag: '🇹🇼 Taiwan', count: 1 },
+  { flag: '🇲🇹 Malta', count: 1 },
+  { flag: '🇭🇰 Hong Kong', count: 1 },
+  { flag: '🇲🇭 Marshall Is.', count: 1 },
 ]
 
 export const cameraFeeds = [
