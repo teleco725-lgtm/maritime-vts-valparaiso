@@ -19,6 +19,7 @@ import RadioVTSPanel from './radio-vts-panel'
 import OperationalAlertsPanel from './operational-alerts-panel'
 import VesselTimeline from './vessel-timeline'
 import AuditLogPanel from './audit-log-panel'
+import ZealModule from './zeal-module'
 import { useRealtimeVessels } from '@/hooks/use-realtime-vessels'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
 import { LayoutDashboard, FileText, ShieldCheck, History } from 'lucide-react'
@@ -167,6 +168,9 @@ export default function Dashboard() {
 
       {/* Asistente de IA flotante */}
       <AIChatPanel />
+
+      {/* Módulo ZEAL — indicadores ambientales + alertas para transportistas */}
+      <ZealModule />
     </div>
   )
 }
