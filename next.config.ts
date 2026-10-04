@@ -1,14 +1,13 @@
 import type { NextConfig } from "next";
 
-// Vercel-friendly config (no standalone output)
+// Vercel-friendly config
 const nextConfig: NextConfig = {
-  // ❌ No usar output: "standalone" en Vercel — causa errores de build
-  // ✅ Sin output = Vercel usa su propia infra serverless
   typescript: {
     ignoreBuildErrors: true,
   },
   reactStrictMode: false,
-  // ⚠️ z-ai-web-dev-sdk es server-only, evitar que se incluya en client bundle
+  // Solo paquetes que realmente necesitan ser externos
+  // @prisma/client y prisma NO deben ir aquí en Vercel
   serverExternalPackages: [
     'z-ai-web-dev-sdk',
     'pptxgenjs',
@@ -16,11 +15,8 @@ const nextConfig: NextConfig = {
     'xlsx',
     'jspdf',
     'jspdf-autotable',
-    '@prisma/client',
-    'prisma',
     'sharp',
   ],
-  // Headers de seguridad (aplica a todas las rutas)
   async headers() {
     return [
       {
