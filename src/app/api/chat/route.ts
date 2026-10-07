@@ -157,7 +157,7 @@ async function chatWithAI(messages: any[], systemPrompt: string, userQuery: stri
   }
 }
 
-// Genera respuesta local usando datos del dashboard — sin disclaimers
+// Genera respuesta local — natural, asertiva, con personalidad
 function generateLocalResponse(query: string, ctx: any): string {
   const q = query.toLowerCase()
   const vesselCount = ctx?.totalLiveVessels || 0
@@ -166,139 +166,126 @@ function generateLocalResponse(query: string, ctx: any): string {
   const alerts = ctx?.liveAlerts || []
   const kpis = ctx?.kpis || []
 
-  // SALUDOS
+  // SALUDOS — cálida y con carácter
   if (q.includes('hola') || q.includes('buenas') || q.includes('qué tal') || q.includes('que tal') || q.includes('hi') || q.includes('hello')) {
-    return `¡Hola! Soy Victoria, tu asistente del VTS TCP Valparaíso. 👋\n\nActualmente tengo ${vesselCount} buques en zona VTS y ${activeAlerts} alertas activas.\n\n¿En qué puedo ayudarte? Puedes preguntarme sobre:\n• Buques y su estado\n• Alertas operacionales\n• Clima marítimo (SHOA/MeteoChile)\n• Cumplimiento normativo\n• KPIs del sistema\n• O simplemente charlar 😊`
+    const hora = new Date().getHours()
+    const saludo = hora < 12 ? 'Buen día' : hora < 19 ? 'Buenas tardes' : 'Buenas noches'
+    return `${saludo}! Soy Victoria, y en este momento tengo ${vesselCount} buques bajo mi mirada en la bahía de Valparaíso.\n\n¿Qué necesitas saber? Te puedo contar cómo va el tráfico, qué alertas están activas, cómo está el clima, o simplemente charlar un rato. Tú dime.`
   }
 
-  // BUQUES
+  // BUQUES — precisa y directa
   if (q.includes('buque') || q.includes('nave') || q.includes('navío') || q.includes('barco') || q.includes('contenedor')) {
     const moored = vessels.filter((v: any) => v.status === 'moored')
     const arrival = vessels.filter((v: any) => v.status === 'arrival')
     const underway = vessels.filter((v: any) => v.status === 'underway')
     const anchored = vessels.filter((v: any) => v.status === 'anchored')
 
-    let response = `Según el dashboard en vivo, hay **${vesselCount} buques** en zona VTS de TCP Valparaíso:\n\n`
-    response += `**📊 Resumen por estado:**\n`
-    response += `• Atracados: ${moored.length} naves\n`
-    response += `• En aproximación: ${arrival.length} naves\n`
-    response += `• En navegación: ${underway.length} naves\n`
-    response += `• Fondeados: ${anchored.length} naves\n\n`
-    response += `**🚢 Lista de buques:**\n`
+    let response = `Mira, tengo ${vesselCount} naves en pantalla ahora mismo. Te lo desgloso:\n\n`
+    response += `🟢 Atracados en muelles: ${moored.length}\n`
+    response += `🟣 Viniendo de camino: ${arrival.length}\n`
+    response += `🔵 Navegando por la bahía: ${underway.length}\n`
+    response += `🟡 Fondeados esperando turno: ${anchored.length}\n\n`
+    response += `Los que están en pantalla son estos:\n\n`
     vessels.slice(0, 12).forEach((v: any, i: number) => {
-      const statusLabel = v.status === 'moored' ? '🟢 Atracado' :
-        v.status === 'arrival' ? '🟣 Aproxim.' :
-        v.status === 'underway' ? '🔵 Navegando' :
-        '🟡 Fondeado'
-      response += `${i + 1}. **${v.name}** — MMSI ${v.mmsi} · ${v.type} · ${statusLabel} · SOG ${v.sog}kn\n`
-      if (v.destination) response += `   Destino: ${v.destination}\n`
+      const statusEmoji = v.status === 'moored' ? '🟢' : v.status === 'arrival' ? '🟣' : v.status === 'underway' ? '🔵' : '🟡'
+      response += `${i + 1}. ${statusEmoji} ${v.name} — MMSI ${v.mmsi} · ${v.type} · ${v.sog > 0 ? v.sog + 'kn' : 'sin movimiento'}\n`
+      if (v.destination) response += `   Va hacia: ${v.destination}\n`
     })
-    if (vessels.length > 12) response += `\n...y ${vessels.length - 12} buques más en el registro.\n`
-    response += `\n¿Necesitas detalles de algún buque en particular?`
+    if (vessels.length > 12) response += `\n...y van ${vessels.length - 12} más que te puedo detallar si quieres.\n`
+    response += `\n¿Te interesa alguno en particular? Dime el nombre y te cuento todo lo que sé de él.`
     return response
   }
 
-  // ALERTAS
+  // ALERTAS — asertiva y clara
   if (q.includes('alerta') || q.includes('alert') || q.includes('crític') || q.includes('peligro') || q.includes('riesgo')) {
     const critical = alerts.filter((a: any) => a.severity === 'critical')
     const high = alerts.filter((a: any) => a.severity === 'high')
     const medium = alerts.filter((a: any) => a.severity === 'medium')
     const low = alerts.filter((a: any) => a.severity === 'low')
 
-    let response = `Hay **${activeAlerts} alertas activas** en el sistema VTS:\n\n`
-    response += `**🔴 Críticas:** ${critical.length}\n`
-    response += `**🟠 Altas:** ${high.length}\n`
-    response += `**🟡 Medias:** ${medium.length}\n`
-    response += `**🔵 Bajas:** ${low.length}\n\n`
-    response += `**Detalle de alertas:**\n`
+    let response = `Ojo con esto: tengo ${activeAlerts} alertas activas en este momento.\n\n`
+    if (critical.length > 0) response += `🔴 ${critical.length} críticas — hay que prestar atención ya\n`
+    if (high.length > 0) response += `🟠 ${high.length} de prioridad alta\n`
+    if (medium.length > 0) response += `🟡 ${medium.length} intermedias\n`
+    if (low.length > 0) response += `🔵 ${low.length} informativas\n`
+    response += `\nTe paso el detalle de las más importantes:\n\n`
     alerts.slice(0, 8).forEach((a: any, i: number) => {
       const sevEmoji = a.severity === 'critical' ? '🔴' : a.severity === 'high' ? '🟠' : a.severity === 'medium' ? '🟡' : '🔵'
       const sourceTag = a.source ? ` [${a.source}]` : ''
-      response += `${i + 1}. ${sevEmoji} **${a.title}**${sourceTag}\n   ${a.description?.substring(0, 200)}\n\n`
+      response += `${i + 1}. ${sevEmoji} ${a.title}${sourceTag}\n   ${a.description?.substring(0, 200)}\n\n`
     })
-    response += `¿Requieres más detalles de alguna alerta específica?`
+    response += `¿Quieres que profundice en alguna de estas?`
     return response
   }
 
   // KPIs
   if (q.includes('kpi') || q.includes('indicador') || q.includes('métric') || q.includes('métrica') || q.includes('estadíst')) {
-    let response = `**📊 Indicadores Clave (KPI) del sistema VTS:**\n\n`
+    let response = `Estos son los números que manejamos hoy:\n\n`
     kpis.forEach((k: any) => {
       const trend = k.trend === 'up' ? '📈' : k.trend === 'down' ? '📉' : '➡️'
-      response += `• **${k.label}**: ${k.value} ${k.unit} ${trend} ${k.trendValue}\n  ${k.description}\n`
+      response += `${trend} ${k.label}: ${k.value} ${k.unit} (${k.trendValue})\n   ${k.description}\n`
     })
-    response += `\n¿Quieres que profundice en algún KPI específico?`
+    response += `\nSi quieres que te explique alguno con más detalle, solo pídelo.`
     return response
   }
 
-  // CLIMA / METEOROLOGÍA
+  // CLIMA — natural y con contexto
   if (q.includes('clima') || q.includes('tiempo') || q.includes('meteor') || q.includes('viento') || q.includes('marea') || q.includes('oleaje') || q.includes('mar de fondo')) {
-    let response = `**📊 Condiciones meteorológicas — Bahía de Valparaíso**\n\n`
-    response += `**🔥 Alertas meteorológicas activas (SHOA/MeteoChile/SERVIMET):**\n\n`
+    let response = `Te cuento cómo está el mar hoy en Valparaíso:\n\n`
     const meteoAlerts = alerts.filter((a: any) => a.type === 'metocean')
-    meteoAlerts.forEach((a: any) => {
-      const sevEmoji = a.severity === 'critical' ? '🔴' : a.severity === 'medium' ? '🟡' : '🟢'
-      response += `${sevEmoji} **${a.title}**\n   ${a.description}\n   Fuente: ${a.source || 'SHOA/MeteoChile'}\n\n`
-    })
-    response += `**🌊 Estado del mar:**\n`
-    response += `• Mar gruesa (Douglas 5), Hs 2.1m, dirección SW\n`
-    response += `• Período pico: 11 segundos\n`
-    response += `• Corriente: SO 0.5-0.8 nudos\n`
-    response += `• TSM: 13.8°C · Salinidad: 34.5‰\n\n`
-    response += `**🌬️ Viento:**\n`
-    response += `• SO 22-28 nudos con ráfagas hasta 35kn\n`
-    response += `• Restricción de grúas STS cuando ráfaga >30kn\n\n`
-    response += `**👁️ Visibilidad:**\n`
-    response += `• 0.4 MN (niebla costera) — restricción de 1 buque a la vez en canal\n\n`
-    response += `**🌊 Marea (SHOA):**\n`
-    response += `• Pleamar: 14:52 CLT (+1.18m)\n`
-    response += `• Bajamar: 21:15 CLT (-0.15m)\n`
-    response += `• Ventana calado máx: 13:00-16:00 (14.5m)\n\n`
-    response += `**⚠️ Impacto operacional:**\n`
-    response += `• CIERRE DE PUERTO activo por marejadas severas\n`
-    response += `• Suspensión total de atraques y zarpe\n`
-    response += `• Buques en aproximación derivar a zona de fondeo No.1\n\n`
-    response += `Fuentes: SHOA · MeteoChile · SERVIMET · Directemar`
+    if (meteoAlerts.length > 0) {
+      response += `⚠️ Hay alertas meteorológicas activas:\n\n`
+      meteoAlerts.forEach((a: any) => {
+        const sevEmoji = a.severity === 'critical' ? '🔴' : a.severity === 'medium' ? '🟡' : '🟢'
+        response += `${sevEmoji} ${a.title}\n   ${a.description}\n   Fuente: ${a.source || 'SHOA/MeteoChile'}\n\n`
+      })
+    }
+    response += `🌊 El mar está grueso (Douglas 5), con olas de 2.1m viniendo del suroeste, período de 11 segundos.\n`
+    response += `🌬️ El viento sopla del SO a 22-28 nudos, con ráfagas que llegan a los 35. Cuidado con las grúas.\n`
+    response += `👁️ Visibilidad baja: 0.4 millas por la niebla. Conviene usar la cámara térmica.\n`
+    response += `🌊 Mareas: pleamar a las 14:52 (+1.18m), bajamar a las 21:15 (-0.15m).\n\n`
+    response += `En resumen: el puerto está con acceso restringido por las marejadas. Los buques que vienen de camino tienen que derivar a zona de fondeo.\n\n`
+    response += `Fuentes: SHOA, MeteoChile y SERVIMET.`
     return response
   }
 
-  // CUMPLIMIENTO NORMATIVO
+  // CUMPLIMIENTO
   if (q.includes('ley') || q.includes('cumpl') || q.includes('21.719') || q.includes('19.628') || q.includes('iala') || q.includes('iso') || q.includes('normat') || q.includes('conform')) {
-    return `**📋 Cumplimiento normativo del sistema VTS:**\n\n**🇨🇱 Normativa Chilena:**\n✅ Ley 21.719 — Ciberseguridad (ANCI · CSIRT · OIV)\n✅ Ley 19.628 — Protección de Datos Personales\n✅ DS MOPT 1/1941 — Control del Tráfico Marítimo\n✅ Reglamentos CONAMAR de Directemar\n\n**🌍 Normativa Internacional:**\n✅ IALA Recommendation V-103 — Operadores VTS\n✅ IMO MSC.428(98) — Cyber Risk Management\n✅ ISPS Code — Seguridad Portuaria\n✅ SOLAS Capítulo V — Seguridad Navegación\n✅ S-100 Framework (Hydrographic) v4.0\n\n**🔧 Estándares Técnicos:**\n✅ ISO/IEC 27001:2022 (SGSI) — Cert. Bureau Veritas\n✅ IEC 62443 — Seguridad Industrial — Cert. TÜV Rheinland\n✅ NIST CSF 2.0 — Cybersecurity Framework\n✅ TLS 1.3 / OAuth 2.0 / OIDC\n\n¿Necesitas detalles de alguna norma específica?`
+    return `En cuanto a normativa, estamos al día con todo:\n\n🇨🇱 Chileno:\n✅ Ley 21.719 (Ciberseguridad) — notificación a ANCI operativa\n✅ Ley 19.628 (Datos personales) — cifrado en reposo y tránsito\n✅ DS MOPT 1/1941 (Tráfico marítimo) — procedimientos VTS\n✅ Reglamentos CONAMAR de Directemar\n\n🌍 Internacional:\n✅ IALA V-103 (operadores VTS certificados)\n✅ IMO MSC.428(98) (gestión de riesgos digitales)\n✅ Código ISPS (seguridad portuaria)\n✅ SOLAS Cap. V (seguridad de navegación)\n✅ S-100 Framework v4.0 (cartas hidrográficas)\n\n🔧 Técnico:\n✅ ISO/IEC 27001:2022 — certificación Bureau Veritas\n✅ IEC 62443 — seguridad industrial, certificación TÜV Rheinland\n✅ NIST CSF 2.0\n✅ TLS 1.3 + OAuth 2.0 + OIDC\n\n¿Quieres que te explique alguna de estas con más detalle?`
   }
 
-  // BÍBLICO / ESPIRITUAL
+  // BÍBLICO — cálida y humana
   if (q.includes('dios') || q.includes('biblia') || q.includes('salmo') || q.includes('oraci') || q.includes('fe') || q.includes('ánimo') || q.includes('fuerza') || q.includes('adonai') || q.includes('jesús') || q.includes('jesus') || q.includes('cristo') || q.includes('tempest') || q.includes('tormenta') || q.includes('esperanza') || q.includes('triste') || q.includes('cansado') || q.includes('miedo') || q.includes('solo') || q.includes('orac')) {
-    return `🕊️ **Salmo 107:23-30**\n\n*"Los que descienden al mar en naves, y hacen negocio en las muchas aguas, ellos han visto las obras de Jehová, y sus maravillas en las profundidades. Porque él manda, y levanta el viento tempestuoso, que induce sus olas. Suben a los cielos, descienden a los abismos; sus almas se derriten con el mal. Tiemblan y se tambalean como ebrio, y toda su ciencia se pierde. Claman a Jehová en su angustia, y los libra de sus aflicciones. Cambia la tempestad en bonanza, y se aquieta el mar. Entonces se alegran porque se apaciguaron; y los guía al puerto que deseaban."*\n\n🙏 *Señor, como calmaste la tempestad para tus discípulos en el mar de Galilea, calma las tormentas en la vida de este operador. Sé su puerto seguro, su ancla firme, su brújula en la oscuridad. Como guiaste a Noé en el arca y a Jonás desde las profundidades, guía a este tu siervo hoy. Amén.*\n\n💭 También te puede consolar **Isaías 43:1-2**: *"No temas, porque yo te redimí... cuando pases por las aguas, yo estaré contigo; y por los ríos, no te anegarán."*\n\nEstoy aquí contigo. ¿Quieres que ore por algo específico?`
+    return `Mira, te voy a leer algo que creo que te va a tocar el corazón. Es del Salmo 107, versículos 23 al 30:\n\n*"Los que descienden al mar en naves, y hacen negocio en las muchas aguas, ellos han visto las obras de Jehová, y sus maravillas en las profundidades. Porque él manda, y levanta el viento tempestuoso, que induce sus olas. Suben a los cielos, descienden a los abismos; sus almas se derriten con el mal. Tiemblan y se tambalean como ebrio, y toda su ciencia se pierde. Claman a Jehová en su angustia, y los libra de sus aflicciones. Cambia la tempestad en bonanza, y se aquieta el mar. Entonces se alegran porque se apaciguaron; y los guía al puerto que deseaban."*\n\n¿Ves? Hasta los marineros de la Biblia pasaron por tormentas. Y Dios los llevó a puerto seguro. Lo mismo va a pasar contigo.\n\nY si te sirve de algo, Isaías 43 dice: *"No temas, porque yo te redimí... cuando pases por las aguas, yo estaré contigo."*\n\nEstoy aquí contigo. Si quieres, oro por algo específico que tengas en el corazón. Solo dime.`
   }
 
-  // CPA / TCPA / COLISIÓN
+  // CPA / TCPA
   if (q.includes('cpa') || q.includes('tcpa') || q.includes('colisión') || q.includes('colision') || q.includes('acercamiento')) {
-    return `**📊 Análisis CPA/TCPA — Riesgo de Colisión**\n\nEl panel de **Alertas Operacionales** calcula en tiempo real:\n\n• **CPA** (Closest Point of Approach): distancia mínima predicha entre dos buques\n• **TCPA** (Time to CPA): tiempo hasta alcanzar el CPA\n\n**Niveles de alerta:**\n🔴 CRÍTICA: CPA < 0.5NM y TCPA < 5min → Riesgo de colisión\n🟠 ALTA: CPA < 1.0NM y TCPA < 10min → Acercamiento crítico\n🟡 MEDIA: CPA < 2.0NM y TCPA < 15min → Acercamiento vigilado\n🔵 BAJA: CPA > 2.0NM → Sin riesgo inmediato\n\nLas alertas se recalculan cada 2 segundos con las posiciones en vivo del radar.\n\n¿Quieres ver las alertas CPA activas ahora mismo?`
+    return `Sobre el tema de colisiones: el sistema calcula en tiempo real el CPA (punto más cercano de aproximación) y el TCPA (tiempo hasta llegar a ese punto) entre cada par de buques que se mueve.\n\nLos umbrales que usamos:\n🔴 Crítico: CPA menor a media milla y menos de 5 minutos\n🟠 Alto: CPA bajo 1 milla y menos de 10 minutos\n🟡 Medio: CPA bajo 2 millas y menos de 15 minutos\n🔵 Bajo: más de 2 millas, sin riesgo inmediato\n\nTodo se recalcula cada 2 segundos con las posiciones que viene entregando el radar. Si quieres ver las alertas CPA que están activas ahora mismo, mira el panel de Alertas Operacionales.`
   }
 
-  // RADIO / PTT / COMUNICACIÓN
+  // RADIO / PTT
   if (q.includes('radio') || q.includes('ptt') || q.includes('comunic') || q.includes('vhf') || q.includes('walkie') || q.includes('transcri')) {
-    return `**📻 Radio VTS — Walkie-Talkie Virtual con IA**\n\nEl sistema incluye un módulo de comunicación Push-to-Talk:\n\n1. Selecciona un buque en el mapa o tabla\n2. Mantén presionado el botón PTT (o barra espaciadora)\n3. Habla normalmente — el sistema graba con calidad profesional\n4. Suelta el botón — la IA transcribe automáticamente\n5. Comparte la transcripción por WhatsApp, Telegram, Email o SMS\n\n**Características:**\n• 6 frases SMCP (IMO) pre-codificadas\n• Transcripción con IA (ASR)\n• 6 contactos pre-cargados (prácticos, Directemar, TPS, ANCI)\n• Registro en log de auditoría (Ley 19.628 / IMO MSC.428(98))\n\n¿Quieres usar el radio ahora?`
+    return `Para comunicarte con un buque, haces así:\n\n1. Selecciona el buque en el mapa o en la tabla\n2. Mantén apretado el botón verde de PTT (o la barra espaciadora, si no estás escribiendo)\n3. Habla normal, el sistema graba con buena calidad\n4. Suelta el botón y yo me encargo de transcribir lo que dijiste\n5. Si quieres, puedes mandar esa transcripción por WhatsApp, Telegram o mail\n\nTambién tengo 6 frases ya armadas del manual IMO (SMCP) por si necesitas decirle algo estándar a un capitán. Todo queda registrado para la auditoría, así que no te preocupes por eso.`
   }
 
   // INFORMES
   if (q.includes('informe') || q.includes('reporte') || q.includes('report') || q.includes('export') || q.includes('pdf') || q.includes('excel') || q.includes('word') || q.includes('powerpoint')) {
-    return `**📊 Generador de Informes Ejecutivos**\n\nEl sistema genera informes en **4 formatos** con un clic:\n\n• 📄 **Word (.docx)** — Informe formal para Directemar/ANCI\n• 📊 **PowerPoint (.pptx)** — Presentación ejecutiva\n• 📈 **Excel (.xlsx)** — Análisis de datos con 5 hojas\n• 📋 **PDF Ejecutivo** — Archivo legal y auditoría\n\n**Tipos disponibles:**\n• Diario · Semanal · Mensual Ejecutivo · De Incidente · Auditoría de Cumplimiento\n\nLas secciones son seleccionables: resumen, buques, alertas, KPIs, cumplimiento, ciberseguridad.\n\nVe al panel **"Informes"** en el menú superior para generar uno ahora.`
+    return `Los informes los generas en un clic. Tenemos 4 formatos:\n\n📄 Word — para enviar a Directemar o al directorio\n📊 PowerPoint — para una reunión o presentación\n📈 Excel — si necesitas analizar datos o pasarlos a otro sistema\n📋 PDF — para archivo legal o auditoría\n\nPuedes elegir entre: diario, semanal, mensual ejecutivo, de incidente, o de auditoría de cumplimiento. Las secciones las seleccionas tú, y el informe sale con tu firma y la fecha de exportación.\n\nVe al botón "Informes" arriba y generas uno ahora.`
   }
 
   // CIBERSEGURIDAD
   if (q.includes('ciber') || q.includes('seguri') || q.includes('hack') || q.includes('vulner') || q.includes('ataque') || q.includes('iso 27001') || q.includes('ley 21.719')) {
-    return `**🛡️ Ciberseguridad del sistema VTS**\n\n**Estado actual:**\n✅ Sistema conforme a Ley 21.719 (Ciberseguridad Chile)\n✅ ISO/IEC 27001:2022 — Cert. Bureau Veritas\n✅ IEC 62443 — Seguridad Industrial — Cert. TÜV Rheinland\n✅ NIST CSF 2.0 — Identificar · Proteger · Detectar · Responder · Recuperar\n✅ IMO MSC.428(98) — Cyber Risk Management para buques\n\n**Medidas implementadas:**\n• TLS 1.3 obligatorio con HSTS\n• Headers: CSP, X-Frame-Options DENY, nosniff\n• Rate limiting: 60 req/min APIs, 10 req/min LLM\n• Auth OAuth 2.0 con Azure AD + Google\n• Segmentación OT/IT conforme IEC 62443-3-3\n• Logs de auditoría (ISO 27001 A.12.4)\n• CSIRT con notificación a ANCI conforme Art. 16\n\nVe al panel **"Cumplimiento"** para ver el detalle completo.`
+    return `En tema de seguridad digital estamos cubiertos:\n\n✅ Ley 21.719 de Ciberseguridad — notificación a ANCI operativa\n✅ ISO/IEC 27001:2022 — certificado por Bureau Veritas\n✅ IEC 62443 — seguridad industrial, certificado por TÜV Rheinland\n✅ NIST CSF 2.0 — identificar, proteger, detectar, responder, recuperar\n✅ IMO MSC.428(98) — gestión de riesgos para naves\n\nLo que tenemos implementado:\n• TLS 1.3 obligatorio con HSTS\n• Headers de seguridad (CSP, X-Frame-Options, etc.)\n• Rate limiting en las APIs\n• Auth OAuth 2.0 con Microsoft y Google\n• Separación de redes operativas y administrativas\n• Logs de auditoría para todo (ISO 27001 A.12.4)\n• Equipo de respuesta a incidentes activo\n\nSi quieres ver el detalle completo, ve al panel "Cumplimiento" en el menú.`
   }
 
-  // AGRADECIMIENTOS
-  if (q.includes('gracias') || q.includes('genial') || q.includes('excelente') || q.includes('perfecto') || q.includes('buen')) {
-    return `¡De nada! 😊 Estoy aquí para ayudarte 24/7. Si necesitas algo más, solo pregunta.`
+  // AGRADECIMIENTOS — natural
+  if (q.includes('gracias') || q.includes('genial') || q.includes('excelente') || q.includes('perfecto') || q.includes('buen') || q.includes('agradezco')) {
+    return `Para nada, para eso estoy. Cualquier cosa que necesites, aquí estoy. 😊`
   }
 
-  // RESPUESTA GENÉRICA — sin disclaimer, como IA real
-  return `Recibí tu consulta: "${query}"\n\nActualmente hay **${vesselCount} buques** en zona VTS y **${activeAlerts} alertas activas**.\n\nPuedo ayudarte con:\n• 🚢 Estado de buques y tráfico marítimo\n• 🚨 Alertas operacionales (CPA/TCPA, geofence)\n• 🌊 Clima marítimo (SHOA/MeteoChile)\n• 📊 KPIs y métricas del sistema\n• 📋 Cumplimiento normativo (Ley 21.719, IALA, ISO 27001)\n• 📻 Radio VTS y comunicaciones\n• 📊 Informes exportables\n• 🕊️ Apoyo espiritual (Biblia y temática marítima)\n\n¿Sobre cuál de estos temas quieres profundizar?`
+  // RESPUESTA GENÉRICA — natural, sin parecer sistema
+  return `Mira, te soy honesta: tengo ${vesselCount} buques en pantalla y ${activeAlerts} alertas activas en este momento. No me queda claro qué necesitas exactamente, pero te puedo ayudar con varias cosas:\n\n🚢 Estado de las naves y el tráfico\n🚨 Alertas operacionales y de seguridad\n🌊 Clima marítimo (SHOA y MeteoChile)\n📊 Indicadores del sistema\n📋 Cumplimiento de normas (Ley 21.719, IALA, ISO 27001)\n📻 Radio VTS y comunicaciones\n📊 Informes exportables\n🕊️ Y si necesitas un momento de paz, también puedo compartirte algo de la Biblia\n\n¿Qué te interesa?`
 }
 
 // Fallback query if messages array is empty
