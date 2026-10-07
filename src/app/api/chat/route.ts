@@ -175,24 +175,45 @@ function generateLocalResponse(query: string, ctx: any): string {
 
   // BUQUES — precisa y directa
   if (q.includes('buque') || q.includes('nave') || q.includes('navío') || q.includes('barco') || q.includes('contenedor')) {
+    // Primero: buscar si el usuario mencionó un buque por nombre
+    const vesselFound = vessels.find((v: any) => {
+      const name = v.name.toLowerCase()
+      // Buscar coincidencia: nombre del buque dentro de la pregunta
+      return name.split(' ').some((word: string) => word.length > 2 && q.includes(word.toLowerCase()))
+    })
+
+    if (vesselFound) {
+      // El usuario preguntó por un buque específico — solo mostrar ese
+      const v = vesselFound
+      const statusLabel = v.status === 'moored' ? '🟢 Atracado' :
+        v.status === 'arrival' ? '🟣 En aproximación' :
+        v.status === 'underway' ? '🔵 Navegando' :
+        '🟡 Fondeado'
+      let response = `Aquí está ${v.name}:\n\n`
+      response += `📊 Estado: ${statusLabel}\n`
+      response += `🆔 MMSI: ${v.mmsi}\n`
+      response += `🆔 IMO: ${v.imo}\n`
+      response += `🚢 Tipo: ${v.type}\n`
+      response += `📏 Eslora: ${v.length}m · Manga: ${v.beam}m · Calado: ${v.draft}m\n`
+      response += `💨 Velocidad: ${v.sog > 0 ? v.sog + ' nudos' : 'Sin movimiento'}\n`
+      response += `🧭 Rumbo: ${v.cog}°\n`
+      response += `🏳️ Bandera: ${v.flag}\n`
+      response += `📍 Destino: ${v.destination || 'No disponible'}\n`
+      response += `⏰ ETA: ${v.eta}\n`
+      response += `🎯 Precisión GPS: ${v.confidence}%\n`
+      response += `📋 Registro: ${v.registry}\n\n`
+      response += `¿Quieres saber algo más de esta nave o de otra?`
+      return response
+    }
+
+    // Si no mencionó un buque específico, mostrar resumen corto
     const moored = vessels.filter((v: any) => v.status === 'moored')
     const arrival = vessels.filter((v: any) => v.status === 'arrival')
     const underway = vessels.filter((v: any) => v.status === 'underway')
     const anchored = vessels.filter((v: any) => v.status === 'anchored')
 
-    let response = `Mira, tengo ${vesselCount} naves en pantalla ahora mismo. Te lo desgloso:\n\n`
-    response += `🟢 Atracados en muelles: ${moored.length}\n`
-    response += `🟣 Viniendo de camino: ${arrival.length}\n`
-    response += `🔵 Navegando por la bahía: ${underway.length}\n`
-    response += `🟡 Fondeados esperando turno: ${anchored.length}\n\n`
-    response += `Los que están en pantalla son estos:\n\n`
-    vessels.slice(0, 12).forEach((v: any, i: number) => {
-      const statusEmoji = v.status === 'moored' ? '🟢' : v.status === 'arrival' ? '🟣' : v.status === 'underway' ? '🔵' : '🟡'
-      response += `${i + 1}. ${statusEmoji} ${v.name} — MMSI ${v.mmsi} · ${v.type} · ${v.sog > 0 ? v.sog + 'kn' : 'sin movimiento'}\n`
-      if (v.destination) response += `   Va hacia: ${v.destination}\n`
-    })
-    if (vessels.length > 12) response += `\n...y van ${vessels.length - 12} más que te puedo detallar si quieres.\n`
-    response += `\n¿Te interesa alguno en particular? Dime el nombre y te cuento todo lo que sé de él.`
+    let response = `Tengo ${vesselCount} naves en pantalla: ${moored.length} atracadas, ${arrival.length} viniendo, ${underway.length} navegando y ${anchored.length} fondeadas.\n\n`
+    response += `Si quieres el detalle de alguna, dime el nombre. Por ejemplo: "dime de MSC ISABELLA" o "¿qué pasa con EVER GIVEN?".`
     return response
   }
 
