@@ -338,7 +338,7 @@ export default function AIChatPanel() {
                     </Badge>
                   </div>
                   <div className="text-xs text-slate-600 truncate">
-                    Asistente Marítimo · TCP Valparaíso
+                    Asistente Marítimo · TPS Valparaíso
                   </div>
                 </div>
               </div>

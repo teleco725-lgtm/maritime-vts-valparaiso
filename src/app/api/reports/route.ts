@@ -10,7 +10,7 @@ function getQueryParams(req: NextRequest) {
     dateTo: searchParams.get('dateTo') || new Date().toISOString().split('T')[0],
     includeSections: (searchParams.get('includeSections') || 'summary,vessels,alerts,kpis').split(','),
     operator: searchParams.get('operator') || 'Operador VTS',
-    organization: searchParams.get('organization') || 'TCP Valparaíso',
+    organization: searchParams.get('organization') || 'TPS Valparaíso',
     exportDate: new Date().toLocaleDateString('es-CL', { day: '2-digit', month: 'long', year: 'numeric' }),
     exportTime: new Date().toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
   }
@@ -295,7 +295,7 @@ async function generateWord(params: ReturnType<typeof getQueryParams>): Promise<
     alignment: AlignmentType.CENTER,
     spacing: { before: 100 },
     children: [
-      new TextRun({ text: 'Documento generado por MaritimeVTS · Plataforma VTS para TCP Valparaíso', size: 16, color: 'CBD5E1', italics: true }),
+      new TextRun({ text: 'Documento generado por MaritimeVTS · Plataforma VTS para TPS Valparaíso', size: 16, color: 'CBD5E1', italics: true }),
     ],
   }))
 
@@ -335,7 +335,7 @@ async function generatePowerPoint(params: ReturnType<typeof getQueryParams>): Pr
     slide2.addText('Resumen Ejecutivo', { x: 0.5, y: 0.3, w: 12, h: 0.8, fontSize: 28, bold: true, color: '06B6D4' })
     slide2.addText([
       { text: `• ${vessels.length} naves operando en zona VTS durante el período\n`, options: { fontSize: 16, color: 'E2E8F0', breakLine: true } },
-      { text: `• ${vessels.filter(v => v.status === 'moored').length} buques atracados en muelles TCP\n`, options: { fontSize: 16, color: 'E2E8F0', breakLine: true } },
+      { text: `• ${vessels.filter(v => v.status === 'moored').length} buques atracados en muelles TPS\n`, options: { fontSize: 16, color: 'E2E8F0', breakLine: true } },
       { text: `• ${vessels.filter(v => v.status === 'arrival').length} buques en aproximación\n`, options: { fontSize: 16, color: 'E2E8F0', breakLine: true } },
       { text: `• ${vessels.filter(v => v.status === 'underway').length} buques en navegación\n`, options: { fontSize: 16, color: 'E2E8F0', breakLine: true } },
       { text: `• Precisión GPS media con fusión IA: ${kpis[3].value}%\n`, options: { fontSize: 16, color: '10B981', breakLine: true } },
@@ -575,7 +575,7 @@ async function generatePDF(params: ReturnType<typeof getQueryParams>): Promise<B
     doc.setFont('helvetica', 'normal')
     doc.setFontSize(10)
     doc.setTextColor(51, 65, 85)
-    const summaryText = `Durante el período ${params.dateFrom} a ${params.dateTo}, el Sistema VTS de TCP Valparaíso registró ${vessels.length} naves operando en su zona de jurisdicción. De estas, ${vessels.filter(v => v.status === 'moored').length} se encontraban atracadas, ${vessels.filter(v => v.status === 'arrival').length} en aproximación y ${vessels.filter(v => v.status === 'underway').length} en navegación. La precisión media del sistema de fusión GPS con IA alcanzó ${kpis[3].value}%, manteniendo los estándares operacionales conforme a los lineamientos IALA V-103.`
+    const summaryText = `Durante el período ${params.dateFrom} a ${params.dateTo}, el Sistema VTS de TPS Valparaíso registró ${vessels.length} naves operando en su zona de jurisdicción. De estas, ${vessels.filter(v => v.status === 'moored').length} se encontraban atracadas, ${vessels.filter(v => v.status === 'arrival').length} en aproximación y ${vessels.filter(v => v.status === 'underway').length} en navegación. La precisión media del sistema de fusión GPS con IA alcanzó ${kpis[3].value}%, manteniendo los estándares operacionales conforme a los lineamientos IALA V-103.`
     const lines = doc.splitTextToSize(summaryText, pageW - 2 * margin)
     doc.text(lines, margin, y)
     y += lines.length * 14 + 10

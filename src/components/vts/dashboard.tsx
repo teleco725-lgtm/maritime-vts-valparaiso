@@ -152,7 +152,7 @@ export default function Dashboard() {
           <div className="flex items-center gap-3 flex-wrap justify-center">
             <span className="font-semibold text-slate-200">MaritimeVTS v1.0</span>
             <span className="hidden sm:inline text-slate-600">·</span>
-            <span>TCP Valparaíso</span>
+            <span>TPS Valparaíso</span>
             <span className="hidden sm:inline text-slate-600">·</span>
             <span className="hidden lg:inline text-slate-500">IALA V-103 · IMO MSC.428(98) · Ley 21.719</span>
           </div>

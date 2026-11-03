@@ -63,7 +63,7 @@ export default function LoginView() {
             </div>
             <div>
               <h1 className="text-2xl font-bold tracking-tight text-white">MaritimeVTS</h1>
-              <p className="text-sm text-sky-200">Control de Tráfico Marítimo · TCP Valparaíso</p>
+              <p className="text-sm text-sky-200">Control de Tráfico Marítimo · TPS Valparaíso</p>
             </div>
           </div>
         </div>
@@ -186,7 +186,7 @@ export default function LoginView() {
           </Card>
 
           <div className="mt-6 text-center text-xs text-sky-200">
-            <p>Prototipo demostrativo · TCP Valparaíso · v1.0</p>
+            <p>Prototipo demostrativo · TPS Valparaíso · v1.0</p>
             <p className="mt-1">© 2026 MaritimeVTS — Todos los derechos reservados</p>
           </div>
         </motion.div>

@@ -51,7 +51,7 @@ export default function Header({ activeView, onNavigate, onToggleMobileNav, mobi
             </div>
             <div className="hidden sm:block">
               <div className="text-base font-bold text-slate-100 leading-tight">MaritimeVTS</div>
-              <div className="text-xs text-slate-500 leading-tight">TCP Valparaíso</div>
+              <div className="text-xs text-slate-500 leading-tight">TPS Valparaíso</div>
             </div>
           </div>
 

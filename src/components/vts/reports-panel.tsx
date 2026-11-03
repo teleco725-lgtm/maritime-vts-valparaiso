@@ -51,7 +51,7 @@ export default function ReportsPanel({ user }: Props) {
         dateTo,
         includeSections: includeSections.join(','),
         operator: user?.name || 'Operador',
-        organization: user?.organization || 'TCP Valparaíso',
+        organization: user?.organization || 'TPS Valparaíso',
       })
       const res = await fetch(`/api/reports?${params.toString()}`)
       if (!res.ok) throw new Error('Error al generar informe')
@@ -238,7 +238,7 @@ export default function ReportsPanel({ user }: Props) {
               </Badge>
             </div>
             <div className="text-slate-100 font-semibold">Informe de Tráfico Marítimo</div>
-            <div className="text-xs text-slate-500">TCP Valparaíso · {dateFrom} → {dateTo}</div>
+            <div className="text-xs text-slate-500">TPS Valparaíso · {dateFrom} → {dateTo}</div>
             <div className="text-[10px] text-slate-500 mt-1">Operador: {user?.name} · {user?.organization}</div>
           </div>
 

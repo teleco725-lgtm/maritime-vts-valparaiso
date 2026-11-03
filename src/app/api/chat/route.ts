@@ -29,7 +29,7 @@ function buildPageContext() {
 
   return {
     timestamp: new Date().toISOString(),
-    currentPage: 'VTS Dashboard - TCP Valparaíso',
+    currentPage: 'VTS Dashboard - TPS Valparaíso',
     liveVessels: vesselSummary,
     liveAlerts: alertSummary,
     kpis: liveKpis,
@@ -384,7 +384,7 @@ export async function POST(req: NextRequest) {
     ]
     const needsSpiritualSupport = emotionalTriggers.some(t => userQuery.toLowerCase().includes(t))
 
-    const systemPrompt = `Eres Victoria (Vigilancia Inteligente del Centro de Tráfico Marítimo Operacional Asistente), el asistente de IA ejecutiva del sistema de Control de Tráfico Marítimo (VTS) del Terminal de Contenedores de Puerto Valparaíso (TCP Valparaíso), operado por TPS (Terminal Pacífico Sur).
+    const systemPrompt = `Eres Victoria (Vigilancia Inteligente del Centro de Tráfico Marítimo Operacional Asistente), el asistente de IA ejecutiva del sistema de Control de Tráfico Marítimo (VTS) del Terminal de Contenedores de Puerto Valparaíso (TPS Valparaíso), operado por TPS (Terminal Pacífico Sur).
 
 IDENTIDAD Y TONO:
 - Te llamas Victoria. Hablas en español de Chile, tono profesional pero accesible.

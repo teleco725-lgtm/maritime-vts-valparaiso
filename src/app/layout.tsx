@@ -17,12 +17,12 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "MaritimeVTS — TCP Valparaíso",
+    default: "MaritimeVTS — TPS Valparaíso",
     template: "%s · MaritimeVTS",
   },
   description:
-    "Plataforma ejecutiva de control de tráfico marítimo con integración AIS, Radar y Cámaras. TCP Valparaíso.",
-  keywords: ["VTS", "AIS", "TCP Valparaíso", "Directemar", "IALA", "Ley 21.719"],
+    "Plataforma ejecutiva de control de tráfico marítimo con integración AIS, Radar y Cámaras. TPS Valparaíso.",
+  keywords: ["VTS", "AIS", "TPS Valparaíso", "Directemar", "IALA", "Ley 21.719"],
   authors: [{ name: "MaritimeVTS" }],
   applicationName: "MaritimeVTS",
   generator: "MaritimeVTS",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     statusBarStyle: "black-translucent",
   },
   openGraph: {
-    title: "MaritimeVTS — TCP Valparaíso",
+    title: "MaritimeVTS — TPS Valparaíso",
     description:
       "Plataforma ejecutiva de control de tráfico marítimo con integración AIS, Radar y Cámaras.",
     type: "website",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary",
-    title: "MaritimeVTS — TCP Valparaíso",
+    title: "MaritimeVTS — TPS Valparaíso",
     description:
       "Plataforma ejecutiva de control de tráfico marítimo con integración AIS, Radar y Cámaras.",
   },

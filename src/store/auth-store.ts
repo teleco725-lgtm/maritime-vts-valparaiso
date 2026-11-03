@@ -40,7 +40,7 @@ export const useAuthStore = create<AuthState>()(
             name: 'Cap. Andrés Martínez Soto',
             email: 'andres.martinez@tcpvalparaiso.onmicrosoft.com',
             role: 'Operador VTS Senior',
-            organization: 'TCP Valparaíso — Terminal Pacífico Sur',
+            organization: 'TPS Valparaíso — Terminal Pacífico Sur',
             provider: 'microsoft',
             loginAt: new Date().toISOString(),
           },

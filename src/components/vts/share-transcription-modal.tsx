@@ -55,7 +55,7 @@ export default function ShareTranscriptionModal({
   })
 
   const buildMessage = (contactName: string) => {
-    const header = `🚢 *MaritimeVTS — TCP Valparaíso*\n`
+    const header = `🚢 *MaritimeVTS — TPS Valparaíso*\n`
     const meta = `Operador: ${recipientName ? 'Respuesta a ' + recipientName : 'Comunicación saliente'}${recipientMmsi ? ' (MMSI ' + recipientMmsi + ')' : ''}\n`
     const ts = `Hora: ${new Date().toLocaleString('es-CL')}\n`
     const body = `---\n${transcription}`
@@ -82,7 +82,7 @@ export default function ShareTranscriptionModal({
         return `sms:${cleanPhone}?body=${encodeURIComponent(message)}`
       }
       case 'email': {
-        return `mailto:${email || ''}?subject=${encodeURIComponent('Comunicación VTS — TCP Valparaíso')}&body=${encodeURIComponent(message)}`
+        return `mailto:${email || ''}?subject=${encodeURIComponent('Comunicación VTS — TPS Valparaíso')}&body=${encodeURIComponent(message)}`
       }
       case 'copy': {
         return null

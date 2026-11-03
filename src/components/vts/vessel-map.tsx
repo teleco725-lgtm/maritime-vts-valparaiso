@@ -172,7 +172,7 @@ export default function VesselMap({ selectedVessel, onSelectVessel }: Props) {
           stroke="#2a4a3c"
           strokeWidth="0.8"
         />
-        {/* Espigón TCP */}
+        {/* Espigón TPS */}
         <path
           d="M 380 100 L 420 200 L 460 220 L 540 200 L 580 220 L 620 210 L 660 230 L 700 220 L 700 240 L 660 250 L 620 240 L 580 250 L 540 230 L 460 240 L 420 220 L 380 120 Z"
           fill="#0a1a14"
@@ -199,7 +199,7 @@ export default function VesselMap({ selectedVessel, onSelectVessel }: Props) {
 
         {/* Etiquetas geográficas — monospace militar */}
         <text x="50" y="80" fill="#3a5a4c" fontSize="9" fontFamily="monospace" opacity="0.7">VALPARAÍSO</text>
-        <text x="500" y="195" fill="#2a4a3c" fontSize="7" fontFamily="monospace">ESPIGÓN TCP</text>
+        <text x="500" y="195" fill="#2a4a3c" fontSize="7" fontFamily="monospace">ESPIGÓN TPS</text>
         <text x="850" y="280" fill="#2a4a3c" fontSize="6" fontFamily="monospace" opacity="0.5">OCÉANO PACÍFICO</text>
 
         {/* === ANILLOS DE RANGO estilo militar — sólidos sin glow === */}
