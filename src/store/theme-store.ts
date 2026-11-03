@@ -110,6 +110,36 @@ export const themes: Theme[] = [
       '--vts-bg-gradient-end': '#080A0E',
     },
   },
+  {
+    id: 'celeste-claro',
+    name: 'Celeste Claro',
+    description: 'Luminoso · Fresco · Moderno',
+    swatchColor: '#7DD3FC',
+    secondaryColor: '#F0F9FF',
+    vars: {
+      '--vts-bg': '#F0F9FF',
+      '--vts-card': '#FFFFFF',
+      '--vts-subcard': '#E0F2FE',
+      '--vts-deep': '#DBEAFE',
+      '--vts-bg-gradient-start': '#F0F9FF',
+      '--vts-bg-gradient-end': '#DBEAFE',
+    },
+  },
+  {
+    id: 'arena-costera',
+    name: 'Arena Costera',
+    description: 'Cálido · Suave · Costero',
+    swatchColor: '#FDE68A',
+    secondaryColor: '#FFFBEB',
+    vars: {
+      '--vts-bg': '#FFFBEB',
+      '--vts-card': '#FFFFFF',
+      '--vts-subcard': '#FEF3C7',
+      '--vts-deep': '#FDE68A',
+      '--vts-bg-gradient-start': '#FFFBEB',
+      '--vts-bg-gradient-end': '#FDE68A',
+    },
+  },
 ]
 
 interface ThemeState {
